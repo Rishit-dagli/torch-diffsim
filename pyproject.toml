@@ -1,0 +1,54 @@
+[project]
+name = "torch-diffsim"
+version = "0.1.0"
+description = "Very minimal physics simulator supporting differentiation entirely in torch."
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [
+    { name = "Rishit Dagli", email = "rishit.dagli@gmail.com" }
+]
+keywords = ["physics", "simulation", "differentiable", "pytorch", "neo-hookean"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+dependencies = [
+    "torch>=2.0.0",
+    "numpy>=1.20.0",
+    "polyscope>=1.3.0",
+    "meshio>=5.0.0",
+    "scipy>=1.7.0",
+    "matplotlib>=3.5.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "black>=22.0.0",
+    "ruff>=0.1.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/Rishit-Dagli/torch-diffsim"
+Documentation = "https://rishit-dagli.github.io/torch-diffsim/"
+Repository = "https://github.com/Rishit-Dagli/torch-diffsim"
+
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["diffsim*"]
+
