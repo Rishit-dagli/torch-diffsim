@@ -1,11 +1,18 @@
 """
-Differentiable simulator combining all techniques
+Differentiable simulation components.
 
-Provides a drop-in replacement for Simulator that supports:
-- Full gradient backpropagation
-- Smooth contact handling
-- Memory-efficient checkpointing
-- Implicit differentiation through solvers
+This module provides DifferentiableSolver and DifferentiableSimulator classes that
+maintain full gradient flow through all simulation operations. Unlike the standard
+simulator, these classes use:
+
+- **Smooth operations**: No hard constraints or projections that break gradients
+- **Differentiable contact**: Smooth barrier functions instead of projection
+- **Gradient-aware constraints**: Fixed vertices handled with smooth masking
+- **Checkpointing support**: Memory-efficient backpropagation for long rollouts
+
+The differentiable simulator implements the same semi-implicit (symplectic Euler)
+time integration as the standard simulator, but all operations preserve gradients
+for automatic differentiation.
 """
 
 import torch
@@ -19,12 +26,24 @@ from .diff_physics import (
 
 class DifferentiableSolver:
     """
-    Fully differentiable semi-implicit solver
+    Semi-implicit (symplectic Euler) solver with gradient-preserving operations.
+    Forces are derived from the energy gradient; contact uses smooth barriers;
+    constraints use masking to avoid breaking gradients.
 
-    Key differences from regular solver:
-    1. All operations preserve gradients
-    2. Smooth contact model (no hard constraints)
-    3. Optional implicit differentiation for efficiency
+    Integration scheme:
+
+    .. math::
+
+        \\mathbf{v}^{n+1} &= \\mathbf{v}^n + h \\, \\mathbf{M}^{-1} \\mathbf{f}(\\mathbf{x}^n)
+
+        \\mathbf{x}^{n+1} &= \\mathbf{x}^n + h \\, \\mathbf{v}^{n+1}
+
+    Parameters:
+        dt (float): Time step size (default: 0.01)
+        gravity (float): Gravity acceleration in m/s² (default: -9.8)
+        damping (float): Velocity damping coefficient (default: 0.99)
+        substeps (int): Number of substeps per timestep (default: 4)
+        use_implicit_diff (bool): Use implicit differentiation (default: False)
     """
 
     def __init__(
@@ -58,14 +77,14 @@ class DifferentiableSolver:
         Args:
             mesh: TetrahedralMesh
             material: DifferentiableMaterial
-            positions: (N, 3) positions (requires_grad=True for backprop)
-            velocities: (N, 3) velocities
-            masses: (N,) masses
+            positions: :math:`(N, 3)` positions (requires_grad=True for backprop)
+            velocities: :math:`(N, 3)` velocities
+            masses: :math:`(N,)` masses
             fixed_vertices: optional fixed vertices
 
         Returns:
-            new_positions: (N, 3) with gradients
-            new_velocities: (N, 3) with gradients
+            new_positions: :math:`(N, 3)` with gradients
+            new_velocities: :math:`(N, 3)` with gradients
         """
         device = positions.device
         self.gravity = self.gravity.to(device)
@@ -131,11 +150,11 @@ class DifferentiableSolver:
         Args:
             mesh: TetrahedralMesh
             material: DifferentiableMaterial
-            positions: (N, 3) positions with gradients
-            masses: (N,) masses
+            positions: :math:`(N, 3)` positions with gradients
+            masses: :math:`(N,)` masses
 
         Returns:
-            forces: (N, 3) forces with gradients
+            forces: :math:`(N, 3)` forces with gradients
         """
         # Ensure positions require grad
         if not positions.requires_grad:
@@ -280,7 +299,7 @@ class DifferentiableSimulator:
         Compute loss for optimization
 
         Args:
-            target_positions: (N, 3) target positions
+            target_positions: :math:`(N, 3)` target positions
             loss_type: 'mse' or 'chamfer'
 
         Returns:

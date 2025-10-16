@@ -1,5 +1,18 @@
 """
 Time integration solvers for physics simulation
+
+This module implements semi-implicit (symplectic Euler) time integration for
+tetrahedral FEM simulation. The integration scheme updates velocities using
+forces at the current position, then updates positions using the new velocities:
+
+.. math::
+
+    \\mathbf{v}^{n+1} = \\mathbf{v}^n + \\Delta t \\, \\mathbf{M}^{-1} \\mathbf{f}(\\mathbf{x}^n)
+
+    \\mathbf{x}^{n+1} = \\mathbf{x}^n + \\Delta t \\, \\mathbf{v}^{n+1}
+
+This is a first-order symplectic method that provides better energy conservation
+than explicit Euler integration.
 """
 
 import torch
@@ -7,12 +20,30 @@ import torch
 
 class SemiImplicitSolver:
     """
-    Semi-implicit (Backward Euler) solver for dynamic simulation
+    Semi-implicit (symplectic Euler) solver for dynamic FEM simulation
 
-    Solves: M(v_{n+1} - v_n) = dt * f(x_n + dt*v_{n+1})
-    where f includes elastic, gravity, and constraint forces
+    This solver implements a first-order symplectic integration scheme. Velocities
+    are updated using forces at the current position, then positions are updated
+    using the new velocities. This scheme is symplectic (preserves phase space
+    volume) and provides better energy conservation than explicit methods.
 
-    Uses Newton's method with line search for robustness
+    The integration follows:
+
+    .. math::
+
+        \\mathbf{v}^{n+1} &= \\mathbf{v}^n + h \\, \\mathbf{M}^{-1} (\\mathbf{f}_{\\text{elastic}}(\\mathbf{x}^n) + \\mathbf{f}_{\\text{gravity}} + \\mathbf{f}_{\\text{contact}})
+
+        \\mathbf{x}^{n+1} &= \\mathbf{x}^n + h \\, \\mathbf{v}^{n+1}
+
+    where :math:`h = \\Delta t / \\text{substeps}` is the substep size.
+
+    Attributes:
+        dt (float): Time step size in seconds
+        gravity_value (float): Gravity acceleration in m/s² (negative for downward)
+        damping (float): Velocity damping coefficient (0-1, typically ~0.99)
+        substeps (int): Number of substeps per timestep for stability
+        enable_self_collision (bool): Whether to compute self-collision forces
+        collision_method (str): Collision detection method ('simplified' or 'ipc')
     """
 
     def __init__(
@@ -53,14 +84,14 @@ class SemiImplicitSolver:
         Args:
             mesh: TetrahedralMesh object
             material: Material model (e.g., StableNeoHookean)
-            positions: (N, 3) current positions
-            velocities: (N, 3) current velocities
-            masses: (N,) vertex masses
+            positions: :math:`(N, 3)` current positions
+            velocities: :math:`(N, 3)` current velocities
+            masses: :math:`(N,)` vertex masses
             fixed_vertices: list of fixed vertex indices
 
         Returns:
-            new_positions: (N, 3) updated positions
-            new_velocities: (N, 3) updated velocities
+            new_positions: :math:`(N, 3)` updated positions
+            new_velocities: :math:`(N, 3)` updated velocities
         """
         device = positions.device
 
@@ -122,11 +153,11 @@ class SemiImplicitSolver:
         Args:
             mesh: TetrahedralMesh
             material: Material model
-            positions: (N, 3) vertex positions
-            masses: (N,) vertex masses
+            positions: :math:`(N, 3)` vertex positions
+            masses: :math:`(N,)` vertex masses
 
         Returns:
-            forces: (N, 3) forces on each vertex
+            forces: :math:`(N, 3)` forces on each vertex
         """
         # Compute deformation gradient
         F = mesh.compute_deformation_gradient(positions)
@@ -172,14 +203,14 @@ class SemiImplicitSolver:
         Handle collision with ground plane
 
         Args:
-            positions: (N, 3) positions
-            velocities: (N, 3) velocities
+            positions: :math:`(N, 3)` positions
+            velocities: :math:`(N, 3)` velocities
             ground_height: y-coordinate of ground
             restitution: coefficient of restitution
 
         Returns:
-            positions: (N, 3) corrected positions
-            velocities: (N, 3) corrected velocities
+            positions: :math:`(N, 3)` corrected positions
+            velocities: :math:`(N, 3)` corrected velocities
         """
         # Contact tolerance to avoid chatter
         eps = 1e-6

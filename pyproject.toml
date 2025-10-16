@@ -1,7 +1,7 @@
 [project]
 name = "torch-diffsim"
 version = "0.1.0"
-description = "Very minimal physics simulator supporting differentiation entirely in torch."
+description = "a very minimal paralllelizable physics simulator supporting differentiation entirely in torch."
 readme = "README.md"
 requires-python = ">=3.8"
 license = { text = "MIT" }

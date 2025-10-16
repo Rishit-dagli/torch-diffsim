@@ -1,5 +1,23 @@
 """
-Collision detection and response using IPC (Incremental Potential Contact) principles
+Collision detection and response
+
+This module implements two collision handling approaches:
+
+1. **IPC (Incremental Potential Contact)**: Rigorous collision handling using
+   barrier potentials with provable non-penetration guarantees. Based on Li et al.
+   "Incremental Potential Contact" (2020).
+
+2. **Simplified**: Fast approximate collision detection using distance-based
+   repulsion forces for real-time simulation.
+
+The IPC barrier function is:
+
+.. math::
+
+    b(d) = -(d - \\hat{d})^2 \\log(d/\\hat{d}) \\text{ for } d < \\hat{d}
+
+where :math:`d` is the distance between primitives and :math:`\\hat{d}` is the
+activation distance. This creates smooth repulsive forces that prevent penetration.
 """
 
 import torch
@@ -8,9 +26,27 @@ import numpy as np
 
 class IPCCollisionHandler:
     """
-    IPC-based collision detection and response
+    IPC (Incremental Potential Contact) collision handler
 
-    Uses barrier potentials to prevent penetrations with continuous collision detection
+    Implements collision handling using smooth barrier potentials as described in:
+    Li, M., Ferguson, Z., Schneider, T., Langlois, T. R., Zorin, D., Panozzo, D., ...
+    & Jiang, C. (2020). Incremental potential contact: intersection-and inversion-free,
+    large-deformation dynamics. ACM Trans. Graph., 39(4), 49.
+
+    The barrier function creates smooth repulsive forces that activate when primitives
+    approach within a threshold distance :math:`\\hat{d}`, preventing penetration while
+    maintaining continuity for gradient-based optimization.
+
+    Parameters:
+        barrier_stiffness (float): Stiffness coefficient :math:`\\kappa` (default: 1e3)
+        dhat (float): Barrier activation distance :math:`\\hat{d}` (default: 1e-3)
+        friction_mu (float): Friction coefficient (default: 0.3)
+
+    Attributes:
+        kappa (float): Barrier stiffness
+        dhat (float): Activation distance
+        dhat_squared (float): Squared activation distance for efficiency
+        friction_mu (float): Friction coefficient
     """
 
     def __init__(self, barrier_stiffness=1e3, dhat=1e-3, friction_mu=0.3):
@@ -90,12 +126,12 @@ class IPCCollisionHandler:
         Compute squared distance from point p to triangle (v0, v1, v2)
 
         Args:
-            p: (N, 3) points
-            v0, v1, v2: (M, 3) triangle vertices
+            p: :math:`(N, 3)` points
+            v0, v1, v2: :math:`(M, 3)` triangle vertices
 
         Returns:
-            distances: (N, M) squared distances
-            closest_points: (N, M, 3) closest points on triangles
+            distances: :math:`(N, M)` squared distances
+            closest_points: :math:`(N, M, 3)` closest points on triangles
         """
         # Expand dimensions for broadcasting
         p = p.unsqueeze(1)  # (N, 1, 3)
@@ -133,10 +169,10 @@ class IPCCollisionHandler:
 
         Args:
             mesh: TetrahedralMesh
-            positions: (N, 3) current positions
+            positions: :math:`(N, 3)` current positions
 
         Returns:
-            forces: (N, 3) collision forces
+            forces: :math:`(N, 3)` collision forces
         """
         device = positions.device
         forces = torch.zeros_like(positions)
@@ -213,7 +249,7 @@ class IPCCollisionHandler:
         Extract surface triangles from tetrahedral mesh
 
         Returns:
-            surface_faces: (F, 3) tensor of surface triangle indices
+            surface_faces: :math:`(F, 3)` tensor of surface triangle indices
         """
         tets = mesh.tetrahedra.cpu()
 
@@ -284,10 +320,10 @@ class SimplifiedCollisionHandler:
 
         Args:
             mesh: TetrahedralMesh
-            positions: (N, 3) current positions
+            positions: :math:`(N, 3)` current positions
 
         Returns:
-            forces: (N, 3) repulsion forces
+            forces: :math:`(N, 3)` repulsion forces
         """
         forces = torch.zeros_like(positions)
 

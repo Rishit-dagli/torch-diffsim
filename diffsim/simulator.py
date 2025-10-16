@@ -1,5 +1,18 @@
 """
-Main simulator class that integrates all components
+Main simulator class
+
+This module provides the Simulator class, which integrates the mesh, material model,
+and time integration solver into a unified interface for running physics simulations.
+
+The simulator manages:
+
+- State variables (positions, velocities)
+- Vertex masses computed from density and element volumes
+- Boundary conditions (fixed vertices)
+- Time tracking
+- Energy computation
+
+For differentiable simulation with gradient support, use DifferentiableSimulator instead.
 """
 
 import torch
@@ -8,9 +21,29 @@ import numpy as np
 
 class Simulator:
     """
-    Main physics simulator class
+    Main physics simulator for non-differentiable forward simulation
 
-    Combines mesh, material model, and solver into a unified interface
+    This class combines a TetrahedralMesh, material model, and SemiImplicitSolver
+    into a unified interface. It manages simulation state, computes vertex masses,
+    handles boundary conditions, and provides methods for running simulations.
+
+    For gradient-based optimization and differentiable simulation, use
+    DifferentiableSimulator instead.
+
+    Parameters:
+        mesh (TetrahedralMesh): Tetrahedral mesh
+        material (StableNeoHookean): Material model
+        solver (SemiImplicitSolver): Time integration solver
+        density (float): Material density in kg/m³ (default: 1000.0)
+        device (str): 'cpu' or 'cuda' (default: 'cpu')
+        use_compile (bool): Use torch.compile for speedup (default: False)
+
+    Attributes:
+        positions (torch.Tensor): Current vertex positions :math:`(N \\times 3)`
+        velocities (torch.Tensor): Current vertex velocities :math:`(N \\times 3)`
+        masses (torch.Tensor): Vertex masses :math:`(N,)`
+        fixed_vertices (torch.Tensor): Indices of fixed vertices
+        time (float): Current simulation time in seconds
     """
 
     def __init__(
@@ -72,10 +105,10 @@ class Simulator:
         Compute vertex masses from element volumes and density
 
         Args:
-            density: material density (kg/m^3)
+            density: material density (kg/m³)
 
         Returns:
-            masses: (N,) vertex masses
+            masses: :math:`(N,)` vertex masses
         """
         masses = torch.zeros(self.mesh.num_vertices, device=self.device)
 
@@ -118,7 +151,7 @@ class Simulator:
 
         Args:
             vertex_indices: indices of vertices
-            velocity: (3,) velocity vector to add
+            velocity: :math:`(3,)` velocity vector to add
         """
         if isinstance(velocity, (list, np.ndarray)):
             velocity = torch.tensor(velocity, dtype=torch.float32, device=self.device)
@@ -186,8 +219,8 @@ class Simulator:
         Extract surface triangles for visualization (boundary faces only)
 
         Returns:
-            vertices: (N, 3) vertex positions
-            faces: (F, 3) triangle indices
+            vertices: :math:`(N, 3)` vertex positions
+            faces: :math:`(F, 3)` triangle indices
         """
         # Extract all faces from tetrahedra
         # Each tetrahedron has 4 faces with consistent winding
