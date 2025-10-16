@@ -1,5 +1,24 @@
 """
-DiffSim - A minimal differentiable physics simulator
+torch-diffsim: A minimal differentiable physics simulator in PyTorch
+
+This package provides a fully differentiable finite element method (FEM) simulator
+using semi-implicit (symplectic Euler) time integration. All operations support
+automatic differentiation for gradient-based optimization.
+
+Main Components:
+    - TetrahedralMesh: Tetrahedral mesh representation
+    - StableNeoHookean: Stable Neo-Hookean hyperelastic material model
+    - SemiImplicitSolver: Semi-implicit time integration solver
+    - Simulator: Main simulator combining mesh, material, and solver
+
+Differentiable Components:
+    - DifferentiableMaterial: Learnable material parameters
+    - SpatiallyVaryingMaterial: Per-element learnable material properties
+    - DifferentiableSolver: Fully differentiable semi-implicit solver
+    - DifferentiableSimulator: Differentiable simulator with gradient support
+    - DifferentiableBarrierContact: Smooth differentiable contact handling
+    - CheckpointedRollout: Memory-efficient gradient computation
+    - ImplicitDifferentiation: Efficient gradients through implicit function theorem
 """
 
 from .material import StableNeoHookean

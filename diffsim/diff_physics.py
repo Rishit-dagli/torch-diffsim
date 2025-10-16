@@ -1,11 +1,22 @@
 """
 Differentiable physics simulation utilities
 
-Implements techniques for making physics simulations differentiable:
-1. Smooth contact approximations (no discontinuous collisions)
-2. Implicit differentiation through Newton/CG solvers
-3. Memory-efficient checkpointing for long rollouts
-4. Jacobian-free backpropagation
+This module provides advanced techniques for differentiable physics simulation:
+
+1. **Smooth Contact Approximations**: Replace hard constraints with smooth barrier
+   functions that maintain gradient flow
+
+2. **Implicit Differentiation**: Compute gradients through iterative solvers using
+   the implicit function theorem without storing the full computation graph
+
+3. **Gradient Checkpointing**: Memory-efficient backpropagation through long simulations
+   by recomputing forward passes instead of storing all intermediate states
+
+4. **Learnable Materials**: Material models with parameters that can be optimized
+   via gradient descent
+
+All components are designed to preserve gradients for automatic differentiation
+while maintaining numerical stability.
 """
 
 import torch
@@ -16,7 +27,28 @@ class DifferentiableBarrierContact:
     """
     Smooth, differentiable contact model using barrier functions
 
-    Replaces hard constraints with smooth potentials for AD compatibility
+    This class implements smooth contact forces that maintain gradient flow for
+    automatic differentiation. Instead of hard constraints or projections that
+    introduce discontinuities, it uses smooth barrier potential functions that
+    activate near contact.
+
+    The barrier potential is:
+
+    .. math::
+
+        b(d) = -(d - \\hat{d})^2 \\log(d/\\hat{d}) \\text{ for } d < \\hat{d}
+
+    where :math:`d` is the distance to the surface and :math:`\\hat{d}` is the
+    barrier activation distance. The potential smoothly increases as :math:`d \\to 0`,
+    preventing penetration while maintaining :math:`C^2` continuity.
+
+    Parameters:
+        barrier_stiffness (float): Stiffness of barrier forces (default: 1e4)
+        barrier_width (float): Distance at which barrier activates (default: 0.01)
+
+    Attributes:
+        kappa (float): Barrier stiffness coefficient
+        d_hat (float): Barrier activation distance
     """
 
     def __init__(self, barrier_stiffness=1e4, barrier_width=0.01):
@@ -35,10 +67,10 @@ class DifferentiableBarrierContact:
         This is C^2 continuous and always differentiable
 
         Args:
-            d: (N,) distances to surface
+            d: :math:`(N,)` distances to surface
 
         Returns:
-            energy: (N,) barrier energy
+            energy: :math:`(N,)` barrier energy
         """
         # Smooth activation (no if-statements for AD)
         # Use smooth step function instead of hard threshold
@@ -55,11 +87,11 @@ class DifferentiableBarrierContact:
         Compute smooth ground contact forces (fully differentiable)
 
         Args:
-            positions: (N, 3) positions
-            velocities: (N, 3) velocities
+            positions: :math:`(N, 3)` positions
+            velocities: :math:`(N, 3)` velocities
 
         Returns:
-            forces: (N, 3) contact forces
+            forces: :math:`(N, 3)` contact forces
         """
         # Distance to ground (y-coordinate). Use contiguous copy to avoid view versioning issues.
         d = positions[:, 1].contiguous()
@@ -256,7 +288,31 @@ class DifferentiableMaterial(torch.nn.Module):
     """
     Material model with learnable parameters
 
-    Allows differentiation wrt Young's modulus, Poisson's ratio, etc.
+    This class wraps material properties as PyTorch parameters, enabling gradient-based
+    optimization of material constants. It implements the Stable Neo-Hookean energy
+    density with learnable Young's modulus :math:`E` and Poisson's ratio :math:`\\nu`.
+
+    The energy density is:
+
+    .. math::
+
+        \\Psi(\\mathbf{F}) = \\frac{\\mu}{2}(I_C - 3) - \\mu \\log J + \\frac{\\lambda}{2}(J-1)^2
+
+    where :math:`\\mu` and :math:`\\lambda` are computed from :math:`E` and :math:`\\nu`.
+
+    Parameters:
+        youngs_modulus (float): Initial Young's modulus value
+        poissons_ratio (float): Initial Poisson's ratio value
+        requires_grad (bool): Whether parameters should track gradients (default: True)
+
+    Attributes:
+        E (torch.nn.Parameter): Learnable Young's modulus
+        nu (torch.nn.Parameter): Learnable Poisson's ratio
+
+    Example:
+        >>> material = DifferentiableMaterial(1e5, 0.4, requires_grad=True)
+        >>> optimizer = torch.optim.Adam(material.parameters(), lr=1e3)
+        >>> # Run simulation and optimize material.E and material.nu
     """
 
     def __init__(self, youngs_modulus, poissons_ratio, requires_grad=True):
@@ -292,10 +348,10 @@ class DifferentiableMaterial(torch.nn.Module):
         Compute strain energy (fully differentiable)
 
         Args:
-            F: (M, 3, 3) deformation gradient
+            F: :math:`(M, 3, 3)` deformation gradient
 
         Returns:
-            psi: (M,) energy density
+            psi: :math:`(M,)` energy density
         """
         # Stable neo-Hookean energy
         Ic = torch.sum(F * F, dim=(1, 2))
@@ -313,9 +369,36 @@ class DifferentiableMaterial(torch.nn.Module):
 
 class SpatiallyVaryingMaterial(torch.nn.Module):
     """
-    Material with spatially varying properties (e.g., per-element stiffness)
+    Material with spatially varying properties
 
-    Useful for inverse problems and material optimization
+    This class allows each element in the mesh to have independent material properties,
+    enabling optimization of heterogeneous material distributions. Young's modulus is
+    parameterized in log-space to ensure positivity:
+
+    .. math::
+
+        E_i = \\exp(\\log E_i)
+
+    This is particularly useful for:
+
+    - Inverse material identification problems
+    - Topology optimization
+    - Functionally graded material design
+    - Material distribution learning
+
+    Parameters:
+        num_elements (int): Number of elements in the mesh
+        base_youngs (float): Initial Young's modulus for all elements (default: 1e5)
+        base_poisson (float): Poisson's ratio for all elements (default: 0.4)
+
+    Attributes:
+        log_E (torch.nn.Parameter): Log-space Young's modulus per element :math:`(M,)`
+        nu (torch.nn.Parameter): Poisson's ratio per element :math:`(M,)`
+
+    Example:
+        >>> material = SpatiallyVaryingMaterial(mesh.num_elements, 1e5, 0.4)
+        >>> optimizer = torch.optim.Adam([material.log_E], lr=0.01)
+        >>> # Optimize spatial distribution of stiffness
     """
 
     def __init__(self, num_elements, base_youngs=1e5, base_poisson=0.4):
@@ -352,10 +435,10 @@ class SpatiallyVaryingMaterial(torch.nn.Module):
         Compute strain energy per element (fully differentiable)
 
         Args:
-            F: (M, 3, 3) deformation gradient
+            F: :math:`(M, 3, 3)` deformation gradient
 
         Returns:
-            psi: (M,) energy density
+            psi: :math:`(M,)` energy density
         """
         # Stable neo-Hookean energy
         Ic = torch.sum(F * F, dim=(1, 2))

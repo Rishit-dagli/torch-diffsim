@@ -1,5 +1,19 @@
 """
 Tetrahedral mesh representation for finite element simulation
+
+This module provides the TetrahedralMesh class, which represents volumetric geometry
+using tetrahedral elements. The mesh stores vertex positions and element connectivity,
+and computes the deformation gradient for each element during simulation.
+
+The deformation gradient :math:`\\mathbf{F}` maps from the reference (rest) configuration
+to the current (deformed) configuration:
+
+.. math::
+
+    \\mathbf{F} = \\mathbf{D}_s \\mathbf{D}_m^{-1}
+
+where :math:`\\mathbf{D}_s` contains edge vectors in the current configuration and
+:math:`\\mathbf{D}_m` contains edge vectors in the rest configuration.
 """
 
 import torch
@@ -8,15 +22,37 @@ import meshio
 
 
 class TetrahedralMesh:
-    """A tetrahedral mesh for finite element simulation"""
+    """
+    Tetrahedral mesh for finite element simulation
+
+    This class represents a volumetric mesh using tetrahedral elements. Each tetrahedron
+    is defined by four vertices, and the mesh computes quantities needed for FEM simulation
+    such as the deformation gradient, element volumes, and shape matrices.
+
+    The mesh automatically computes and caches rest-state quantities when initialized:
+
+    - :math:`\\mathbf{D}_m`: Rest shape matrix for each element (3×3)
+    - :math:`\\mathbf{D}_m^{-1}`: Inverse rest shape matrix
+    - :math:`V_0`: Rest volume for each element
+
+    Attributes:
+        vertices (torch.Tensor): Vertex positions :math:`(N \\times 3)`
+        tetrahedra (torch.Tensor): Element connectivity :math:`(M \\times 4)` indices
+        num_vertices (int): Number of vertices :math:`N`
+        num_elements (int): Number of tetrahedral elements :math:`M`
+        Dm (torch.Tensor): Rest shape matrices :math:`(M \\times 3 \\times 3)`
+        Dm_inv (torch.Tensor): Inverse rest shape matrices :math:`(M \\times 3 \\times 3)`
+        rest_volume (torch.Tensor): Rest volumes :math:`(M,)`
+        device (torch.device): Device where tensors are stored
+    """
 
     def __init__(self, vertices, tetrahedra, device="cpu"):
         """
         Initialize tetrahedral mesh
 
         Args:
-            vertices: (N, 3) array of vertex positions
-            tetrahedra: (M, 4) array of tetrahedron indices
+            vertices: :math:`(N, 3)` array of vertex positions
+            tetrahedra: :math:`(M, 4)` array of tetrahedron indices
             device: 'cpu' or 'cuda'
         """
         self.device = torch.device(device)
@@ -61,10 +97,10 @@ class TetrahedralMesh:
         Compute deformation gradient F for each element
 
         Args:
-            current_vertices: (N, 3) current vertex positions
+            current_vertices: :math:`(N, 3)` current vertex positions
 
         Returns:
-            F: (M, 3, 3) deformation gradient for each element
+            F: :math:`(M, 3, 3)` deformation gradient for each element
         """
         # Get current vertices for each tetrahedron
         v0 = current_vertices[self.tetrahedra[:, 0]]

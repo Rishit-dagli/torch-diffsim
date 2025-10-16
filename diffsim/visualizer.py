@@ -1,5 +1,12 @@
 """
 Visualization utilities using Polyscope
+
+Interactive 3D visualization for simulations via Polyscope. Supports:
+- Real-time visualization of tetrahedral meshes
+- Playback controls (play/pause, step, reset)
+- Display of energy values and material properties
+- Offline frame capture
+- Volume mesh rendering
 """
 
 import polyscope as ps
@@ -8,7 +15,34 @@ import numpy as np
 
 class PolyscopeVisualizer:
     """
-    Visualizer for physics simulation using Polyscope
+    Interactive 3D visualizer for physics simulations using Polyscope
+
+    This class provides real-time visualization of tetrahedral mesh deformation
+    during physics simulation. It displays the mesh as a volume with proper shading,
+    shows simulation statistics, and provides interactive controls.
+
+    Features:
+
+    - **Interactive controls**: Play/pause, step-by-step execution, reset
+    - **Real-time statistics**: Time, step count, energy values
+    - **Material display**: Shows Young's modulus and Poisson's ratio
+    - **Solver parameters**: Displays time step, gravity, etc.
+    - Volume rendering via Polyscope
+
+    Parameters:
+        simulator (Simulator): The simulator instance to visualize
+        window_name (str): Window title (default: "DiffSim Physics Simulator")
+
+    Attributes:
+        simulator (Simulator): Reference to the simulator
+        mesh (ps.VolumeMesh): Polyscope volume mesh object
+        is_playing (bool): Whether simulation is currently running
+        show_wireframe (bool): Whether to show mesh edges
+
+    Example:
+        >>> sim = Simulator(mesh, material, solver)
+        >>> viz = PolyscopeVisualizer(sim)
+        >>> viz.run(max_steps=1000, steps_per_frame=5)
     """
 
     def __init__(self, simulator, window_name="DiffSim Physics Simulator"):
