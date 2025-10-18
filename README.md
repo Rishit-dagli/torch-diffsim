@@ -1,4 +1,4 @@
-https://github.com/Rishit-dagli/torch-diffsim/blob/main/assets/diffsim_teaser.mp4
+https://github.com/user-attachments/assets/e7d80ce7-af74-4deb-bb5a-aa3f93bb7a6d
 
 # ⚙️ torch-diffsim
 
@@ -36,7 +36,7 @@ for _ in range(200):
     sim.step()
 ```
 
-https://github.com/Rishit-dagli/torch-diffsim/blob/main/assets/bunnies_compressed.mp4
+https://github.com/user-attachments/assets/8e4c1e52-6baf-4806-b8d7-9f87f74c1af5
 
 ## Quick start (differentiable simulation)
 
