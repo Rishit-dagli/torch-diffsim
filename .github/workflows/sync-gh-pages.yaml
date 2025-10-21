@@ -1,0 +1,23 @@
+name: Sync GitHub Pages
+
+on:
+  push:
+    branches:
+      - gh-pages
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout gh-pages branch
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          fetch-depth: 0
+
+      - name: Push to torch-diffsim.github.io
+        run: |
+          git remote add pages https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/torch-diffsim/torch-diffsim.github.io.git
+          git push pages gh-pages:main --force
+
