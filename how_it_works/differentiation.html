@@ -1,0 +1,794 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Differentiation &#8212; ⚙️ torch-diffsim</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=a1637f0b"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'how_it_works/differentiation';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Examples" href="../examples.html" />
+    <link rel="prev" title="Simulation" href="simulation.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">⚙️ torch-diffsim</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Rishit-dagli/torch-diffsim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    ⚙️ torch-diffsim
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart Guide</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../how_it_works.html">How does torch-diffsim work?</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="simulation.html">Simulation</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Differentiation</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../citation.html">Citation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../api/mesh.html">Mesh</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/material.html">Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/solver.html">Solver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/simulator.html">Simulator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/diff_physics.html">Differentiable Physics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/diff_simulator.html">Differentiable Simulator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/collision.html">Collision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/visualizer.html">Visualizer</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Rishit-dagli/torch-diffsim" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Rishit-dagli/torch-diffsim/edit/main/docs/source/how_it_works/differentiation.rst" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Rishit-dagli/torch-diffsim/issues/new?title=Issue%20on%20page%20%2Fhow_it_works/differentiation.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/how_it_works/differentiation.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Differentiation</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automatic-differentiation-overview">Automatic Differentiation Overview</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-setup">Problem Setup</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#differentiable-simulation">Differentiable Simulation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-flow-through-time-steps">Gradient Flow Through Time Steps</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#backward-pass">Backward Pass</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-force-gradients">Computing Force Gradients</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#energy-based-force-computation">Energy-Based Force Computation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#material-parameter-gradients">Material Parameter Gradients</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#differentiable-contact">Differentiable Contact</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#smooth-operations-for-differentiation">Smooth Operations for Differentiation</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#velocity-clamping">Velocity Clamping</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed-vertices">Fixed Vertices</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#memory-efficient-backpropagation">Memory-Efficient Backpropagation</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-checkpointing">Gradient Checkpointing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implicit-differentiation">Implicit Differentiation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spatially-varying-materials">Spatially Varying Materials</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization-example">Optimization Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-considerations">Practical Considerations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verification">Verification</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="differentiation">
+<h1>Differentiation<a class="headerlink" href="#differentiation" title="Link to this heading">#</a></h1>
+<p>This page describes how gradients are computed through the simulation, enabling gradient-based optimization of material properties, initial conditions, and other parameters.</p>
+<section id="automatic-differentiation-overview">
+<h2>Automatic Differentiation Overview<a class="headerlink" href="#automatic-differentiation-overview" title="Link to this heading">#</a></h2>
+<p>torch-diffsim uses <strong>automatic differentiation (autodiff)</strong> via PyTorch’s autograd system to compute gradients of outputs with respect to inputs through the simulation.</p>
+<section id="problem-setup">
+<h3>Problem Setup<a class="headerlink" href="#problem-setup" title="Link to this heading">#</a></h3>
+<p>Given:</p>
+<ul class="simple">
+<li><p>Parameters <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> (e.g., material properties <span class="math notranslate nohighlight">\(E\)</span>, <span class="math notranslate nohighlight">\(\nu\)</span>)</p></li>
+<li><p>Initial state <span class="math notranslate nohighlight">\(\mathbf{x}_0, \mathbf{v}_0\)</span></p></li>
+<li><p>Loss function <span class="math notranslate nohighlight">\(\mathcal{L}\)</span> that depends on final or intermediate states</p></li>
+</ul>
+<p>Goal: Compute <span class="math notranslate nohighlight">\(\frac{\partial \mathcal{L}}{\partial \boldsymbol{\theta}}\)</span></p>
+<p>This enables gradient-based optimization:</p>
+<div class="math notranslate nohighlight">
+\[\boldsymbol{\theta}^{k+1} = \boldsymbol{\theta}^k - \alpha \frac{\partial \mathcal{L}}{\partial \boldsymbol{\theta}}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\alpha\)</span> is the learning rate.</p>
+</section>
+</section>
+<section id="differentiable-simulation">
+<h2>Differentiable Simulation<a class="headerlink" href="#differentiable-simulation" title="Link to this heading">#</a></h2>
+<p>The simulation can be viewed as a computational graph:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{x}_0, \mathbf{v}_0, \boldsymbol{\theta} \xrightarrow{\text{step 1}} \mathbf{x}_1, \mathbf{v}_1 \xrightarrow{\text{step 2}} \cdots \xrightarrow{\text{step } T} \mathbf{x}_T, \mathbf{v}_T \xrightarrow{\mathcal{L}} \text{loss}\]</div>
+<p>For differentiation to work, every operation must:</p>
+<ol class="arabic simple">
+<li><p>Be differentiable (smooth)</p></li>
+<li><p>Maintain gradient information (no detach operations)</p></li>
+<li><p>Allow backward pass through PyTorch’s autograd</p></li>
+</ol>
+</section>
+<section id="gradient-flow-through-time-steps">
+<h2>Gradient Flow Through Time Steps<a class="headerlink" href="#gradient-flow-through-time-steps" title="Link to this heading">#</a></h2>
+<p>Each simulation step involves:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\mathbf{v}^{n+1} &amp;= \mathbf{v}^n + \Delta t \, \mathbf{M}^{-1} \mathbf{f}(\mathbf{x}^n, \boldsymbol{\theta})\\\mathbf{x}^{n+1} &amp;= \mathbf{x}^n + \Delta t \, \mathbf{v}^{n+1}\end{aligned}\end{align} \]</div>
+<section id="backward-pass">
+<h3>Backward Pass<a class="headerlink" href="#backward-pass" title="Link to this heading">#</a></h3>
+<p>By the chain rule, gradients flow backward:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\frac{\partial \mathcal{L}}{\partial \mathbf{x}^n} &amp;= \frac{\partial \mathcal{L}}{\partial \mathbf{x}^{n+1}} \frac{\partial \mathbf{x}^{n+1}}{\partial \mathbf{x}^n} + \frac{\partial \mathcal{L}}{\partial \mathbf{v}^{n+1}} \frac{\partial \mathbf{v}^{n+1}}{\partial \mathbf{x}^n}\\\frac{\partial \mathcal{L}}{\partial \boldsymbol{\theta}} &amp;= \sum_{n=0}^{T-1} \frac{\partial \mathcal{L}}{\partial \mathbf{v}^{n+1}} \frac{\partial \mathbf{v}^{n+1}}{\partial \boldsymbol{\theta}}\end{aligned}\end{align} \]</div>
+</section>
+<section id="computing-force-gradients">
+<h3>Computing Force Gradients<a class="headerlink" href="#computing-force-gradients" title="Link to this heading">#</a></h3>
+<p>The key computation is <span class="math notranslate nohighlight">\(\frac{\partial \mathbf{f}}{\partial \mathbf{x}}\)</span> (force Jacobian) and <span class="math notranslate nohighlight">\(\frac{\partial \mathbf{f}}{\partial \boldsymbol{\theta}}\)</span>.</p>
+<p>Since forces come from energy:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{f} = -\nabla_{\mathbf{x}} E(\mathbf{x}, \boldsymbol{\theta})\]</div>
+<p>The gradient is:</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial \mathbf{f}}{\partial \mathbf{x}} = -\nabla^2_{\mathbf{x}} E = -\mathbf{H}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{H}\)</span> is the <strong>Hessian</strong> of the energy (stiffness matrix in FEM terminology).</p>
+</section>
+</section>
+<section id="energy-based-force-computation">
+<h2>Energy-Based Force Computation<a class="headerlink" href="#energy-based-force-computation" title="Link to this heading">#</a></h2>
+<p>In torch-diffsim, forces are computed as:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute elastic energy</span>
+<span class="n">E_elastic</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">psi</span><span class="p">(</span><span class="n">F_e</span><span class="p">)</span> <span class="o">*</span> <span class="n">V_e</span> <span class="k">for</span> <span class="nb">all</span> <span class="n">elements</span><span class="p">)</span>
+
+<span class="c1"># Forces as negative energy gradient</span>
+<span class="n">forces</span> <span class="o">=</span> <span class="o">-</span><span class="n">autograd</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">E_elastic</span><span class="p">,</span> <span class="n">positions</span><span class="p">,</span> <span class="n">create_graph</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>This approach:</p>
+<ol class="arabic simple">
+<li><p><strong>Automatically handles material gradients</strong>: <span class="math notranslate nohighlight">\(\frac{\partial \mathbf{f}}{\partial \boldsymbol{\theta}}\)</span> is computed by PyTorch</p></li>
+<li><p><strong>Ensures correctness</strong>: Forces are guaranteed to be energy-consistent</p></li>
+<li><p><strong>Enables higher-order derivatives</strong>: <code class="docutils literal notranslate"><span class="pre">create_graph=True</span></code> maintains the graph</p></li>
+</ol>
+</section>
+<section id="material-parameter-gradients">
+<h2>Material Parameter Gradients<a class="headerlink" href="#material-parameter-gradients" title="Link to this heading">#</a></h2>
+<p>For learnable material parameters <span class="math notranslate nohighlight">\(E\)</span> and <span class="math notranslate nohighlight">\(\nu\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial \mathcal{L}}{\partial E} = \sum_{n=0}^{T-1} \frac{\partial \mathcal{L}}{\partial \mathbf{f}^n} \frac{\partial \mathbf{f}^n}{\partial E}\]</div>
+<p>The force derivative <span class="math notranslate nohighlight">\(\frac{\partial \mathbf{f}}{\partial E}\)</span> comes from:</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial \mathbf{f}}{\partial E} = -\frac{\partial}{\partial E} \left( \nabla_{\mathbf{x}} \sum_e \Psi(\mathbf{F}_e, E, \nu) V_e \right)\]</div>
+<p>Since <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\lambda\)</span> depend on <span class="math notranslate nohighlight">\(E\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial \mu}{\partial E} = \frac{1}{2(1+\nu)}, \quad \frac{\partial \lambda}{\partial E} = \frac{\nu}{(1+\nu)(1-2\nu)}\]</div>
+<p>PyTorch autograd handles this automatically when parameters are <cite>torch.nn.Parameter</cite>.</p>
+</section>
+<section id="differentiable-contact">
+<h2>Differentiable Contact<a class="headerlink" href="#differentiable-contact" title="Link to this heading">#</a></h2>
+<p>Contact forces must also be differentiable. The barrier function:</p>
+<div class="math notranslate nohighlight">
+\[b(d) = -\kappa (d - \hat{d})^2 \log(d / \hat{d})\]</div>
+<p>has gradient:</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial b}{\partial d} = -\kappa \left[ 2(d - \hat{d}) \log(d/\hat{d}) + \frac{(d - \hat{d})^2}{d} \right]\]</div>
+<p>This is smooth (no discontinuities), enabling gradient flow even through contact events.</p>
+</section>
+<section id="smooth-operations-for-differentiation">
+<h2>Smooth Operations for Differentiation<a class="headerlink" href="#smooth-operations-for-differentiation" title="Link to this heading">#</a></h2>
+<p>Several operations are modified to maintain smoothness:</p>
+<section id="velocity-clamping">
+<h3>Velocity Clamping<a class="headerlink" href="#velocity-clamping" title="Link to this heading">#</a></h3>
+<p>Instead of hard clamp:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{v} \leftarrow \min(\mathbf{v}, v_{\max})  \quad \text{(non-differentiable)}\]</div>
+<p>Use smooth clamp via <code class="docutils literal notranslate"><span class="pre">tanh</span></code>:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{v} \leftarrow \mathbf{v} \cdot \tanh\left(\frac{v_{\max}}{\|\mathbf{v}\|}\right)  \quad \text{(differentiable)}\]</div>
+</section>
+<section id="fixed-vertices">
+<h3>Fixed Vertices<a class="headerlink" href="#fixed-vertices" title="Link to this heading">#</a></h3>
+<p>Instead of hard assignment:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{v}_i = \mathbf{0} \quad \text{(breaks gradients)}\]</div>
+<p>Use masking:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{v} \leftarrow \mathbf{v} \odot (\mathbf{1} - \mathbf{m})\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{m}\)</span> is a binary mask (<span class="math notranslate nohighlight">\(m_i = 1\)</span> for fixed vertices).</p>
+</section>
+</section>
+<section id="memory-efficient-backpropagation">
+<h2>Memory-Efficient Backpropagation<a class="headerlink" href="#memory-efficient-backpropagation" title="Link to this heading">#</a></h2>
+<p>For long simulations (many time steps), storing the entire computational graph is memory-intensive.</p>
+<section id="gradient-checkpointing">
+<h3>Gradient Checkpointing<a class="headerlink" href="#gradient-checkpointing" title="Link to this heading">#</a></h3>
+<p>Gradient checkpointing trades computation for memory:</p>
+<ol class="arabic simple">
+<li><p>Forward: Store only every <span class="math notranslate nohighlight">\(K\)</span>-th intermediate state</p></li>
+<li><p>Backward: Recompute intermediate states as needed</p></li>
+</ol>
+<p>For a simulation with <span class="math notranslate nohighlight">\(T\)</span> steps:</p>
+<ul class="simple">
+<li><p>Without checkpointing <span class="math notranslate nohighlight">\(O(T)\)</span> memory</p></li>
+<li><p>With checkpointing <span class="math notranslate nohighlight">\(O(\sqrt{T})\)</span> memory (with optimal <span class="math notranslate nohighlight">\(K\)</span>)</p></li>
+</ul>
+<p>In torch-diffsim:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">torch.utils.checkpoint</span><span class="w"> </span><span class="kn">import</span> <span class="n">checkpoint</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_steps</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="n">checkpoint_every</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">checkpoint</span><span class="p">(</span><span class="n">step_fn</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">use_reentrant</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">step_fn</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="implicit-differentiation">
+<h3>Implicit Differentiation<a class="headerlink" href="#implicit-differentiation" title="Link to this heading">#</a></h3>
+<p>For very long simulations or when only the final state matters, implicit differentiation can be used.</p>
+<p>For an equilibrium problem <span class="math notranslate nohighlight">\(\mathbf{f}(\mathbf{x}^*, \boldsymbol{\theta}) = 0\)</span>, the gradient is:</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial \mathbf{x}^*}{\partial \boldsymbol{\theta}} = -\left(\frac{\partial \mathbf{f}}{\partial \mathbf{x}}\right)^{-1} \frac{\partial \mathbf{f}}{\partial \boldsymbol{\theta}}\]</div>
+<p>This requires only:</p>
+<ol class="arabic simple">
+<li><p>Solving a linear system (CG or direct solve)</p></li>
+<li><p>Computing <span class="math notranslate nohighlight">\(\frac{\partial \mathbf{f}}{\partial \boldsymbol{\theta}}\)</span> at the solution</p></li>
+</ol>
+<p>Benefit: <span class="math notranslate nohighlight">\(O(1)\)</span> memory regardless of simulation length.</p>
+<p>Tradeoff: Less accurate gradients, only works for steady-state problems.</p>
+</section>
+</section>
+<section id="spatially-varying-materials">
+<h2>Spatially Varying Materials<a class="headerlink" href="#spatially-varying-materials" title="Link to this heading">#</a></h2>
+<p>For per-element material properties <span class="math notranslate nohighlight">\(E_e\)</span>, the gradient is:</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial \mathcal{L}}{\partial E_e} = \frac{\partial \mathcal{L}}{\partial \Psi_e} \frac{\partial \Psi_e}{\partial E_e} V_e\]</div>
+<p>Since each element’s energy only depends on its own <span class="math notranslate nohighlight">\(E_e\)</span>, gradients are computed independently per element.</p>
+<p><strong>Log-space parameterization</strong>: To ensure positivity, we parameterize:</p>
+<div class="math notranslate nohighlight">
+\[E_e = \exp(\log E_e)\]</div>
+<p>Then optimize <span class="math notranslate nohighlight">\(\log E_e\)</span> instead of <span class="math notranslate nohighlight">\(E_e\)</span> directly. The gradient transforms as:</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial \mathcal{L}}{\partial \log E_e} = E_e \frac{\partial \mathcal{L}}{\partial E_e}\]</div>
+</section>
+<section id="optimization-example">
+<h2>Optimization Example<a class="headerlink" href="#optimization-example" title="Link to this heading">#</a></h2>
+<p>Material parameter optimization:</p>
+<div class="math notranslate nohighlight">
+\[\min_{E, \nu} \mathcal{L}(\mathbf{x}_T(E, \nu), \mathbf{x}_{\text{target}})\]</div>
+<p>Algorithm:</p>
+<ol class="arabic simple">
+<li><p>Forward: Run simulation with current <span class="math notranslate nohighlight">\(E, \nu\)</span> → get <span class="math notranslate nohighlight">\(\mathbf{x}_T\)</span></p></li>
+<li><p>Loss: Compute <span class="math notranslate nohighlight">\(\mathcal{L} = \|\mathbf{x}_T - \mathbf{x}_{\text{target}}\|^2\)</span></p></li>
+<li><p>Backward: Compute <span class="math notranslate nohighlight">\(\frac{\partial \mathcal{L}}{\partial E}, \frac{\partial \mathcal{L}}{\partial \nu}\)</span></p></li>
+<li><p>Update: <span class="math notranslate nohighlight">\(E \leftarrow E - \alpha \frac{\partial \mathcal{L}}{\partial E}\)</span></p></li>
+</ol>
+</section>
+<section id="practical-considerations">
+<h2>Practical Considerations<a class="headerlink" href="#practical-considerations" title="Link to this heading">#</a></h2>
+<p>Gradient Explosion</p>
+<p>If gradients become too large:</p>
+<ul class="simple">
+<li><p>Reduce learning rate</p></li>
+<li><p>Use gradient clipping: <code class="docutils literal notranslate"><span class="pre">torch.nn.utils.clip_grad_norm_(params,</span> <span class="pre">max_norm)</span></code></p></li>
+<li><p>Increase damping in simulation</p></li>
+<li><p>Reduce time step</p></li>
+</ul>
+<p>Gradient Vanishing</p>
+<p>If gradients become too small:</p>
+<ul class="simple">
+<li><p>Increase learning rate</p></li>
+<li><p>Normalize loss by number of steps</p></li>
+<li><p>Use adaptive optimizers (Adam, AdamW)</p></li>
+<li><p>Check for numerical instabilities</p></li>
+</ul>
+<p>Numerical Stability</p>
+<ul class="simple">
+<li><p>Clamp <span class="math notranslate nohighlight">\(J\)</span> to prevent inversion: <span class="math notranslate nohighlight">\(J \in [0.1, 5.0]\)</span></p></li>
+<li><p>Use stable material models (log terms instead of polynomials)</p></li>
+<li><p>Apply velocity clamping to prevent blow-up</p></li>
+<li><p>Use substepping for better stability</p></li>
+</ul>
+</section>
+<section id="verification">
+<h2>Verification<a class="headerlink" href="#verification" title="Link to this heading">#</a></h2>
+<p>To verify gradients are correct, use finite differences:</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial \mathcal{L}}{\partial \theta_i} \approx \frac{\mathcal{L}(\theta_i + \epsilon) - \mathcal{L}(\theta_i - \epsilon)}{2\epsilon}\]</div>
+<p>Compare with autograd gradients. They should match to numerical precision (<span class="math notranslate nohighlight">\(\epsilon \sim 10^{-5}\)</span>).</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="simulation.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Simulation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../examples.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Examples</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#automatic-differentiation-overview">Automatic Differentiation Overview</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-setup">Problem Setup</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#differentiable-simulation">Differentiable Simulation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-flow-through-time-steps">Gradient Flow Through Time Steps</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#backward-pass">Backward Pass</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-force-gradients">Computing Force Gradients</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#energy-based-force-computation">Energy-Based Force Computation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#material-parameter-gradients">Material Parameter Gradients</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#differentiable-contact">Differentiable Contact</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#smooth-operations-for-differentiation">Smooth Operations for Differentiation</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#velocity-clamping">Velocity Clamping</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed-vertices">Fixed Vertices</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#memory-efficient-backpropagation">Memory-Efficient Backpropagation</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-checkpointing">Gradient Checkpointing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implicit-differentiation">Implicit Differentiation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spatially-varying-materials">Spatially Varying Materials</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimization-example">Optimization Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-considerations">Practical Considerations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verification">Verification</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Rishit Dagli
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Rishit Dagli.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

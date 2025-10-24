@@ -1,0 +1,1034 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Differentiable Physics &#8212; ⚙️ torch-diffsim</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=a1637f0b"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/diff_physics';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Differentiable Simulator" href="diff_simulator.html" />
+    <link rel="prev" title="Simulator" href="simulator.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">⚙️ torch-diffsim</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Rishit-dagli/torch-diffsim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    ⚙️ torch-diffsim
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart Guide</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../how_it_works.html">How does torch-diffsim work?</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../how_it_works/simulation.html">Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_it_works/differentiation.html">Differentiation</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../citation.html">Citation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="mesh.html">Mesh</a></li>
+<li class="toctree-l1"><a class="reference internal" href="material.html">Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solver.html">Solver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simulator.html">Simulator</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Differentiable Physics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="diff_simulator.html">Differentiable Simulator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collision.html">Collision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="visualizer.html">Visualizer</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Rishit-dagli/torch-diffsim" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Rishit-dagli/torch-diffsim/edit/main/docs/source/api/diff_physics.rst" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Rishit-dagli/torch-diffsim/issues/new?title=Issue%20on%20page%20%2Fapi/diff_physics.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/api/diff_physics.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Differentiable Physics</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.DifferentiableBarrierContact"><code class="docutils literal notranslate"><span class="pre">DifferentiableBarrierContact</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.DifferentiableBarrierContact.kappa"><code class="docutils literal notranslate"><span class="pre">DifferentiableBarrierContact.kappa</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.DifferentiableBarrierContact.d_hat"><code class="docutils literal notranslate"><span class="pre">DifferentiableBarrierContact.d_hat</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.DifferentiableBarrierContact.__init__"><code class="docutils literal notranslate"><span class="pre">DifferentiableBarrierContact.__init__()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.DifferentiableBarrierContact.barrier_potential"><code class="docutils literal notranslate"><span class="pre">DifferentiableBarrierContact.barrier_potential()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.DifferentiableBarrierContact.ground_contact_force"><code class="docutils literal notranslate"><span class="pre">DifferentiableBarrierContact.ground_contact_force()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.ImplicitDifferentiation"><code class="docutils literal notranslate"><span class="pre">ImplicitDifferentiation</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.ImplicitDifferentiation.implicit_backward"><code class="docutils literal notranslate"><span class="pre">ImplicitDifferentiation.implicit_backward()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.conjugate_gradient"><code class="docutils literal notranslate"><span class="pre">conjugate_gradient()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.CheckpointedRollout"><code class="docutils literal notranslate"><span class="pre">CheckpointedRollout</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.CheckpointedRollout.rollout"><code class="docutils literal notranslate"><span class="pre">CheckpointedRollout.rollout()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.DifferentiableMaterial"><code class="docutils literal notranslate"><span class="pre">DifferentiableMaterial</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.DifferentiableMaterial.E"><code class="docutils literal notranslate"><span class="pre">DifferentiableMaterial.E</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.DifferentiableMaterial.nu"><code class="docutils literal notranslate"><span class="pre">DifferentiableMaterial.nu</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.DifferentiableMaterial.__init__"><code class="docutils literal notranslate"><span class="pre">DifferentiableMaterial.__init__()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.DifferentiableMaterial.mu"><code class="docutils literal notranslate"><span class="pre">DifferentiableMaterial.mu</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.DifferentiableMaterial.lam"><code class="docutils literal notranslate"><span class="pre">DifferentiableMaterial.lam</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.DifferentiableMaterial.energy_density"><code class="docutils literal notranslate"><span class="pre">DifferentiableMaterial.energy_density()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.SpatiallyVaryingMaterial"><code class="docutils literal notranslate"><span class="pre">SpatiallyVaryingMaterial</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.SpatiallyVaryingMaterial.log_E"><code class="docutils literal notranslate"><span class="pre">SpatiallyVaryingMaterial.log_E</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.SpatiallyVaryingMaterial.nu"><code class="docutils literal notranslate"><span class="pre">SpatiallyVaryingMaterial.nu</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.SpatiallyVaryingMaterial.__init__"><code class="docutils literal notranslate"><span class="pre">SpatiallyVaryingMaterial.__init__()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.SpatiallyVaryingMaterial.E"><code class="docutils literal notranslate"><span class="pre">SpatiallyVaryingMaterial.E</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.SpatiallyVaryingMaterial.mu"><code class="docutils literal notranslate"><span class="pre">SpatiallyVaryingMaterial.mu</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.SpatiallyVaryingMaterial.lam"><code class="docutils literal notranslate"><span class="pre">SpatiallyVaryingMaterial.lam</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.SpatiallyVaryingMaterial.energy_density"><code class="docutils literal notranslate"><span class="pre">SpatiallyVaryingMaterial.energy_density()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.smooth_step"><code class="docutils literal notranslate"><span class="pre">smooth_step()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.log_barrier"><code class="docutils literal notranslate"><span class="pre">log_barrier()</span></code></a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="module-diffsim.diff_physics">
+<span id="differentiable-physics"></span><h1>Differentiable Physics<a class="headerlink" href="#module-diffsim.diff_physics" title="Link to this heading">#</a></h1>
+<p>Differentiable physics simulation utilities</p>
+<p>This module provides advanced techniques for differentiable physics simulation:</p>
+<ol class="arabic simple">
+<li><p><strong>Smooth Contact Approximations</strong>: Replace hard constraints with smooth barrier
+functions that maintain gradient flow</p></li>
+<li><p><strong>Implicit Differentiation</strong>: Compute gradients through iterative solvers using
+the implicit function theorem without storing the full computation graph</p></li>
+<li><p><strong>Gradient Checkpointing</strong>: Memory-efficient backpropagation through long simulations
+by recomputing forward passes instead of storing all intermediate states</p></li>
+<li><p><strong>Learnable Materials</strong>: Material models with parameters that can be optimized
+via gradient descent</p></li>
+</ol>
+<p>All components are designed to preserve gradients for automatic differentiation
+while maintaining numerical stability.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="diffsim.diff_physics.DifferentiableBarrierContact">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">diffsim.diff_physics.</span></span><span class="sig-name descname"><span class="pre">DifferentiableBarrierContact</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">barrier_stiffness</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10000.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">barrier_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/diffsim/diff_physics.html#DifferentiableBarrierContact"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffsim.diff_physics.DifferentiableBarrierContact" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Smooth, differentiable contact model using barrier functions</p>
+<p>This class implements smooth contact forces that maintain gradient flow for
+automatic differentiation. Instead of hard constraints or projections that
+introduce discontinuities, it uses smooth barrier potential functions that
+activate near contact.</p>
+<p>The barrier potential is:</p>
+<div class="math notranslate nohighlight">
+\[b(d) = -(d - \hat{d})^2 \log(d/\hat{d}) \text{ for } d &lt; \hat{d}\]</div>
+<p>where <span class="math notranslate nohighlight">\(d\)</span> is the distance to the surface and <span class="math notranslate nohighlight">\(\hat{d}\)</span> is the
+barrier activation distance. The potential smoothly increases as <span class="math notranslate nohighlight">\(d \to 0\)</span>,
+preventing penetration while maintaining <span class="math notranslate nohighlight">\(C^2\)</span> continuity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>barrier_stiffness</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Stiffness of barrier forces (default: 1e4)</p></li>
+<li><p><strong>barrier_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Distance at which barrier activates (default: 0.01)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="diffsim.diff_physics.DifferentiableBarrierContact.kappa">
+<span class="sig-name descname"><span class="pre">kappa</span></span><a class="headerlink" href="#diffsim.diff_physics.DifferentiableBarrierContact.kappa" title="Link to this definition">#</a></dt>
+<dd><p>Barrier stiffness coefficient</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="diffsim.diff_physics.DifferentiableBarrierContact.d_hat">
+<span class="sig-name descname"><span class="pre">d_hat</span></span><a class="headerlink" href="#diffsim.diff_physics.DifferentiableBarrierContact.d_hat" title="Link to this definition">#</a></dt>
+<dd><p>Barrier activation distance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="diffsim.diff_physics.DifferentiableBarrierContact.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">barrier_stiffness</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10000.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">barrier_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/diffsim/diff_physics.html#DifferentiableBarrierContact.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffsim.diff_physics.DifferentiableBarrierContact.__init__" title="Link to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>barrier_stiffness</strong> – controls contact force magnitude</p></li>
+<li><p><strong>barrier_width</strong> – distance at which barrier activates</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="diffsim.diff_physics.DifferentiableBarrierContact.barrier_potential">
+<span class="sig-name descname"><span class="pre">barrier_potential</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">d</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/diffsim/diff_physics.html#DifferentiableBarrierContact.barrier_potential"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffsim.diff_physics.DifferentiableBarrierContact.barrier_potential" title="Link to this definition">#</a></dt>
+<dd><p>Smooth barrier potential: -(d - d_hat)^2 * log(d/d_hat) for d &lt; d_hat</p>
+<p>This is C^2 continuous and always differentiable</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>d</strong> – <span class="math notranslate nohighlight">\((N,)\)</span> distances to surface</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="math notranslate nohighlight">\((N,)\)</span> barrier energy</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>energy</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="diffsim.diff_physics.DifferentiableBarrierContact.ground_contact_force">
+<span class="sig-name descname"><span class="pre">ground_contact_force</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">positions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">velocities</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/diffsim/diff_physics.html#DifferentiableBarrierContact.ground_contact_force"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffsim.diff_physics.DifferentiableBarrierContact.ground_contact_force" title="Link to this definition">#</a></dt>
+<dd><p>Compute smooth ground contact forces (fully differentiable)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>positions</strong> – <span class="math notranslate nohighlight">\((N, 3)\)</span> positions</p></li>
+<li><p><strong>velocities</strong> – <span class="math notranslate nohighlight">\((N, 3)\)</span> velocities</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="math notranslate nohighlight">\((N, 3)\)</span> contact forces</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>forces</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="diffsim.diff_physics.ImplicitDifferentiation">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">diffsim.diff_physics.</span></span><span class="sig-name descname"><span class="pre">ImplicitDifferentiation</span></span><a class="reference internal" href="../_modules/diffsim/diff_physics.html#ImplicitDifferentiation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffsim.diff_physics.ImplicitDifferentiation" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Implicit differentiation for backward Euler and Newton solvers</p>
+<p>Instead of differentiating through all Newton iterations,
+use the implicit function theorem:</p>
+<p>If F(x*, p) = 0, then dx*/dp = -(dF/dx)^{-1} &#64; (dF/dp)</p>
+<p>This avoids storing the full computation graph</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="diffsim.diff_physics.ImplicitDifferentiation.implicit_backward">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">implicit_backward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">forward_fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_star</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/diffsim/diff_physics.html#ImplicitDifferentiation.implicit_backward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffsim.diff_physics.ImplicitDifferentiation.implicit_backward" title="Link to this definition">#</a></dt>
+<dd><p>Compute gradients using implicit differentiation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>forward_fn</strong> – function that computes residual F(x, params) = 0</p></li>
+<li><p><strong>x_star</strong> – solution where F(x_star, params) = 0</p></li>
+<li><p><strong>params</strong> – parameters to differentiate wrt</p></li>
+<li><p><strong>atol</strong> – tolerance for linear solve</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>solution with proper gradients attached</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>x_star</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="diffsim.diff_physics.conjugate_gradient">
+<span class="sig-prename descclassname"><span class="pre">diffsim.diff_physics.</span></span><span class="sig-name descname"><span class="pre">conjugate_gradient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/diffsim/diff_physics.html#conjugate_gradient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffsim.diff_physics.conjugate_gradient" title="Link to this definition">#</a></dt>
+<dd><p>Solve Ax = b using conjugate gradient</p>
+<p>Jacobian-free: A is a function that computes matrix-vector products</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>A</strong> – function that computes A &#64; v</p></li>
+<li><p><strong>b</strong> – right-hand side</p></li>
+<li><p><strong>x0</strong> – initial guess</p></li>
+<li><p><strong>max_iters</strong> – maximum iterations</p></li>
+<li><p><strong>atol</strong> – absolute tolerance</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>solution</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>x</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="diffsim.diff_physics.CheckpointedRollout">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">diffsim.diff_physics.</span></span><span class="sig-name descname"><span class="pre">CheckpointedRollout</span></span><a class="reference internal" href="../_modules/diffsim/diff_physics.html#CheckpointedRollout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffsim.diff_physics.CheckpointedRollout" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Memory-efficient rollout using gradient checkpointing</p>
+<p>Instead of storing all intermediate states, recompute them during backward pass
+This trades computation for memory</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="diffsim.diff_physics.CheckpointedRollout.rollout">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rollout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">step_fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">state0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_steps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint_every</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/diffsim/diff_physics.html#CheckpointedRollout.rollout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffsim.diff_physics.CheckpointedRollout.rollout" title="Link to this definition">#</a></dt>
+<dd><p>Perform rollout with checkpointing</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>step_fn</strong> – function that computes next state: s_{t+1} = step_fn(s_t)</p></li>
+<li><p><strong>state0</strong> – initial state</p></li>
+<li><p><strong>num_steps</strong> – number of steps</p></li>
+<li><p><strong>checkpoint_every</strong> – save state every N steps</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of states [s_0, s_1, …, s_T]</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>trajectory</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="diffsim.diff_physics.DifferentiableMaterial">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">diffsim.diff_physics.</span></span><span class="sig-name descname"><span class="pre">DifferentiableMaterial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">youngs_modulus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">poissons_ratio</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">requires_grad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/diffsim/diff_physics.html#DifferentiableMaterial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffsim.diff_physics.DifferentiableMaterial" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></p>
+<p>Material model with learnable parameters</p>
+<p>This class wraps material properties as PyTorch parameters, enabling gradient-based
+optimization of material constants. It implements the Stable Neo-Hookean energy
+density with learnable Young’s modulus <span class="math notranslate nohighlight">\(E\)</span> and Poisson’s ratio <span class="math notranslate nohighlight">\(\nu\)</span>.</p>
+<p>The energy density is:</p>
+<div class="math notranslate nohighlight">
+\[\Psi(\mathbf{F}) = \frac{\mu}{2}(I_C - 3) - \mu \log J + \frac{\lambda}{2}(J-1)^2\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\lambda\)</span> are computed from <span class="math notranslate nohighlight">\(E\)</span> and <span class="math notranslate nohighlight">\(\nu\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>youngs_modulus</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Initial Young’s modulus value</p></li>
+<li><p><strong>poissons_ratio</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Initial Poisson’s ratio value</p></li>
+<li><p><strong>requires_grad</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Whether parameters should track gradients (default: True)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="diffsim.diff_physics.DifferentiableMaterial.E">
+<span class="sig-name descname"><span class="pre">E</span></span><a class="headerlink" href="#diffsim.diff_physics.DifferentiableMaterial.E" title="Link to this definition">#</a></dt>
+<dd><p>Learnable Young’s modulus</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.nn.Parameter</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="diffsim.diff_physics.DifferentiableMaterial.nu">
+<span class="sig-name descname"><span class="pre">nu</span></span><a class="headerlink" href="#diffsim.diff_physics.DifferentiableMaterial.nu" title="Link to this definition">#</a></dt>
+<dd><p>Learnable Poisson’s ratio</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.nn.Parameter</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">material</span> <span class="o">=</span> <span class="n">DifferentiableMaterial</span><span class="p">(</span><span class="mf">1e5</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">material</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Run simulation and optimize material.E and material.nu</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="diffsim.diff_physics.DifferentiableMaterial.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">youngs_modulus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">poissons_ratio</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">requires_grad</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/diffsim/diff_physics.html#DifferentiableMaterial.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffsim.diff_physics.DifferentiableMaterial.__init__" title="Link to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>youngs_modulus</strong> – (scalar or per-element) Young’s modulus</p></li>
+<li><p><strong>poissons_ratio</strong> – (scalar or per-element) Poisson’s ratio</p></li>
+<li><p><strong>requires_grad</strong> – whether to track gradients</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="diffsim.diff_physics.DifferentiableMaterial.mu">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mu</span></span><a class="headerlink" href="#diffsim.diff_physics.DifferentiableMaterial.mu" title="Link to this definition">#</a></dt>
+<dd><p>Lamé parameter μ (differentiable)</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="diffsim.diff_physics.DifferentiableMaterial.lam">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">lam</span></span><a class="headerlink" href="#diffsim.diff_physics.DifferentiableMaterial.lam" title="Link to this definition">#</a></dt>
+<dd><p>Lamé parameter λ (differentiable)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="diffsim.diff_physics.DifferentiableMaterial.energy_density">
+<span class="sig-name descname"><span class="pre">energy_density</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">F</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/diffsim/diff_physics.html#DifferentiableMaterial.energy_density"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffsim.diff_physics.DifferentiableMaterial.energy_density" title="Link to this definition">#</a></dt>
+<dd><p>Compute strain energy (fully differentiable)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>F</strong> – <span class="math notranslate nohighlight">\((M, 3, 3)\)</span> deformation gradient</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="math notranslate nohighlight">\((M,)\)</span> energy density</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>psi</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="diffsim.diff_physics.SpatiallyVaryingMaterial">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">diffsim.diff_physics.</span></span><span class="sig-name descname"><span class="pre">SpatiallyVaryingMaterial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_elements</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_youngs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100000.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_poisson</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.4</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/diffsim/diff_physics.html#SpatiallyVaryingMaterial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffsim.diff_physics.SpatiallyVaryingMaterial" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module" title="(in PyTorch v2.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a></p>
+<p>Material with spatially varying properties</p>
+<p>This class allows each element in the mesh to have independent material properties,
+enabling optimization of heterogeneous material distributions. Young’s modulus is
+parameterized in log-space to ensure positivity:</p>
+<div class="math notranslate nohighlight">
+\[E_i = \exp(\log E_i)\]</div>
+<p>This is particularly useful for:</p>
+<ul class="simple">
+<li><p>Inverse material identification problems</p></li>
+<li><p>Topology optimization</p></li>
+<li><p>Functionally graded material design</p></li>
+<li><p>Material distribution learning</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_elements</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Number of elements in the mesh</p></li>
+<li><p><strong>base_youngs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Initial Young’s modulus for all elements (default: 1e5)</p></li>
+<li><p><strong>base_poisson</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Poisson’s ratio for all elements (default: 0.4)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="diffsim.diff_physics.SpatiallyVaryingMaterial.log_E">
+<span class="sig-name descname"><span class="pre">log_E</span></span><a class="headerlink" href="#diffsim.diff_physics.SpatiallyVaryingMaterial.log_E" title="Link to this definition">#</a></dt>
+<dd><p>Log-space Young’s modulus per element <span class="math notranslate nohighlight">\((M,)\)</span></p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.nn.Parameter</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="diffsim.diff_physics.SpatiallyVaryingMaterial.nu">
+<span class="sig-name descname"><span class="pre">nu</span></span><a class="headerlink" href="#diffsim.diff_physics.SpatiallyVaryingMaterial.nu" title="Link to this definition">#</a></dt>
+<dd><p>Poisson’s ratio per element <span class="math notranslate nohighlight">\((M,)\)</span></p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.nn.Parameter</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">material</span> <span class="o">=</span> <span class="n">SpatiallyVaryingMaterial</span><span class="p">(</span><span class="n">mesh</span><span class="o">.</span><span class="n">num_elements</span><span class="p">,</span> <span class="mf">1e5</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">([</span><span class="n">material</span><span class="o">.</span><span class="n">log_E</span><span class="p">],</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Optimize spatial distribution of stiffness</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="diffsim.diff_physics.SpatiallyVaryingMaterial.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_elements</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_youngs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100000.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_poisson</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.4</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/diffsim/diff_physics.html#SpatiallyVaryingMaterial.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffsim.diff_physics.SpatiallyVaryingMaterial.__init__" title="Link to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_elements</strong> – number of elements in mesh</p></li>
+<li><p><strong>base_youngs</strong> – base Young’s modulus</p></li>
+<li><p><strong>base_poisson</strong> – base Poisson’s ratio</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="diffsim.diff_physics.SpatiallyVaryingMaterial.E">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">E</span></span><a class="headerlink" href="#diffsim.diff_physics.SpatiallyVaryingMaterial.E" title="Link to this definition">#</a></dt>
+<dd><p>Young’s modulus (always positive via exp)</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="diffsim.diff_physics.SpatiallyVaryingMaterial.mu">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mu</span></span><a class="headerlink" href="#diffsim.diff_physics.SpatiallyVaryingMaterial.mu" title="Link to this definition">#</a></dt>
+<dd><p>Per-element μ</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="diffsim.diff_physics.SpatiallyVaryingMaterial.lam">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">lam</span></span><a class="headerlink" href="#diffsim.diff_physics.SpatiallyVaryingMaterial.lam" title="Link to this definition">#</a></dt>
+<dd><p>Per-element λ</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="diffsim.diff_physics.SpatiallyVaryingMaterial.energy_density">
+<span class="sig-name descname"><span class="pre">energy_density</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">F</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/diffsim/diff_physics.html#SpatiallyVaryingMaterial.energy_density"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffsim.diff_physics.SpatiallyVaryingMaterial.energy_density" title="Link to this definition">#</a></dt>
+<dd><p>Compute strain energy per element (fully differentiable)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>F</strong> – <span class="math notranslate nohighlight">\((M, 3, 3)\)</span> deformation gradient</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="math notranslate nohighlight">\((M,)\)</span> energy density</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>psi</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="diffsim.diff_physics.smooth_step">
+<span class="sig-prename descclassname"><span class="pre">diffsim.diff_physics.</span></span><span class="sig-name descname"><span class="pre">smooth_step</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/diffsim/diff_physics.html#smooth_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffsim.diff_physics.smooth_step" title="Link to this definition">#</a></dt>
+<dd><p>Smooth step function (differentiable replacement for if/else)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> – input</p></li>
+<li><p><strong>edge</strong> – center of transition</p></li>
+<li><p><strong>width</strong> – width of transition</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>smooth step from 0 to 1</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="diffsim.diff_physics.log_barrier">
+<span class="sig-prename descclassname"><span class="pre">diffsim.diff_physics.</span></span><span class="sig-name descname"><span class="pre">log_barrier</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/diffsim/diff_physics.html#log_barrier"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#diffsim.diff_physics.log_barrier" title="Link to this definition">#</a></dt>
+<dd><p>Smooth log barrier: -log(x) for x &gt; eps, quadratic for x &lt; eps</p>
+<p>C^1 continuous approximation of log barrier for AD</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> – input (must be positive)</p></li>
+<li><p><strong>eps</strong> – smoothing parameter</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>barrier value</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="simulator.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Simulator</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="diff_simulator.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Differentiable Simulator</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.DifferentiableBarrierContact"><code class="docutils literal notranslate"><span class="pre">DifferentiableBarrierContact</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.DifferentiableBarrierContact.kappa"><code class="docutils literal notranslate"><span class="pre">DifferentiableBarrierContact.kappa</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.DifferentiableBarrierContact.d_hat"><code class="docutils literal notranslate"><span class="pre">DifferentiableBarrierContact.d_hat</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.DifferentiableBarrierContact.__init__"><code class="docutils literal notranslate"><span class="pre">DifferentiableBarrierContact.__init__()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.DifferentiableBarrierContact.barrier_potential"><code class="docutils literal notranslate"><span class="pre">DifferentiableBarrierContact.barrier_potential()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.DifferentiableBarrierContact.ground_contact_force"><code class="docutils literal notranslate"><span class="pre">DifferentiableBarrierContact.ground_contact_force()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.ImplicitDifferentiation"><code class="docutils literal notranslate"><span class="pre">ImplicitDifferentiation</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.ImplicitDifferentiation.implicit_backward"><code class="docutils literal notranslate"><span class="pre">ImplicitDifferentiation.implicit_backward()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.conjugate_gradient"><code class="docutils literal notranslate"><span class="pre">conjugate_gradient()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.CheckpointedRollout"><code class="docutils literal notranslate"><span class="pre">CheckpointedRollout</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.CheckpointedRollout.rollout"><code class="docutils literal notranslate"><span class="pre">CheckpointedRollout.rollout()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.DifferentiableMaterial"><code class="docutils literal notranslate"><span class="pre">DifferentiableMaterial</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.DifferentiableMaterial.E"><code class="docutils literal notranslate"><span class="pre">DifferentiableMaterial.E</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.DifferentiableMaterial.nu"><code class="docutils literal notranslate"><span class="pre">DifferentiableMaterial.nu</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.DifferentiableMaterial.__init__"><code class="docutils literal notranslate"><span class="pre">DifferentiableMaterial.__init__()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.DifferentiableMaterial.mu"><code class="docutils literal notranslate"><span class="pre">DifferentiableMaterial.mu</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.DifferentiableMaterial.lam"><code class="docutils literal notranslate"><span class="pre">DifferentiableMaterial.lam</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.DifferentiableMaterial.energy_density"><code class="docutils literal notranslate"><span class="pre">DifferentiableMaterial.energy_density()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.SpatiallyVaryingMaterial"><code class="docutils literal notranslate"><span class="pre">SpatiallyVaryingMaterial</span></code></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.SpatiallyVaryingMaterial.log_E"><code class="docutils literal notranslate"><span class="pre">SpatiallyVaryingMaterial.log_E</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.SpatiallyVaryingMaterial.nu"><code class="docutils literal notranslate"><span class="pre">SpatiallyVaryingMaterial.nu</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.SpatiallyVaryingMaterial.__init__"><code class="docutils literal notranslate"><span class="pre">SpatiallyVaryingMaterial.__init__()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.SpatiallyVaryingMaterial.E"><code class="docutils literal notranslate"><span class="pre">SpatiallyVaryingMaterial.E</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.SpatiallyVaryingMaterial.mu"><code class="docutils literal notranslate"><span class="pre">SpatiallyVaryingMaterial.mu</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.SpatiallyVaryingMaterial.lam"><code class="docutils literal notranslate"><span class="pre">SpatiallyVaryingMaterial.lam</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.SpatiallyVaryingMaterial.energy_density"><code class="docutils literal notranslate"><span class="pre">SpatiallyVaryingMaterial.energy_density()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.smooth_step"><code class="docutils literal notranslate"><span class="pre">smooth_step()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diffsim.diff_physics.log_barrier"><code class="docutils literal notranslate"><span class="pre">log_barrier()</span></code></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Rishit Dagli
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Rishit Dagli.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
