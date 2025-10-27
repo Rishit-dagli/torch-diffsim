@@ -135,7 +135,7 @@ The total force includes multiple components:
 
 **Gravity**: :math:`\mathbf{f}_{\text{gravity}} = \mathbf{M} \mathbf{g}` where :math:`\mathbf{g} = [0, -9.8, 0]^T`
 
-**Contact forces**: Smooth barrier forces (see Contact Handling below)
+**Contact forces**: Either smooth barrier forces (differentiable solver) or projection with friction (standard solver)
 
 **Damping**: :math:`\mathbf{v} \leftarrow \alpha \mathbf{v}` with :math:`\alpha \approx 0.99`
 
@@ -153,7 +153,10 @@ The integration scheme is applied :math:`n_{\text{sub}}` times with step size :m
 Contact Handling
 ----------------
 
-Contact is handled using **smooth barrier functions** to maintain differentiability.
+We use two approaches depending on the solver:
+
+- **Differentiable solver**: Smooth barrier functions to maintain differentiability
+- **Standard solver**: Ground-plane projection with restitution and simple Coulomb-like friction
 
 Barrier Potential
 ~~~~~~~~~~~~~~~~~
@@ -173,8 +176,8 @@ where:
 - :math:`\hat{d}` is the barrier activation distance (e.g., 0.01 m)
 - :math:`\kappa` is the barrier stiffness (e.g., :math:`10^4`)
 
-Contact Force
-~~~~~~~~~~~~~
+Contact Force (Differentiable)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The contact force is the negative gradient of the barrier potential:
 
@@ -185,6 +188,11 @@ The contact force is the negative gradient of the barrier potential:
 This creates a smooth repulsive force that increases as the vertex approaches the ground, preventing penetration while maintaining :math:`C^2` continuity.
 
 **Why smooth barriers?** Hard constraints (projections) introduce discontinuities that break gradient flow. Smooth barriers maintain differentiability while still preventing penetration.
+
+Ground Projection (Standard)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+For the non-differentiable solver, vertices below the ground are projected back to :math:`y=0`, normal velocity is adjusted by restitution, and tangential velocity is damped to emulate friction. See ``SemiImplicitSolver._handle_ground_collision`` in the code.
 
 Mass Matrix
 -----------
@@ -217,3 +225,4 @@ In the code:
 2. Forces are accumulated using ``index_add_`` for parallelism
 3. All operations use PyTorch tensors for GPU acceleration
 4. Clamping is applied to :math:`J` to prevent numerical issues: :math:`J \leftarrow \text{clamp}(J, J_{\min}, J_{\max})`
+5. The standard solver optionally adds simplified self-collision forces; the differentiable solver includes smooth ground contact forces.

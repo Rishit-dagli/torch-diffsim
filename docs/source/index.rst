@@ -23,6 +23,8 @@ Key Features
 * **Barrier-Based Contact.** Uses differentiable collision handling using smooth barrier functions
 * **GPU Accelerated.** Full CUDA support via PyTorch
 
+Checkout the [Deepwiki: torch-diffsim](https://deepwiki.com/Rishit-dagli/torch-diffsim) for an in-depth conceptual description.
+
 Installation
 ------------
 

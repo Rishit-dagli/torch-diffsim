@@ -22,7 +22,7 @@ jobs:
           python -m pip install --upgrade pip
           # Try repo deps; ignore if not present
           pip install -r requirements.txt || true
-          pip install sphinx sphinx-book-theme sphinx-autodoc-typehints
+          pip install sphinx sphinx-book-theme sphinx-autodoc-typehints sphinxcontrib-mermaid
 
       - name: Build HTML docs
         run: |

@@ -6,6 +6,8 @@ https://github.com/user-attachments/assets/e7d80ce7-af74-4deb-bb5a-aa3f93bb7a6d
 
 Documentation is hosted at: https://rishit-dagli.github.io/torch-diffsim/
 
+Checkout the [Deepwiki: torch-diffsim](https://deepwiki.com/Rishit-dagli/torch-diffsim) for an in-depth conceptual description.
+
 torch-diffsim is an extremely minimal parallelizable differentiable finite element (FEM) simulator written entirely in PyTorch. It uses a semi-implicit (symplectic Euler) integrator, a stable Neo-Hookean material model, and smooth barrier-based contact. All operations preserve gradients to enable optimization of materials and states.
 
 ## Install
