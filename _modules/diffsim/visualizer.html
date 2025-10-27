@@ -1,0 +1,614 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>diffsim.visualizer &#8212; ⚙️ torch-diffsim</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=a1637f0b"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs"></script>
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+    <script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";
+window.addEventListener("load", () => mermaid.run());
+</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/diffsim/visualizer';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">⚙️ torch-diffsim</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Rishit-dagli/torch-diffsim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    ⚙️ torch-diffsim
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quickstart Guide</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../how_it_works.html">How does torch-diffsim work?</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../how_it_works/simulation.html">Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../how_it_works/differentiation.html">Differentiation</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../citation.html">Citation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../api/mesh.html">Mesh</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/material.html">Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/solver.html">Solver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/simulator.html">Simulator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/diff_physics.html">Differentiable Physics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/diff_simulator.html">Differentiable Simulator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/collision.html">Collision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/visualizer.html">Visualizer</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Rishit-dagli/torch-diffsim" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Rishit-dagli/torch-diffsim/issues/new?title=Issue%20on%20page%20%2F_modules/diffsim/visualizer.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for diffsim.visualizer</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Visualization utilities using Polyscope</span>
+
+<span class="sd">Interactive 3D visualization for simulations via Polyscope. Supports:</span>
+<span class="sd">- Real-time visualization of tetrahedral meshes</span>
+<span class="sd">- Playback controls (play/pause, step, reset)</span>
+<span class="sd">- Display of energy values and material properties</span>
+<span class="sd">- Offline frame capture</span>
+<span class="sd">- Volume mesh rendering</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">polyscope</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ps</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+
+<div class="viewcode-block" id="PolyscopeVisualizer">
+<a class="viewcode-back" href="../../api/visualizer.html#diffsim.visualizer.PolyscopeVisualizer">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PolyscopeVisualizer</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Interactive 3D visualizer for physics simulations using Polyscope</span>
+
+<span class="sd">    This class provides real-time visualization of tetrahedral mesh deformation</span>
+<span class="sd">    during physics simulation. It displays the mesh as a volume with proper shading,</span>
+<span class="sd">    shows simulation statistics, and provides interactive controls.</span>
+
+<span class="sd">    Features:</span>
+
+<span class="sd">    - **Interactive controls**: Play/pause, step-by-step execution, reset</span>
+<span class="sd">    - **Real-time statistics**: Time, step count, energy values</span>
+<span class="sd">    - **Material display**: Shows Young&#39;s modulus and Poisson&#39;s ratio</span>
+<span class="sd">    - **Solver parameters**: Displays time step, gravity, etc.</span>
+<span class="sd">    - Volume rendering via Polyscope</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        simulator (Simulator): The simulator instance to visualize</span>
+<span class="sd">        window_name (str): Window title (default: &quot;DiffSim Physics Simulator&quot;)</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        simulator (Simulator): Reference to the simulator</span>
+<span class="sd">        mesh (ps.VolumeMesh): Polyscope volume mesh object</span>
+<span class="sd">        is_playing (bool): Whether simulation is currently running</span>
+<span class="sd">        show_wireframe (bool): Whether to show mesh edges</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; sim = Simulator(mesh, material, solver)</span>
+<span class="sd">        &gt;&gt;&gt; viz = PolyscopeVisualizer(sim)</span>
+<span class="sd">        &gt;&gt;&gt; viz.run(max_steps=1000, steps_per_frame=5)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="PolyscopeVisualizer.__init__">
+<a class="viewcode-back" href="../../api/visualizer.html#diffsim.visualizer.PolyscopeVisualizer.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">simulator</span><span class="p">,</span> <span class="n">window_name</span><span class="o">=</span><span class="s2">&quot;DiffSim Physics Simulator&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize visualizer</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            simulator: Simulator object</span>
+<span class="sd">            window_name: window title</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">simulator</span> <span class="o">=</span> <span class="n">simulator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">window_name</span> <span class="o">=</span> <span class="n">window_name</span>
+
+        <span class="c1"># Initialize polyscope</span>
+        <span class="n">ps</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+        <span class="n">ps</span><span class="o">.</span><span class="n">set_ground_plane_mode</span><span class="p">(</span><span class="s2">&quot;tile&quot;</span><span class="p">)</span>  <span class="c1"># Show ground plane as a tile grid</span>
+        <span class="n">ps</span><span class="o">.</span><span class="n">set_ground_plane_height</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>  <span class="c1"># Align with y=0</span>
+        <span class="n">ps</span><span class="o">.</span><span class="n">set_up_dir</span><span class="p">(</span><span class="s2">&quot;y_up&quot;</span><span class="p">)</span>  <span class="c1"># Set Y as up direction</span>
+
+        <span class="c1"># Register mesh</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_register_mesh</span><span class="p">()</span>
+
+        <span class="c1"># Animation control</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_playing</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">show_wireframe</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_register_mesh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Register the mesh with polyscope (as volume mesh)&quot;&quot;&quot;</span>
+        <span class="c1"># Register as tetrahedral volume mesh for proper visualization</span>
+        <span class="n">vertices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulator</span><span class="o">.</span><span class="n">positions</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+        <span class="n">tetrahedra</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulator</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">tetrahedra</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">mesh</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">register_volume_mesh</span><span class="p">(</span>
+            <span class="s2">&quot;simulation_mesh&quot;</span><span class="p">,</span> <span class="n">vertices</span><span class="p">,</span> <span class="n">tetrahedra</span><span class="p">,</span> <span class="n">enabled</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Add some nice visualization options</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">set_color</span><span class="p">((</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">set_edge_width</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">set_material</span><span class="p">(</span><span class="s2">&quot;wax&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="PolyscopeVisualizer.update">
+<a class="viewcode-back" href="../../api/visualizer.html#diffsim.visualizer.PolyscopeVisualizer.update">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update visualization with current simulation state&quot;&quot;&quot;</span>
+        <span class="n">vertices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulator</span><span class="o">.</span><span class="n">positions</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">update_vertex_positions</span><span class="p">(</span><span class="n">vertices</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PolyscopeVisualizer.run">
+<a class="viewcode-back" href="../../api/visualizer.html#diffsim.visualizer.PolyscopeVisualizer.run">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_steps</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">steps_per_frame</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run interactive visualization loop</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            max_steps: maximum number of simulation steps (None for infinite)</span>
+<span class="sd">            steps_per_frame: number of simulation steps per frame</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">step_count</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">callback</span><span class="p">():</span>
+            <span class="k">nonlocal</span> <span class="n">step_count</span>
+
+            <span class="c1"># UI controls</span>
+            <span class="k">if</span> <span class="n">ps</span><span class="o">.</span><span class="n">imgui</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Play/Pause&quot;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">is_playing</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_playing</span>
+
+            <span class="n">ps</span><span class="o">.</span><span class="n">imgui</span><span class="o">.</span><span class="n">SameLine</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">ps</span><span class="o">.</span><span class="n">imgui</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Step&quot;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">simulator</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+                <span class="n">step_count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="n">ps</span><span class="o">.</span><span class="n">imgui</span><span class="o">.</span><span class="n">SameLine</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">ps</span><span class="o">.</span><span class="n">imgui</span><span class="o">.</span><span class="n">Button</span><span class="p">(</span><span class="s2">&quot;Reset&quot;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">simulator</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+                <span class="n">step_count</span> <span class="o">=</span> <span class="mi">0</span>
+
+            <span class="c1"># Display info</span>
+            <span class="n">ps</span><span class="o">.</span><span class="n">imgui</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Time: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">simulator</span><span class="o">.</span><span class="n">time</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> s&quot;</span><span class="p">)</span>
+            <span class="n">ps</span><span class="o">.</span><span class="n">imgui</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Steps: </span><span class="si">{</span><span class="n">step_count</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">ps</span><span class="o">.</span><span class="n">imgui</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Vertices: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">simulator</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">num_vertices</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">ps</span><span class="o">.</span><span class="n">imgui</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Elements: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">simulator</span><span class="o">.</span><span class="n">mesh</span><span class="o">.</span><span class="n">num_elements</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Energy display</span>
+            <span class="n">ke</span><span class="p">,</span> <span class="n">ee</span><span class="p">,</span> <span class="n">ge</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulator</span><span class="o">.</span><span class="n">compute_energy</span><span class="p">()</span>
+            <span class="n">ps</span><span class="o">.</span><span class="n">imgui</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Kinetic Energy: </span><span class="si">{</span><span class="n">ke</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> J&quot;</span><span class="p">)</span>
+            <span class="n">ps</span><span class="o">.</span><span class="n">imgui</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Elastic Energy: </span><span class="si">{</span><span class="n">ee</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> J&quot;</span><span class="p">)</span>
+            <span class="n">ps</span><span class="o">.</span><span class="n">imgui</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total Energy: </span><span class="si">{</span><span class="n">ke</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ee</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ge</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> J&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Material parameters</span>
+            <span class="n">ps</span><span class="o">.</span><span class="n">imgui</span><span class="o">.</span><span class="n">Separator</span><span class="p">()</span>
+            <span class="n">ps</span><span class="o">.</span><span class="n">imgui</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="s2">&quot;Material Properties:&quot;</span><span class="p">)</span>
+            <span class="n">ps</span><span class="o">.</span><span class="n">imgui</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Young&#39;s Modulus: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">simulator</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">E</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2"> Pa&quot;</span><span class="p">)</span>
+            <span class="n">ps</span><span class="o">.</span><span class="n">imgui</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Poisson&#39;s Ratio: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">simulator</span><span class="o">.</span><span class="n">material</span><span class="o">.</span><span class="n">nu</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Simulation parameters</span>
+            <span class="n">ps</span><span class="o">.</span><span class="n">imgui</span><span class="o">.</span><span class="n">Separator</span><span class="p">()</span>
+            <span class="n">ps</span><span class="o">.</span><span class="n">imgui</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="s2">&quot;Solver Parameters:&quot;</span><span class="p">)</span>
+            <span class="n">ps</span><span class="o">.</span><span class="n">imgui</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Time Step: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">simulator</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">dt</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> s&quot;</span><span class="p">)</span>
+            <span class="n">g_val</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">simulator</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">gravity_value</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulator</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">gravity</span> <span class="ow">is</span> <span class="kc">None</span>
+                <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">simulator</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">gravity</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+            <span class="p">)</span>
+            <span class="n">ps</span><span class="o">.</span><span class="n">imgui</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Gravity: </span><span class="si">{</span><span class="n">g_val</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> m/s²&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Run simulation if playing</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_playing</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">steps_per_frame</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">max_steps</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">step_count</span> <span class="o">&lt;</span> <span class="n">max_steps</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">simulator</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+                        <span class="n">step_count</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+        <span class="c1"># Set callback and show</span>
+        <span class="n">ps</span><span class="o">.</span><span class="n">set_user_callback</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span>
+        <span class="n">ps</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="PolyscopeVisualizer.animate_offline">
+<a class="viewcode-back" href="../../api/visualizer.html#diffsim.visualizer.PolyscopeVisualizer.animate_offline">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">animate_offline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_steps</span><span class="p">,</span> <span class="n">output_frames</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run simulation and optionally save frames</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            num_steps: number of simulation steps</span>
+<span class="sd">            output_frames: if not None, save frames to this directory</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_steps</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">simulator</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">output_frames</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">ps</span><span class="o">.</span><span class="n">screenshot</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_frames</span><span class="si">}</span><span class="s2">/frame_</span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s2">05d</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Step </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">num_steps</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Rishit Dagli
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Rishit Dagli.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

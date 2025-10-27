@@ -1,0 +1,646 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>diffsim.material &#8212; ⚙️ torch-diffsim</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=a1637f0b"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs"></script>
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+    <script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";
+window.addEventListener("load", () => mermaid.run());
+</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/diffsim/material';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">⚙️ torch-diffsim</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Rishit-dagli/torch-diffsim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    ⚙️ torch-diffsim
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quickstart Guide</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../how_it_works.html">How does torch-diffsim work?</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../how_it_works/simulation.html">Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../how_it_works/differentiation.html">Differentiation</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../citation.html">Citation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../api/mesh.html">Mesh</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/material.html">Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/solver.html">Solver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/simulator.html">Simulator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/diff_physics.html">Differentiable Physics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/diff_simulator.html">Differentiable Simulator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/collision.html">Collision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/visualizer.html">Visualizer</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Rishit-dagli/torch-diffsim" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Rishit-dagli/torch-diffsim/issues/new?title=Issue%20on%20page%20%2F_modules/diffsim/material.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for diffsim.material</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Material models for finite element simulation</span>
+
+<span class="sd">This module implements hyperelastic material models for FEM simulation.</span>
+<span class="sd">The primary model is the Stable Neo-Hookean formulation, which provides</span>
+<span class="sd">numerical stability even under large deformations and element inversion.</span>
+
+<span class="sd">The strain energy density is derived from the deformation gradient :math:`\\mathbf{F}`,</span>
+<span class="sd">and forces are computed as the negative gradient of the total elastic energy.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+
+
+<div class="viewcode-block" id="StableNeoHookean">
+<a class="viewcode-back" href="../../api/material.html#diffsim.material.StableNeoHookean">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">StableNeoHookean</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Stable Neo-Hookean hyperelastic material model</span>
+
+<span class="sd">    This class implements the stable Neo-Hookean formulation from Smith et al. (2018)</span>
+<span class="sd">    &quot;Stable Neo-Hookean Flesh Simulation&quot;. The energy density function is:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \\Psi(\\mathbf{F}) = \\frac{\\mu}{2}(I_C - 3) - \\mu \\log J + \\frac{\\lambda}{2}(J-1)^2</span>
+
+<span class="sd">    where:</span>
+
+<span class="sd">    - :math:`\\mathbf{F}` is the deformation gradient tensor (3×3)</span>
+<span class="sd">    - :math:`I_C = \\text{tr}(\\mathbf{F}^T \\mathbf{F}) = \\|\\mathbf{F}\\|_F^2` is the first invariant</span>
+<span class="sd">    - :math:`J = \\det(\\mathbf{F})` is the Jacobian determinant (volume ratio)</span>
+<span class="sd">    - :math:`\\mu = \\frac{E}{2(1+\\nu)}` is the first Lamé parameter (shear modulus)</span>
+<span class="sd">    - :math:`\\lambda = \\frac{E\\nu}{(1+\\nu)(1-2\\nu)}` is the second Lamé parameter</span>
+
+<span class="sd">    The formulation ensures numerical stability even under large deformations and</span>
+<span class="sd">    near-inversion by using logarithmic terms instead of polynomial terms for the</span>
+<span class="sd">    volumetric component.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        youngs_modulus (float): Young&#39;s modulus :math:`E` in Pascals (default: 1e6)</span>
+<span class="sd">        poissons_ratio (float): Poisson&#39;s ratio :math:`\\nu` (default: 0.45)</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        E (float): Young&#39;s modulus</span>
+<span class="sd">        nu (float): Poisson&#39;s ratio</span>
+<span class="sd">        mu (float): First Lamé parameter (shear modulus)</span>
+<span class="sd">        lam (float): Second Lamé parameter</span>
+
+<span class="sd">    Reference:</span>
+<span class="sd">        Smith, B., De Goes, F., &amp; Kim, T. (2018). Stable neo-hookean flesh simulation.</span>
+<span class="sd">        ACM Transactions on Graphics (TOG), 37(2), 1-15.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="StableNeoHookean.__init__">
+<a class="viewcode-back" href="../../api/material.html#diffsim.material.StableNeoHookean.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">youngs_modulus</span><span class="o">=</span><span class="mf">1e6</span><span class="p">,</span> <span class="n">poissons_ratio</span><span class="o">=</span><span class="mf">0.45</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize material with elastic constants</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            youngs_modulus: Young&#39;s modulus (E)</span>
+<span class="sd">            poissons_ratio: Poisson&#39;s ratio (ν)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">E</span> <span class="o">=</span> <span class="n">youngs_modulus</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nu</span> <span class="o">=</span> <span class="n">poissons_ratio</span>
+
+        <span class="c1"># Convert to Lamé parameters</span>
+        <span class="c1"># μ = E / (2(1+ν))</span>
+        <span class="c1"># λ = E*ν / ((1+ν)(1-2ν))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">E</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lam</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">E</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span> <span class="o">/</span> <span class="p">((</span><span class="mf">1.0</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="StableNeoHookean.energy_density">
+<a class="viewcode-back" href="../../api/material.html#diffsim.material.StableNeoHookean.energy_density">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">energy_density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">F</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute strain energy density for deformation gradient F</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            F: :math:`(M, 3, 3)` deformation gradient tensor</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            psi: :math:`(M,)` energy density for each element</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Compute first invariant Ic = trace(F^T F) = ||F||_F^2</span>
+        <span class="n">Ic</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">F</span> <span class="o">*</span> <span class="n">F</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>  <span class="c1"># (M,)</span>
+
+        <span class="c1"># Compute determinant (volume ratio)</span>
+        <span class="n">J</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">F</span><span class="p">)</span>  <span class="c1"># (M,)</span>
+
+        <span class="c1"># Clamp J to prevent inversion (J &gt; 0)</span>
+        <span class="n">J</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">J</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">)</span>
+
+        <span class="c1"># Stable Neo-Hookean energy density</span>
+        <span class="c1"># Ψ = μ/2 * (Ic - 3) - μ log(J) + λ/2 * (J-1)^2</span>
+        <span class="n">psi</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mu</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">Ic</span> <span class="o">-</span> <span class="mf">3.0</span><span class="p">)</span>
+            <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">mu</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">J</span><span class="p">)</span>
+            <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">lam</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">J</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">psi</span></div>
+
+
+<div class="viewcode-block" id="StableNeoHookean.first_piola_kirchhoff_stress">
+<a class="viewcode-back" href="../../api/material.html#diffsim.material.StableNeoHookean.first_piola_kirchhoff_stress">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">first_piola_kirchhoff_stress</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">F</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute first Piola-Kirchhoff stress tensor P = ∂Ψ/∂F</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            F: :math:`(M, 3, 3)` deformation gradient tensor</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            P: :math:`(M, 3, 3)` first Piola-Kirchhoff stress tensor</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Enable gradient computation</span>
+        <span class="n">F_grad</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">requires_grad_</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># Compute energy density</span>
+        <span class="n">psi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_density</span><span class="p">(</span><span class="n">F_grad</span><span class="p">)</span>
+
+        <span class="c1"># Compute gradient</span>
+        <span class="n">P</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">autograd</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">psi</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="n">F_grad</span><span class="p">,</span> <span class="n">create_graph</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">P</span></div>
+
+
+<div class="viewcode-block" id="StableNeoHookean.first_piola_kirchhoff_stress_analytic">
+<a class="viewcode-back" href="../../api/material.html#diffsim.material.StableNeoHookean.first_piola_kirchhoff_stress_analytic">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">first_piola_kirchhoff_stress_analytic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">F</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute first Piola-Kirchhoff stress tensor analytically with stability</span>
+
+<span class="sd">        P = ∂Ψ/∂F = μ*F - μ*F^{-T} + λ*(J-1)*J*F^{-T}</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            F: :math:`(M, 3, 3)` deformation gradient tensor</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            P: :math:`(M, 3, 3)` first Piola-Kirchhoff stress tensor</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Compute determinant with strict clamping to prevent inversion</span>
+        <span class="n">J</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">F</span><span class="p">)</span>  <span class="c1"># (M,)</span>
+
+        <span class="c1"># Check for degenerate/inverted elements</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">J</span> <span class="o">&lt;</span> <span class="mf">0.01</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+            <span class="c1"># Clamp more aggressively to prevent blow-up</span>
+            <span class="n">J</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">J</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mf">5.0</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">J</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">J</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mf">3.0</span><span class="p">)</span>
+
+        <span class="n">J_clamped</span> <span class="o">=</span> <span class="n">J</span>
+
+        <span class="c1"># Compute F^{-T} = (F^{-1})^T using SVD for stability</span>
+        <span class="c1"># F = U S V^T, then F^{-1} = V S^{-1} U^T</span>
+        <span class="n">U</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">Vh</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">F</span><span class="p">)</span>
+
+        <span class="c1"># Clamp singular values more aggressively to prevent singularity</span>
+        <span class="n">S_clamped</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mf">5.0</span><span class="p">)</span>
+        <span class="n">S_inv</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">S_clamped</span>
+
+        <span class="c1"># F_inv = V @ diag(S_inv) @ U^T</span>
+        <span class="n">F_inv</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">bmm</span><span class="p">(</span>
+            <span class="n">Vh</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">torch</span><span class="o">.</span><span class="n">bmm</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">diag_embed</span><span class="p">(</span><span class="n">S_inv</span><span class="p">),</span> <span class="n">U</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="p">)</span>
+        <span class="n">F_inv_T</span> <span class="o">=</span> <span class="n">F_inv</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1"># P = μ*F - μ*F^{-T} + λ*(J-1)*J*F^{-T}</span>
+        <span class="c1"># Scale down to prevent blow-up</span>
+        <span class="n">P</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mu</span> <span class="o">*</span> <span class="n">F</span>
+            <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">mu</span> <span class="o">*</span> <span class="n">F_inv_T</span>
+            <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">lam</span>
+            <span class="o">*</span> <span class="p">(</span><span class="n">J_clamped</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="o">*</span> <span class="n">J_clamped</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="o">*</span> <span class="n">F_inv_T</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Only clamp extreme stresses (very high limit for realistic behavior)</span>
+        <span class="n">P_norm</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># (M, 1, 1)</span>
+        <span class="n">max_stress</span> <span class="o">=</span> <span class="mf">1e6</span>  <span class="c1"># Much higher limit - only prevent catastrophic blow-up</span>
+        <span class="n">P_scale</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">max_stress</span> <span class="o">/</span> <span class="p">(</span><span class="n">P_norm</span> <span class="o">+</span> <span class="mf">1e-8</span><span class="p">),</span> <span class="nb">max</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+        <span class="n">P</span> <span class="o">=</span> <span class="n">P</span> <span class="o">*</span> <span class="n">P_scale</span>
+
+        <span class="k">return</span> <span class="n">P</span></div>
+
+
+<div class="viewcode-block" id="StableNeoHookean.compute_elastic_forces">
+<a class="viewcode-back" href="../../api/material.html#diffsim.material.StableNeoHookean.compute_elastic_forces">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_elastic_forces</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="n">Dm_inv</span><span class="p">,</span> <span class="n">volume</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute elastic forces from stress tensor</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            F: :math:`(M, 3, 3)` deformation gradient</span>
+<span class="sd">            Dm_inv: :math:`(M, 3, 3)` inverse rest shape matrix</span>
+<span class="sd">            volume: :math:`(M,)` rest volume of each element</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            forces: :math:`(M, 4, 3)` forces on vertices of each element</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Compute stress tensor</span>
+        <span class="n">P</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">first_piola_kirchhoff_stress_analytic</span><span class="p">(</span><span class="n">F</span><span class="p">)</span>  <span class="c1"># (M, 3, 3)</span>
+
+        <span class="c1"># H = -volume * P * Dm_inv^T (force matrix)</span>
+        <span class="n">H</span> <span class="o">=</span> <span class="o">-</span><span class="n">volume</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">bmm</span><span class="p">(</span>
+            <span class="n">P</span><span class="p">,</span> <span class="n">Dm_inv</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="p">)</span>  <span class="c1"># (M, 3, 3)</span>
+
+        <span class="c1"># Extract forces for each vertex</span>
+        <span class="c1"># f1, f2, f3 are columns of H</span>
+        <span class="c1"># f0 = -(f1 + f2 + f3) (force balance)</span>
+        <span class="n">f1</span> <span class="o">=</span> <span class="n">H</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># (M, 3)</span>
+        <span class="n">f2</span> <span class="o">=</span> <span class="n">H</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">]</span>  <span class="c1"># (M, 3)</span>
+        <span class="n">f3</span> <span class="o">=</span> <span class="n">H</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">2</span><span class="p">]</span>  <span class="c1"># (M, 3)</span>
+        <span class="n">f0</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">f1</span> <span class="o">+</span> <span class="n">f2</span> <span class="o">+</span> <span class="n">f3</span><span class="p">)</span>  <span class="c1"># (M, 3)</span>
+
+        <span class="n">forces</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">f0</span><span class="p">,</span> <span class="n">f1</span><span class="p">,</span> <span class="n">f2</span><span class="p">,</span> <span class="n">f3</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># (M, 4, 3)</span>
+
+        <span class="k">return</span> <span class="n">forces</span></div>
+</div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Rishit Dagli
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Rishit Dagli.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

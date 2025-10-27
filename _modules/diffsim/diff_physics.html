@@ -1,0 +1,971 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>diffsim.diff_physics &#8212; ⚙️ torch-diffsim</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=a1637f0b"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs"></script>
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+    <script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";
+window.addEventListener("load", () => mermaid.run());
+</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/diffsim/diff_physics';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">⚙️ torch-diffsim</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Rishit-dagli/torch-diffsim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    ⚙️ torch-diffsim
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quickstart Guide</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../how_it_works.html">How does torch-diffsim work?</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../how_it_works/simulation.html">Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../how_it_works/differentiation.html">Differentiation</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../citation.html">Citation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../api/mesh.html">Mesh</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/material.html">Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/solver.html">Solver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/simulator.html">Simulator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/diff_physics.html">Differentiable Physics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/diff_simulator.html">Differentiable Simulator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/collision.html">Collision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/visualizer.html">Visualizer</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Rishit-dagli/torch-diffsim" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Rishit-dagli/torch-diffsim/issues/new?title=Issue%20on%20page%20%2F_modules/diffsim/diff_physics.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for diffsim.diff_physics</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Differentiable physics simulation utilities</span>
+
+<span class="sd">This module provides advanced techniques for differentiable physics simulation:</span>
+
+<span class="sd">1. **Smooth Contact Approximations**: Replace hard constraints with smooth barrier</span>
+<span class="sd">   functions that maintain gradient flow</span>
+
+<span class="sd">2. **Implicit Differentiation**: Compute gradients through iterative solvers using</span>
+<span class="sd">   the implicit function theorem without storing the full computation graph</span>
+
+<span class="sd">3. **Gradient Checkpointing**: Memory-efficient backpropagation through long simulations</span>
+<span class="sd">   by recomputing forward passes instead of storing all intermediate states</span>
+
+<span class="sd">4. **Learnable Materials**: Material models with parameters that can be optimized</span>
+<span class="sd">   via gradient descent</span>
+
+<span class="sd">All components are designed to preserve gradients for automatic differentiation</span>
+<span class="sd">while maintaining numerical stability.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch.utils.checkpoint</span><span class="w"> </span><span class="kn">import</span> <span class="n">checkpoint</span>
+
+
+<div class="viewcode-block" id="DifferentiableBarrierContact">
+<a class="viewcode-back" href="../../api/diff_physics.html#diffsim.diff_physics.DifferentiableBarrierContact">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DifferentiableBarrierContact</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Smooth, differentiable contact model using barrier functions</span>
+
+<span class="sd">    This class implements smooth contact forces that maintain gradient flow for</span>
+<span class="sd">    automatic differentiation. Instead of hard constraints or projections that</span>
+<span class="sd">    introduce discontinuities, it uses smooth barrier potential functions that</span>
+<span class="sd">    activate near contact.</span>
+
+<span class="sd">    The barrier potential is:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        b(d) = -(d - \\hat{d})^2 \\log(d/\\hat{d}) \\text{ for } d &lt; \\hat{d}</span>
+
+<span class="sd">    where :math:`d` is the distance to the surface and :math:`\\hat{d}` is the</span>
+<span class="sd">    barrier activation distance. The potential smoothly increases as :math:`d \\to 0`,</span>
+<span class="sd">    preventing penetration while maintaining :math:`C^2` continuity.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        barrier_stiffness (float): Stiffness of barrier forces (default: 1e4)</span>
+<span class="sd">        barrier_width (float): Distance at which barrier activates (default: 0.01)</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        kappa (float): Barrier stiffness coefficient</span>
+<span class="sd">        d_hat (float): Barrier activation distance</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="DifferentiableBarrierContact.__init__">
+<a class="viewcode-back" href="../../api/diff_physics.html#diffsim.diff_physics.DifferentiableBarrierContact.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">barrier_stiffness</span><span class="o">=</span><span class="mf">1e4</span><span class="p">,</span> <span class="n">barrier_width</span><span class="o">=</span><span class="mf">0.01</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            barrier_stiffness: controls contact force magnitude</span>
+<span class="sd">            barrier_width: distance at which barrier activates</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kappa</span> <span class="o">=</span> <span class="n">barrier_stiffness</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">d_hat</span> <span class="o">=</span> <span class="n">barrier_width</span></div>
+
+
+<div class="viewcode-block" id="DifferentiableBarrierContact.barrier_potential">
+<a class="viewcode-back" href="../../api/diff_physics.html#diffsim.diff_physics.DifferentiableBarrierContact.barrier_potential">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">barrier_potential</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Smooth barrier potential: -(d - d_hat)^2 * log(d/d_hat) for d &lt; d_hat</span>
+
+<span class="sd">        This is C^2 continuous and always differentiable</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            d: :math:`(N,)` distances to surface</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            energy: :math:`(N,)` barrier energy</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Smooth activation (no if-statements for AD)</span>
+        <span class="c1"># Use smooth step function instead of hard threshold</span>
+        <span class="n">activation</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">d_hat</span> <span class="o">-</span> <span class="n">d</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>  <span class="c1"># Smooth 0/1 transition</span>
+
+        <span class="c1"># Barrier function (only active when d &lt; d_hat)</span>
+        <span class="n">d_safe</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">)</span>  <span class="c1"># Prevent log(0)</span>
+        <span class="n">barrier</span> <span class="o">=</span> <span class="o">-</span><span class="p">((</span><span class="n">d_safe</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">d_hat</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">d_safe</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">d_hat</span> <span class="o">+</span> <span class="mf">1e-12</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">kappa</span> <span class="o">*</span> <span class="n">activation</span> <span class="o">*</span> <span class="n">barrier</span></div>
+
+
+<div class="viewcode-block" id="DifferentiableBarrierContact.ground_contact_force">
+<a class="viewcode-back" href="../../api/diff_physics.html#diffsim.diff_physics.DifferentiableBarrierContact.ground_contact_force">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">ground_contact_force</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">positions</span><span class="p">,</span> <span class="n">velocities</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute smooth ground contact forces (fully differentiable)</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            positions: :math:`(N, 3)` positions</span>
+<span class="sd">            velocities: :math:`(N, 3)` velocities</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            forces: :math:`(N, 3)` contact forces</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Distance to ground (y-coordinate). Use contiguous copy to avoid view versioning issues.</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">positions</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span>
+
+        <span class="c1"># Compute differentiable barrier energy</span>
+        <span class="n">energy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">barrier_potential</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>  <span class="c1"># (N,)</span>
+
+        <span class="c1"># Contact force is negative gradient of energy wrt positions</span>
+        <span class="n">grad_pos</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">autograd</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span>
+            <span class="n">energy</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="n">positions</span><span class="p">,</span> <span class="n">create_graph</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">retain_graph</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">forces</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span>
+        <span class="n">forces</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">grad_pos</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+
+        <span class="c1"># Smooth friction (tangential damping proportional to normal force magnitude)</span>
+        <span class="n">friction_coeff</span> <span class="o">=</span> <span class="mf">0.3</span>
+        <span class="n">tangent_vel</span> <span class="o">=</span> <span class="n">velocities</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+        <span class="n">tangent_vel</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">normal_mag</span> <span class="o">=</span> <span class="n">forces</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">friction_force</span> <span class="o">=</span> <span class="o">-</span><span class="n">friction_coeff</span> <span class="o">*</span> <span class="n">normal_mag</span> <span class="o">*</span> <span class="n">tangent_vel</span>
+        <span class="n">forces</span> <span class="o">=</span> <span class="n">forces</span> <span class="o">+</span> <span class="n">friction_force</span>
+
+        <span class="k">return</span> <span class="n">forces</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="ImplicitDifferentiation">
+<a class="viewcode-back" href="../../api/diff_physics.html#diffsim.diff_physics.ImplicitDifferentiation">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ImplicitDifferentiation</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implicit differentiation for backward Euler and Newton solvers</span>
+
+<span class="sd">    Instead of differentiating through all Newton iterations,</span>
+<span class="sd">    use the implicit function theorem:</span>
+
+<span class="sd">    If F(x*, p) = 0, then dx*/dp = -(dF/dx)^{-1} @ (dF/dp)</span>
+
+<span class="sd">    This avoids storing the full computation graph</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ImplicitDifferentiation.implicit_backward">
+<a class="viewcode-back" href="../../api/diff_physics.html#diffsim.diff_physics.ImplicitDifferentiation.implicit_backward">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">implicit_backward</span><span class="p">(</span><span class="n">forward_fn</span><span class="p">,</span> <span class="n">x_star</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute gradients using implicit differentiation</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            forward_fn: function that computes residual F(x, params) = 0</span>
+<span class="sd">            x_star: solution where F(x_star, params) = 0</span>
+<span class="sd">            params: parameters to differentiate wrt</span>
+<span class="sd">            atol: tolerance for linear solve</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            x_star: solution with proper gradients attached</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">class</span><span class="w"> </span><span class="nc">ImplicitFunction</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">autograd</span><span class="o">.</span><span class="n">Function</span><span class="p">):</span>
+            <span class="nd">@staticmethod</span>
+            <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="o">*</span><span class="n">params_tuple</span><span class="p">):</span>
+                <span class="c1"># Just return the solution</span>
+                <span class="n">ctx</span><span class="o">.</span><span class="n">save_for_backward</span><span class="p">(</span><span class="n">x_star</span><span class="p">,</span> <span class="o">*</span><span class="n">params_tuple</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">x_star</span>
+
+            <span class="nd">@staticmethod</span>
+            <span class="k">def</span><span class="w"> </span><span class="nf">backward</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">grad_output</span><span class="p">):</span>
+<span class="w">                </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">                Compute vjp: grad_output^T @ dx/dp using implicit function theorem</span>
+<span class="sd">                &quot;&quot;&quot;</span>
+                <span class="n">x_star_saved</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">saved_tensors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">params_saved</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">saved_tensors</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+                <span class="c1"># Compute Jacobian dF/dx at x_star (needed for implicit diff)</span>
+                <span class="c1"># Use Jacobian-free approach: approximate with finite differences</span>
+                <span class="k">def</span><span class="w"> </span><span class="nf">matvec</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+<span class="w">                    </span><span class="sd">&quot;&quot;&quot;Compute (dF/dx) @ v without forming full Jacobian&quot;&quot;&quot;</span>
+                    <span class="n">eps</span> <span class="o">=</span> <span class="mf">1e-4</span>
+                    <span class="n">x_plus</span> <span class="o">=</span> <span class="n">x_star_saved</span> <span class="o">+</span> <span class="n">eps</span> <span class="o">*</span> <span class="n">v</span>
+                    <span class="n">F_plus</span> <span class="o">=</span> <span class="n">forward_fn</span><span class="p">(</span><span class="n">x_plus</span><span class="p">,</span> <span class="o">*</span><span class="n">params_saved</span><span class="p">)</span>
+                    <span class="n">F_0</span> <span class="o">=</span> <span class="n">forward_fn</span><span class="p">(</span><span class="n">x_star_saved</span><span class="p">,</span> <span class="o">*</span><span class="n">params_saved</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="p">(</span><span class="n">F_plus</span> <span class="o">-</span> <span class="n">F_0</span><span class="p">)</span> <span class="o">/</span> <span class="n">eps</span>
+
+                <span class="c1"># Solve (dF/dx)^T @ lambda = grad_output using CG</span>
+                <span class="c1"># This is the adjoint equation</span>
+                <span class="n">lambda_star</span> <span class="o">=</span> <span class="n">conjugate_gradient</span><span class="p">(</span>
+                    <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="n">matvec</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span>  <span class="c1"># Detach to avoid double backprop</span>
+                    <span class="n">grad_output</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span>
+                    <span class="n">max_iters</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+                    <span class="n">atol</span><span class="o">=</span><span class="n">atol</span><span class="p">,</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">reshape_as</span><span class="p">(</span><span class="n">grad_output</span><span class="p">)</span>
+
+                <span class="c1"># Now compute dL/dp = -lambda^T @ dF/dp</span>
+                <span class="n">param_grads</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">params_saved</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">requires_grad</span><span class="p">:</span>
+                        <span class="c1"># Compute dF/dp</span>
+                        <span class="n">F</span> <span class="o">=</span> <span class="n">forward_fn</span><span class="p">(</span><span class="n">x_star_saved</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">p</span><span class="p">)</span>
+                        <span class="n">dF_dp</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">autograd</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span>
+                            <span class="n">F</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">grad_outputs</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">F</span><span class="p">),</span> <span class="n">retain_graph</span><span class="o">=</span><span class="kc">True</span>
+                        <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+                        <span class="c1"># Compute vjp</span>
+                        <span class="n">grad_p</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">lambda_star</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> <span class="o">@</span> <span class="n">dF_dp</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span>
+                        <span class="n">param_grads</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">grad_p</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">param_grads</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+
+                <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">param_grads</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">ImplicitFunction</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="o">*</span><span class="n">params</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="conjugate_gradient">
+<a class="viewcode-back" href="../../api/diff_physics.html#diffsim.diff_physics.conjugate_gradient">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">conjugate_gradient</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_iters</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Solve Ax = b using conjugate gradient</span>
+
+<span class="sd">    Jacobian-free: A is a function that computes matrix-vector products</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        A: function that computes A @ v</span>
+<span class="sd">        b: right-hand side</span>
+<span class="sd">        x0: initial guess</span>
+<span class="sd">        max_iters: maximum iterations</span>
+<span class="sd">        atol: absolute tolerance</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        x: solution</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">x0</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x0</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+
+    <span class="n">r</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="n">A</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+    <span class="n">rs_old</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_iters</span><span class="p">):</span>
+        <span class="n">Ap</span> <span class="o">=</span> <span class="n">A</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="n">alpha</span> <span class="o">=</span> <span class="n">rs_old</span> <span class="o">/</span> <span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">Ap</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1e-12</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">p</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">r</span> <span class="o">-</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">Ap</span>
+        <span class="n">rs_new</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">rs_new</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">atol</span><span class="p">:</span>
+            <span class="k">break</span>
+
+        <span class="n">beta</span> <span class="o">=</span> <span class="n">rs_new</span> <span class="o">/</span> <span class="p">(</span><span class="n">rs_old</span> <span class="o">+</span> <span class="mf">1e-12</span><span class="p">)</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">r</span> <span class="o">+</span> <span class="n">beta</span> <span class="o">*</span> <span class="n">p</span>
+        <span class="n">rs_old</span> <span class="o">=</span> <span class="n">rs_new</span>
+
+    <span class="k">return</span> <span class="n">x</span></div>
+
+
+
+<div class="viewcode-block" id="CheckpointedRollout">
+<a class="viewcode-back" href="../../api/diff_physics.html#diffsim.diff_physics.CheckpointedRollout">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">CheckpointedRollout</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Memory-efficient rollout using gradient checkpointing</span>
+
+<span class="sd">    Instead of storing all intermediate states, recompute them during backward pass</span>
+<span class="sd">    This trades computation for memory</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="CheckpointedRollout.rollout">
+<a class="viewcode-back" href="../../api/diff_physics.html#diffsim.diff_physics.CheckpointedRollout.rollout">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rollout</span><span class="p">(</span><span class="n">step_fn</span><span class="p">,</span> <span class="n">state0</span><span class="p">,</span> <span class="n">num_steps</span><span class="p">,</span> <span class="n">checkpoint_every</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform rollout with checkpointing</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            step_fn: function that computes next state: s_{t+1} = step_fn(s_t)</span>
+<span class="sd">            state0: initial state</span>
+<span class="sd">            num_steps: number of steps</span>
+<span class="sd">            checkpoint_every: save state every N steps</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            trajectory: list of states [s_0, s_1, ..., s_T]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">trajectory</span> <span class="o">=</span> <span class="p">[</span><span class="n">state0</span><span class="p">]</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">state0</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">_step_fn_tensors</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">vel</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">step_fn</span><span class="p">((</span><span class="n">pos</span><span class="p">,</span> <span class="n">vel</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_steps</span><span class="p">):</span>
+            <span class="c1"># Use PyTorch&#39;s checkpoint utility</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="n">checkpoint_every</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">pos</span><span class="p">,</span> <span class="n">vel</span> <span class="o">=</span> <span class="n">state</span>
+                <span class="n">state</span> <span class="o">=</span> <span class="n">checkpoint</span><span class="p">(</span><span class="n">_step_fn_tensors</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">vel</span><span class="p">,</span> <span class="n">use_reentrant</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Regular forward pass</span>
+                <span class="n">state</span> <span class="o">=</span> <span class="n">step_fn</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+
+            <span class="n">trajectory</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">trajectory</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="DifferentiableMaterial">
+<a class="viewcode-back" href="../../api/diff_physics.html#diffsim.diff_physics.DifferentiableMaterial">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DifferentiableMaterial</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Material model with learnable parameters</span>
+
+<span class="sd">    This class wraps material properties as PyTorch parameters, enabling gradient-based</span>
+<span class="sd">    optimization of material constants. It implements the Stable Neo-Hookean energy</span>
+<span class="sd">    density with learnable Young&#39;s modulus :math:`E` and Poisson&#39;s ratio :math:`\\nu`.</span>
+
+<span class="sd">    The energy density is:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \\Psi(\\mathbf{F}) = \\frac{\\mu}{2}(I_C - 3) - \\mu \\log J + \\frac{\\lambda}{2}(J-1)^2</span>
+
+<span class="sd">    where :math:`\\mu` and :math:`\\lambda` are computed from :math:`E` and :math:`\\nu`.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        youngs_modulus (float): Initial Young&#39;s modulus value</span>
+<span class="sd">        poissons_ratio (float): Initial Poisson&#39;s ratio value</span>
+<span class="sd">        requires_grad (bool): Whether parameters should track gradients (default: True)</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        E (torch.nn.Parameter): Learnable Young&#39;s modulus</span>
+<span class="sd">        nu (torch.nn.Parameter): Learnable Poisson&#39;s ratio</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; material = DifferentiableMaterial(1e5, 0.4, requires_grad=True)</span>
+<span class="sd">        &gt;&gt;&gt; optimizer = torch.optim.Adam(material.parameters(), lr=1e3)</span>
+<span class="sd">        &gt;&gt;&gt; # Run simulation and optimize material.E and material.nu</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="DifferentiableMaterial.__init__">
+<a class="viewcode-back" href="../../api/diff_physics.html#diffsim.diff_physics.DifferentiableMaterial.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">youngs_modulus</span><span class="p">,</span> <span class="n">poissons_ratio</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            youngs_modulus: (scalar or per-element) Young&#39;s modulus</span>
+<span class="sd">            poissons_ratio: (scalar or per-element) Poisson&#39;s ratio</span>
+<span class="sd">            requires_grad: whether to track gradients</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="c1"># Convert to parameters (requires_grad=True by default)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">E</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">youngs_modulus</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
+            <span class="n">requires_grad</span><span class="o">=</span><span class="n">requires_grad</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nu</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">poissons_ratio</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
+            <span class="n">requires_grad</span><span class="o">=</span><span class="n">requires_grad</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">mu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Lamé parameter μ (differentiable)&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">E</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span><span class="p">))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">lam</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Lamé parameter λ (differentiable)&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">E</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span> <span class="o">/</span> <span class="p">((</span><span class="mf">1.0</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span><span class="p">))</span>
+
+<div class="viewcode-block" id="DifferentiableMaterial.energy_density">
+<a class="viewcode-back" href="../../api/diff_physics.html#diffsim.diff_physics.DifferentiableMaterial.energy_density">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">energy_density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">F</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute strain energy (fully differentiable)</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            F: :math:`(M, 3, 3)` deformation gradient</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            psi: :math:`(M,)` energy density</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Stable neo-Hookean energy</span>
+        <span class="n">Ic</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">F</span> <span class="o">*</span> <span class="n">F</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="n">J</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">F</span><span class="p">)</span>
+        <span class="n">J</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">J</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mf">5.0</span><span class="p">)</span>  <span class="c1"># Smooth clamping</span>
+
+        <span class="n">psi</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mu</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">Ic</span> <span class="o">-</span> <span class="mf">3.0</span><span class="p">)</span>
+            <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">mu</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">J</span><span class="p">)</span>
+            <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">lam</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">J</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">psi</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="SpatiallyVaryingMaterial">
+<a class="viewcode-back" href="../../api/diff_physics.html#diffsim.diff_physics.SpatiallyVaryingMaterial">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SpatiallyVaryingMaterial</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Material with spatially varying properties</span>
+
+<span class="sd">    This class allows each element in the mesh to have independent material properties,</span>
+<span class="sd">    enabling optimization of heterogeneous material distributions. Young&#39;s modulus is</span>
+<span class="sd">    parameterized in log-space to ensure positivity:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        E_i = \\exp(\\log E_i)</span>
+
+<span class="sd">    This is particularly useful for:</span>
+
+<span class="sd">    - Inverse material identification problems</span>
+<span class="sd">    - Topology optimization</span>
+<span class="sd">    - Functionally graded material design</span>
+<span class="sd">    - Material distribution learning</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        num_elements (int): Number of elements in the mesh</span>
+<span class="sd">        base_youngs (float): Initial Young&#39;s modulus for all elements (default: 1e5)</span>
+<span class="sd">        base_poisson (float): Poisson&#39;s ratio for all elements (default: 0.4)</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        log_E (torch.nn.Parameter): Log-space Young&#39;s modulus per element :math:`(M,)`</span>
+<span class="sd">        nu (torch.nn.Parameter): Poisson&#39;s ratio per element :math:`(M,)`</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; material = SpatiallyVaryingMaterial(mesh.num_elements, 1e5, 0.4)</span>
+<span class="sd">        &gt;&gt;&gt; optimizer = torch.optim.Adam([material.log_E], lr=0.01)</span>
+<span class="sd">        &gt;&gt;&gt; # Optimize spatial distribution of stiffness</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SpatiallyVaryingMaterial.__init__">
+<a class="viewcode-back" href="../../api/diff_physics.html#diffsim.diff_physics.SpatiallyVaryingMaterial.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_elements</span><span class="p">,</span> <span class="n">base_youngs</span><span class="o">=</span><span class="mf">1e5</span><span class="p">,</span> <span class="n">base_poisson</span><span class="o">=</span><span class="mf">0.4</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            num_elements: number of elements in mesh</span>
+<span class="sd">            base_youngs: base Young&#39;s modulus</span>
+<span class="sd">            base_poisson: base Poisson&#39;s ratio</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="c1"># Per-element moduli (log-space for positivity)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_E</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span>
+            <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">num_elements</span><span class="p">)</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">base_youngs</span><span class="p">))</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nu</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">num_elements</span><span class="p">)</span> <span class="o">*</span> <span class="n">base_poisson</span><span class="p">)</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">E</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Young&#39;s modulus (always positive via exp)&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">log_E</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">mu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Per-element μ&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">E</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span><span class="p">))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">lam</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Per-element λ&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">E</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span> <span class="o">/</span> <span class="p">((</span><span class="mf">1.0</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu</span><span class="p">))</span>
+
+<div class="viewcode-block" id="SpatiallyVaryingMaterial.energy_density">
+<a class="viewcode-back" href="../../api/diff_physics.html#diffsim.diff_physics.SpatiallyVaryingMaterial.energy_density">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">energy_density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">F</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute strain energy per element (fully differentiable)</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            F: :math:`(M, 3, 3)` deformation gradient</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            psi: :math:`(M,)` energy density</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Stable neo-Hookean energy</span>
+        <span class="n">Ic</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">F</span> <span class="o">*</span> <span class="n">F</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="n">J</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">F</span><span class="p">)</span>
+        <span class="n">J</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">J</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mf">5.0</span><span class="p">)</span>  <span class="c1"># Smooth clamping</span>
+
+        <span class="c1"># Per-element material properties</span>
+        <span class="n">mu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mu</span>
+        <span class="n">lam</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lam</span>
+
+        <span class="n">psi</span> <span class="o">=</span> <span class="n">mu</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">Ic</span> <span class="o">-</span> <span class="mf">3.0</span><span class="p">)</span> <span class="o">-</span> <span class="n">mu</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">J</span><span class="p">)</span> <span class="o">+</span> <span class="n">lam</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="p">(</span><span class="n">J</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+
+        <span class="k">return</span> <span class="n">psi</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="smooth_step">
+<a class="viewcode-back" href="../../api/diff_physics.html#diffsim.diff_physics.smooth_step">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">smooth_step</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">edge</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Smooth step function (differentiable replacement for if/else)</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        x: input</span>
+<span class="sd">        edge: center of transition</span>
+<span class="sd">        width: width of transition</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        smooth step from 0 to 1</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">((</span><span class="n">x</span> <span class="o">-</span> <span class="n">edge</span><span class="p">)</span> <span class="o">/</span> <span class="n">width</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">t</span> <span class="o">*</span> <span class="n">t</span> <span class="o">*</span> <span class="p">(</span><span class="mf">3.0</span> <span class="o">-</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>  <span class="c1"># Hermite interpolation</span></div>
+
+
+
+<div class="viewcode-block" id="log_barrier">
+<a class="viewcode-back" href="../../api/diff_physics.html#diffsim.diff_physics.log_barrier">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">log_barrier</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Smooth log barrier: -log(x) for x &gt; eps, quadratic for x &lt; eps</span>
+
+<span class="sd">    C^1 continuous approximation of log barrier for AD</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        x: input (must be positive)</span>
+<span class="sd">        eps: smoothing parameter</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        barrier value</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Smooth transition</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">eps</span>
+
+    <span class="c1"># Log barrier for x &gt; eps</span>
+    <span class="n">log_part</span> <span class="o">=</span> <span class="o">-</span><span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mf">1e-12</span><span class="p">)</span>
+
+    <span class="c1"># Quadratic extension for x &lt; eps (maintains C^1 continuity)</span>
+    <span class="n">quad_part</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="o">-</span><span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">eps</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">))</span>
+        <span class="o">+</span> <span class="p">(</span><span class="n">eps</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="n">eps</span>
+        <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">((</span><span class="n">eps</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="n">eps</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="n">log_part</span><span class="p">,</span> <span class="n">quad_part</span><span class="p">)</span></div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Rishit Dagli
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Rishit Dagli.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,674 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>diffsim.solver &#8212; ⚙️ torch-diffsim</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=a1637f0b"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs"></script>
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+    <script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";
+window.addEventListener("load", () => mermaid.run());
+</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/diffsim/solver';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">⚙️ torch-diffsim</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Rishit-dagli/torch-diffsim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    ⚙️ torch-diffsim
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quickstart Guide</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../how_it_works.html">How does torch-diffsim work?</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../how_it_works/simulation.html">Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../how_it_works/differentiation.html">Differentiation</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../citation.html">Citation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../api/mesh.html">Mesh</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/material.html">Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/solver.html">Solver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/simulator.html">Simulator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/diff_physics.html">Differentiable Physics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/diff_simulator.html">Differentiable Simulator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/collision.html">Collision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/visualizer.html">Visualizer</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Rishit-dagli/torch-diffsim" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Rishit-dagli/torch-diffsim/issues/new?title=Issue%20on%20page%20%2F_modules/diffsim/solver.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for diffsim.solver</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Time integration solvers for physics simulation</span>
+
+<span class="sd">This module implements semi-implicit (symplectic Euler) time integration for</span>
+<span class="sd">tetrahedral FEM simulation. The integration scheme updates velocities using</span>
+<span class="sd">forces at the current position, then updates positions using the new velocities:</span>
+
+<span class="sd">.. math::</span>
+
+<span class="sd">    \\mathbf{v}^{n+1} = \\mathbf{v}^n + \\Delta t \\, \\mathbf{M}^{-1} \\mathbf{f}(\\mathbf{x}^n)</span>
+
+<span class="sd">    \\mathbf{x}^{n+1} = \\mathbf{x}^n + \\Delta t \\, \\mathbf{v}^{n+1}</span>
+
+<span class="sd">This is a first-order symplectic method that provides better energy conservation</span>
+<span class="sd">than explicit Euler integration.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+
+
+<div class="viewcode-block" id="SemiImplicitSolver">
+<a class="viewcode-back" href="../../api/solver.html#diffsim.solver.SemiImplicitSolver">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SemiImplicitSolver</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Semi-implicit (symplectic Euler) solver for dynamic FEM simulation</span>
+
+<span class="sd">    This solver implements a first-order symplectic integration scheme. Velocities</span>
+<span class="sd">    are updated using forces at the current position, then positions are updated</span>
+<span class="sd">    using the new velocities. This scheme is symplectic (preserves phase space</span>
+<span class="sd">    volume) and provides better energy conservation than explicit methods.</span>
+
+<span class="sd">    The integration follows:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \\mathbf{v}^{n+1} &amp;= \\mathbf{v}^n + h \\, \\mathbf{M}^{-1} (\\mathbf{f}_{\\text{elastic}}(\\mathbf{x}^n) + \\mathbf{f}_{\\text{gravity}} + \\mathbf{f}_{\\text{contact}})</span>
+
+<span class="sd">        \\mathbf{x}^{n+1} &amp;= \\mathbf{x}^n + h \\, \\mathbf{v}^{n+1}</span>
+
+<span class="sd">    where :math:`h = \\Delta t / \\text{substeps}` is the substep size.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        dt (float): Time step size in seconds</span>
+<span class="sd">        gravity_value (float): Gravity acceleration in m/s² (negative for downward)</span>
+<span class="sd">        damping (float): Velocity damping coefficient (0-1, typically ~0.99)</span>
+<span class="sd">        substeps (int): Number of substeps per timestep for stability</span>
+<span class="sd">        enable_self_collision (bool): Whether to compute self-collision forces</span>
+<span class="sd">        collision_method (str): Collision detection method (&#39;simplified&#39; or &#39;ipc&#39;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SemiImplicitSolver.__init__">
+<a class="viewcode-back" href="../../api/solver.html#diffsim.solver.SemiImplicitSolver.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">dt</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+        <span class="n">gravity</span><span class="o">=-</span><span class="mf">9.8</span><span class="p">,</span>
+        <span class="n">damping</span><span class="o">=</span><span class="mf">0.99</span><span class="p">,</span>
+        <span class="n">substeps</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+        <span class="n">enable_self_collision</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">collision_method</span><span class="o">=</span><span class="s2">&quot;simplified&quot;</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize solver</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            dt: time step size</span>
+<span class="sd">            gravity: gravity acceleration (m/s^2)</span>
+<span class="sd">            damping: velocity damping factor</span>
+<span class="sd">            substeps: number of substeps per timestep</span>
+<span class="sd">            enable_self_collision: enable self-collision detection</span>
+<span class="sd">            collision_method: &#39;simplified&#39; (fast) or &#39;ipc&#39; (accurate but slower)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dt</span> <span class="o">=</span> <span class="n">dt</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gravity_value</span> <span class="o">=</span> <span class="n">gravity</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gravity</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Will be set to correct device on first step</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">damping</span> <span class="o">=</span> <span class="n">damping</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">substeps</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">substeps</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enable_self_collision</span> <span class="o">=</span> <span class="n">enable_self_collision</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">collision_method</span> <span class="o">=</span> <span class="n">collision_method</span>
+
+        <span class="c1"># Collision handler (lazy init)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_collision_handler</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="SemiImplicitSolver.step">
+<a class="viewcode-back" href="../../api/solver.html#diffsim.solver.SemiImplicitSolver.step">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mesh</span><span class="p">,</span> <span class="n">material</span><span class="p">,</span> <span class="n">positions</span><span class="p">,</span> <span class="n">velocities</span><span class="p">,</span> <span class="n">masses</span><span class="p">,</span> <span class="n">fixed_vertices</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform one semi-implicit time step with stability controls</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            mesh: TetrahedralMesh object</span>
+<span class="sd">            material: Material model (e.g., StableNeoHookean)</span>
+<span class="sd">            positions: :math:`(N, 3)` current positions</span>
+<span class="sd">            velocities: :math:`(N, 3)` current velocities</span>
+<span class="sd">            masses: :math:`(N,)` vertex masses</span>
+<span class="sd">            fixed_vertices: list of fixed vertex indices</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            new_positions: :math:`(N, 3)` updated positions</span>
+<span class="sd">            new_velocities: :math:`(N, 3)` updated velocities</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">device</span> <span class="o">=</span> <span class="n">positions</span><span class="o">.</span><span class="n">device</span>
+
+        <span class="c1"># Initialize gravity tensor on correct device (only once)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">gravity</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">gravity</span><span class="o">.</span><span class="n">device</span> <span class="o">!=</span> <span class="n">device</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">gravity</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span>
+                <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gravity_value</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">positions</span><span class="o">.</span><span class="n">dtype</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Substepping for stability</span>
+        <span class="n">x_cur</span> <span class="o">=</span> <span class="n">positions</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>  <span class="c1"># Clone to avoid modifying input</span>
+        <span class="n">v_cur</span> <span class="o">=</span> <span class="n">velocities</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dt</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">substeps</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">substeps</span><span class="p">):</span>
+            <span class="c1"># Compute forces at current position</span>
+            <span class="n">forces</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_forces</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">material</span><span class="p">,</span> <span class="n">x_cur</span><span class="p">,</span> <span class="n">masses</span><span class="p">)</span>
+
+            <span class="c1"># Add gravity</span>
+            <span class="n">gravity_force</span> <span class="o">=</span> <span class="n">masses</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">gravity</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">forces</span> <span class="o">+=</span> <span class="n">gravity_force</span>
+
+            <span class="c1"># Update velocity</span>
+            <span class="n">acceleration</span> <span class="o">=</span> <span class="n">forces</span> <span class="o">/</span> <span class="p">(</span><span class="n">masses</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1e-6</span><span class="p">)</span>
+            <span class="n">v_cur</span> <span class="o">=</span> <span class="n">v_cur</span> <span class="o">+</span> <span class="n">h</span> <span class="o">*</span> <span class="n">acceleration</span>
+
+            <span class="c1"># Safety clamp for extreme cases</span>
+            <span class="n">max_velocity</span> <span class="o">=</span> <span class="mf">50.0</span>  <span class="c1"># m/s</span>
+            <span class="n">vel_magnitude</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v_cur</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">vel_scale</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">max_velocity</span> <span class="o">/</span> <span class="p">(</span><span class="n">vel_magnitude</span> <span class="o">+</span> <span class="mf">1e-8</span><span class="p">),</span> <span class="nb">max</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+            <span class="n">v_cur</span> <span class="o">=</span> <span class="n">v_cur</span> <span class="o">*</span> <span class="n">vel_scale</span>
+
+            <span class="c1"># Minimal damping (numerical only)</span>
+            <span class="n">v_cur</span> <span class="o">=</span> <span class="n">v_cur</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">damping</span>
+
+            <span class="c1"># Apply constraints (fixed vertices)</span>
+            <span class="k">if</span> <span class="n">fixed_vertices</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">v_cur</span><span class="p">[</span><span class="n">fixed_vertices</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+            <span class="c1"># Update positions</span>
+            <span class="n">x_cur</span> <span class="o">=</span> <span class="n">x_cur</span> <span class="o">+</span> <span class="n">h</span> <span class="o">*</span> <span class="n">v_cur</span>
+
+            <span class="c1"># Check for NaN/Inf (numerical instability)</span>
+            <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">x_cur</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">()</span> <span class="ow">or</span> <span class="n">torch</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">x_cur</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+                <span class="k">return</span> <span class="n">positions</span><span class="p">,</span> <span class="n">velocities</span> <span class="o">*</span> <span class="mf">0.9</span>  <span class="c1"># Return with damped velocities</span>
+
+            <span class="c1"># Apply position constraints</span>
+            <span class="k">if</span> <span class="n">fixed_vertices</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">x_cur</span><span class="p">[</span><span class="n">fixed_vertices</span><span class="p">]</span> <span class="o">=</span> <span class="n">positions</span><span class="p">[</span><span class="n">fixed_vertices</span><span class="p">]</span>
+
+            <span class="c1"># Handle ground collision (projection + friction)</span>
+            <span class="n">x_cur</span><span class="p">,</span> <span class="n">v_cur</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_handle_ground_collision</span><span class="p">(</span><span class="n">x_cur</span><span class="p">,</span> <span class="n">v_cur</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">x_cur</span><span class="p">,</span> <span class="n">v_cur</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_compute_forces</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mesh</span><span class="p">,</span> <span class="n">material</span><span class="p">,</span> <span class="n">positions</span><span class="p">,</span> <span class="n">masses</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute elastic forces and collision forces</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            mesh: TetrahedralMesh</span>
+<span class="sd">            material: Material model</span>
+<span class="sd">            positions: :math:`(N, 3)` vertex positions</span>
+<span class="sd">            masses: :math:`(N,)` vertex masses</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            forces: :math:`(N, 3)` forces on each vertex</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Compute deformation gradient</span>
+        <span class="n">F</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">compute_deformation_gradient</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span>
+
+        <span class="c1"># Compute elastic forces for each element</span>
+        <span class="n">element_forces</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">compute_elastic_forces</span><span class="p">(</span>
+            <span class="n">F</span><span class="p">,</span> <span class="n">mesh</span><span class="o">.</span><span class="n">Dm_inv</span><span class="p">,</span> <span class="n">mesh</span><span class="o">.</span><span class="n">rest_volume</span>
+        <span class="p">)</span>  <span class="c1"># (M, 4, 3)</span>
+
+        <span class="c1"># Accumulate forces to vertices</span>
+        <span class="n">forces</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+            <span class="n">forces</span><span class="o">.</span><span class="n">index_add_</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">mesh</span><span class="o">.</span><span class="n">tetrahedra</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="n">element_forces</span><span class="p">[:,</span> <span class="n">i</span><span class="p">,</span> <span class="p">:])</span>
+
+        <span class="c1"># Add self-collision forces if enabled</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">enable_self_collision</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collision_handler</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">.collision</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimplifiedCollisionHandler</span><span class="p">,</span> <span class="n">IPCCollisionHandler</span>
+
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">collision_method</span> <span class="o">==</span> <span class="s2">&quot;ipc&quot;</span><span class="p">:</span>
+
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_collision_handler</span> <span class="o">=</span> <span class="n">IPCCollisionHandler</span><span class="p">(</span>
+                        <span class="n">barrier_stiffness</span><span class="o">=</span><span class="mf">1e3</span><span class="p">,</span> <span class="n">dhat</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span> <span class="n">friction_mu</span><span class="o">=</span><span class="mf">0.3</span>
+                    <span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>  <span class="c1"># &#39;simplified&#39;</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_collision_handler</span> <span class="o">=</span> <span class="n">SimplifiedCollisionHandler</span><span class="p">(</span>
+                        <span class="n">collision_distance</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span>
+                        <span class="n">repulsion_stiffness</span><span class="o">=</span><span class="mf">1e4</span><span class="p">,</span>
+                        <span class="n">max_checks_per_frame</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>  <span class="c1"># Reduced for better performance</span>
+                    <span class="p">)</span>
+
+            <span class="n">collision_forces</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collision_handler</span><span class="o">.</span><span class="n">compute_self_collision_forces</span><span class="p">(</span>
+                <span class="n">mesh</span><span class="p">,</span> <span class="n">positions</span>
+            <span class="p">)</span>
+            <span class="n">forces</span> <span class="o">+=</span> <span class="n">collision_forces</span>
+
+        <span class="k">return</span> <span class="n">forces</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_handle_ground_collision</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">positions</span><span class="p">,</span> <span class="n">velocities</span><span class="p">,</span> <span class="n">ground_height</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">restitution</span><span class="o">=</span><span class="mf">0.0</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Handle collision with ground plane</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            positions: :math:`(N, 3)` positions</span>
+<span class="sd">            velocities: :math:`(N, 3)` velocities</span>
+<span class="sd">            ground_height: y-coordinate of ground</span>
+<span class="sd">            restitution: coefficient of restitution</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            positions: :math:`(N, 3)` corrected positions</span>
+<span class="sd">            velocities: :math:`(N, 3)` corrected velocities</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Contact tolerance to avoid chatter</span>
+        <span class="n">eps</span> <span class="o">=</span> <span class="mf">1e-6</span>
+        <span class="n">contact</span> <span class="o">=</span> <span class="n">positions</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">ground_height</span> <span class="o">+</span> <span class="n">eps</span>
+
+        <span class="k">if</span> <span class="n">contact</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+            <span class="c1"># Project to ground plane</span>
+            <span class="n">positions</span><span class="p">[</span><span class="n">contact</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">ground_height</span>
+
+            <span class="c1"># Normal velocity</span>
+            <span class="n">v_n</span> <span class="o">=</span> <span class="n">velocities</span><span class="p">[</span><span class="n">contact</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+
+            <span class="c1"># Restitution only for significant impacts, else stick</span>
+            <span class="n">small_impact</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">v_n</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.02</span>
+            <span class="n">v_n</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">v_n</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">restitution</span> <span class="o">*</span> <span class="n">v_n</span><span class="p">,</span> <span class="n">v_n</span><span class="p">)</span>
+            <span class="n">v_n</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">small_impact</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">v_n</span><span class="p">),</span> <span class="n">v_n</span><span class="p">)</span>
+            <span class="n">velocities</span><span class="p">[</span><span class="n">contact</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">v_n</span>
+
+            <span class="c1"># Tangential friction: static threshold then kinetic damping</span>
+            <span class="n">v_t</span> <span class="o">=</span> <span class="n">velocities</span><span class="p">[</span><span class="n">contact</span><span class="p">][:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]</span>
+            <span class="n">v_t_norm</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v_t</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1e-12</span>
+            <span class="n">v_t_static_thresh</span> <span class="o">=</span> <span class="mf">0.02</span>
+            <span class="c1"># If tangential speed small, stick (zero it)</span>
+            <span class="n">stick</span> <span class="o">=</span> <span class="n">v_t_norm</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">v_t_static_thresh</span>
+            <span class="n">v_t</span><span class="p">[</span><span class="n">stick</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+            <span class="c1"># Else kinetic friction damping</span>
+            <span class="n">mu_k</span> <span class="o">=</span> <span class="mf">0.3</span>
+            <span class="n">v_t</span><span class="p">[</span><span class="o">~</span><span class="n">stick</span><span class="p">]</span> <span class="o">=</span> <span class="n">v_t</span><span class="p">[</span><span class="o">~</span><span class="n">stick</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">mu_k</span><span class="p">)</span>
+            <span class="n">velocities</span><span class="p">[</span><span class="n">contact</span><span class="p">][:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]</span> <span class="o">=</span> <span class="n">v_t</span>
+
+        <span class="k">return</span> <span class="n">positions</span><span class="p">,</span> <span class="n">velocities</span></div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Rishit Dagli
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Rishit Dagli.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

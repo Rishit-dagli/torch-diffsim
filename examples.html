@@ -1,0 +1,736 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Examples &#8212; ⚙️ torch-diffsim</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=a1637f0b"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'examples';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Citation" href="citation.html" />
+    <link rel="prev" title="Differentiation" href="how_it_works/differentiation.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">⚙️ torch-diffsim</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Rishit-dagli/torch-diffsim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    ⚙️ torch-diffsim
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart Guide</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="how_it_works.html">How does torch-diffsim work?</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="how_it_works/simulation.html">Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how_it_works/differentiation.html">Differentiation</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="citation.html">Citation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="api/mesh.html">Mesh</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/material.html">Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/solver.html">Solver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/simulator.html">Simulator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/diff_physics.html">Differentiable Physics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/diff_simulator.html">Differentiable Simulator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/collision.html">Collision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/visualizer.html">Visualizer</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Rishit-dagli/torch-diffsim" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Rishit-dagli/torch-diffsim/edit/main/docs/source/examples.rst" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Rishit-dagli/torch-diffsim/issues/new?title=Issue%20on%20page%20%2Fexamples.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/examples.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Examples</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-differentiable-simulation">Basic Differentiable Simulation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#material-parameter-identification">Material Parameter Identification</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spatially-varying-material-optimization">Spatially Varying Material Optimization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bunny-demo-visualization">Bunny Demo (Visualization)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">Next Steps</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="examples">
+<h1>Examples<a class="headerlink" href="#examples" title="Link to this heading">#</a></h1>
+<p>This page provides detailed walkthroughs of the example scripts included with torch-diffsim. All examples can be found in the <code class="docutils literal notranslate"><span class="pre">examples/</span></code> directory of the repository.</p>
+<section id="basic-differentiable-simulation">
+<h2>Basic Differentiable Simulation<a class="headerlink" href="#basic-differentiable-simulation" title="Link to this heading">#</a></h2>
+<p><strong>File</strong>: <a class="reference external" href="https://github.com/Rishit-dagli/torch-diffsim/blob/main/examples/demo_diff_simple.py">examples/demo_diff_simple.py</a></p>
+<p>This example demonstrates the fundamentals of differentiable simulation in torch-diffsim. It covers three key concepts:</p>
+<ol class="arabic">
+<li><p>Energy and Gradients</p>
+<p>Shows how gradients flow through elastic energy computation with respect to both material parameters and vertex positions.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute elastic energy</span>
+<span class="n">F</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">compute_deformation_gradient</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span>
+<span class="n">energy_density</span> <span class="o">=</span> <span class="n">material</span><span class="o">.</span><span class="n">energy_density</span><span class="p">(</span><span class="n">F</span><span class="p">)</span>
+<span class="n">total_energy</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">energy_density</span> <span class="o">*</span> <span class="n">mesh</span><span class="o">.</span><span class="n">rest_volume</span><span class="p">)</span>
+
+<span class="c1"># Backward pass</span>
+<span class="n">total_energy</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+
+<span class="c1"># Gradients are now available</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;∂E/∂E_young: </span><span class="si">{</span><span class="n">material</span><span class="o">.</span><span class="n">E</span><span class="o">.</span><span class="n">grad</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;∂E/∂x norm: </span><span class="si">{</span><span class="n">positions</span><span class="o">.</span><span class="n">grad</span><span class="o">.</span><span class="n">norm</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>Material Parameter Optimization</p>
+<p>Demonstrates a simple optimization loop to recover material properties from observed deformation:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">([</span><span class="n">learned_material</span><span class="o">.</span><span class="n">E</span><span class="p">],</span> <span class="n">lr</span><span class="o">=</span><span class="mf">5e3</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">iteration</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">):</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+    <span class="n">simulator</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+    <span class="c1"># Run simulation</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
+        <span class="n">simulator</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+    <span class="c1"># Compute loss and optimize</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">simulator</span><span class="o">.</span><span class="n">positions</span> <span class="o">-</span> <span class="n">target</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+</pre></div>
+</div>
+</li>
+<li><p>Different Loss Functions</p>
+<p>Compares various loss functions for matching simulated and target positions:</p>
+<ul class="simple">
+<li><p>Mean squared error (MSE)</p></li>
+<li><p>L1 loss</p></li>
+<li><p>Per-vertex distance metrics</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>Running the example</strong>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>examples/demo_diff_simple.py
+</pre></div>
+</div>
+<p><strong>Expected output</strong>: The script will print gradient information, optimization progress, and final material parameter estimates.</p>
+</section>
+<section id="material-parameter-identification">
+<h2>Material Parameter Identification<a class="headerlink" href="#material-parameter-identification" title="Link to this heading">#</a></h2>
+<p><strong>File</strong>: <a class="reference external" href="https://github.com/Rishit-dagli/torch-diffsim/blob/main/examples/demo_diff_material.py">examples/demo_diff_material.py</a></p>
+<p>This example tackles the inverse problem of identifying material properties (Young’s modulus and Poisson’s ratio) from observed deformation.</p>
+<p>Problem Setup:</p>
+<ol class="arabic simple">
+<li><p>Create a ground truth simulation with known material parameters</p></li>
+<li><p>Run the simulation to generate target observations</p></li>
+<li><p>Initialize a learnable material with incorrect parameters</p></li>
+<li><p>Optimize the parameters to match the target deformation</p></li>
+</ol>
+<p>Key Features:</p>
+<ul class="simple">
+<li><p>Fixed boundary conditions: Bottom vertices are constrained to simulate a fixed support</p></li>
+<li><p>Multi-parameter optimization: Jointly optimizes both Young’s modulus (<span class="math notranslate nohighlight">\(E\)</span>) and Poisson’s ratio (<span class="math notranslate nohighlight">\(\nu\)</span>)</p></li>
+<li><p>Parameter clamping: Ensures physical validity by clamping to reasonable ranges</p></li>
+<li><p>Convergence visualization: Generates plots showing loss, parameter recovery, and displacement matching</p></li>
+<li><p>Convergence visualization: Generates plots showing loss, parameter recovery, and displacement matching</p></li>
+</ul>
+<p>Code Snippet:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create learnable material</span>
+<span class="n">learned_material</span> <span class="o">=</span> <span class="n">DifferentiableMaterial</span><span class="p">(</span>
+    <span class="n">initial_E</span><span class="p">,</span> <span class="n">initial_nu</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+
+<span class="c1"># Optimize both parameters</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">learned_material</span><span class="o">.</span><span class="n">E</span><span class="p">,</span> <span class="n">learned_material</span><span class="o">.</span><span class="n">nu</span><span class="p">],</span>
+    <span class="n">lr</span><span class="o">=</span><span class="mf">1e3</span>
+<span class="p">)</span>
+
+<span class="k">for</span> <span class="nb">iter</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+    <span class="n">learned_sim</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+    <span class="c1"># Forward simulation</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">30</span><span class="p">):</span>
+        <span class="n">learned_sim</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+    <span class="c1"># Match target</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">learned_sim</span><span class="o">.</span><span class="n">positions</span> <span class="o">-</span> <span class="n">target_positions</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+    <span class="c1"># Clamp to physical range</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+        <span class="n">learned_material</span><span class="o">.</span><span class="n">E</span><span class="o">.</span><span class="n">clamp_</span><span class="p">(</span><span class="mf">1e4</span><span class="p">,</span> <span class="mf">1e7</span><span class="p">)</span>
+        <span class="n">learned_material</span><span class="o">.</span><span class="n">nu</span><span class="o">.</span><span class="n">clamp_</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.49</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Running the example</strong>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>examples/demo_diff_material.py
+</pre></div>
+</div>
+<p><strong>Output</strong>: The script generates a figure <code class="docutils literal notranslate"><span class="pre">material_identification.png</span></code> showing:</p>
+<ul class="simple">
+<li><p>Loss convergence over iterations</p></li>
+<li><p>Young’s modulus recovery trajectory</p></li>
+<li><p>Poisson’s ratio recovery trajectory</p></li>
+<li><p>True vs. learned displacement comparison</p></li>
+</ul>
+</section>
+<section id="spatially-varying-material-optimization">
+<h2>Spatially Varying Material Optimization<a class="headerlink" href="#spatially-varying-material-optimization" title="Link to this heading">#</a></h2>
+<p><strong>File</strong>: <a class="reference external" href="https://github.com/Rishit-dagli/torch-diffsim/blob/main/examples/demo_diff_spatial.py">examples/demo_diff_spatial.py</a></p>
+<p>This advanced example demonstrates optimization of spatially heterogeneous material properties. Instead of uniform material parameters, each element has its own Young’s modulus value.</p>
+<p>Problem Setup:</p>
+<ol class="arabic simple">
+<li><p>Create a target with spatially varying stiffness (e.g., stiffer on left, softer on right)</p></li>
+<li><p>Initialize a learnable material with uniform (incorrect) stiffness</p></li>
+<li><p>Optimize per-element stiffness to match target deformation</p></li>
+<li><p>Apply spatial smoothness regularization</p></li>
+</ol>
+<p>Key Features:</p>
+<ul class="simple">
+<li><p>Per-element parameters: Each tetrahedral element has independent material properties</p></li>
+<li><p>Spatial regularization: Tikhonov smoothness penalty prevents noisy solutions</p></li>
+<li><p>Correlation metrics: Tracks how well the learned distribution matches the target</p></li>
+<li><p>Visualization: Plots spatial stiffness distribution along coordinate axes</p></li>
+</ul>
+<p>Code Snippet:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create spatially varying material</span>
+<span class="n">learned_material</span> <span class="o">=</span> <span class="n">SpatiallyVaryingMaterial</span><span class="p">(</span>
+    <span class="n">mesh</span><span class="o">.</span><span class="n">num_elements</span><span class="p">,</span>
+    <span class="n">base_youngs</span><span class="o">=</span><span class="mf">2e5</span><span class="p">,</span>  <span class="c1"># Uniform initial guess</span>
+    <span class="n">base_poisson</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span>
+<span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+<span class="c1"># Optimize with regularization</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">([</span><span class="n">learned_material</span><span class="o">.</span><span class="n">log_E</span><span class="p">],</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="nb">iter</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">200</span><span class="p">):</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+
+    <span class="c1"># Position matching loss</span>
+    <span class="n">pos_loss</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">learned_sim</span><span class="o">.</span><span class="n">positions</span> <span class="o">-</span> <span class="n">target_positions</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="c1"># Spatial smoothness regularization</span>
+    <span class="n">smoothness_loss</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">mesh</span><span class="o">.</span><span class="n">num_elements</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">smoothness_loss</span> <span class="o">+=</span> <span class="p">(</span>
+            <span class="n">learned_material</span><span class="o">.</span><span class="n">log_E</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">learned_material</span><span class="o">.</span><span class="n">log_E</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="n">smoothness_loss</span> <span class="o">=</span> <span class="mf">1e-3</span> <span class="o">*</span> <span class="n">smoothness_loss</span> <span class="o">/</span> <span class="n">mesh</span><span class="o">.</span><span class="n">num_elements</span>
+
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">pos_loss</span> <span class="o">+</span> <span class="n">smoothness_loss</span>
+    <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>Running the example</strong>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>examples/demo_diff_spatial.py
+</pre></div>
+</div>
+<p><strong>Output</strong>: Generates <code class="docutils literal notranslate"><span class="pre">spatial_material_optimization.png</span></code> showing:</p>
+<ul class="simple">
+<li><p>Loss convergence</p></li>
+<li><p>Correlation between learned and target distributions</p></li>
+<li><p>Per-element stiffness scatter plot</p></li>
+<li><p>Spatial stiffness profile along X-axis</p></li>
+</ul>
+</section>
+<section id="bunny-demo-visualization">
+<h2>Bunny Demo (Visualization)<a class="headerlink" href="#bunny-demo-visualization" title="Link to this heading">#</a></h2>
+<p><strong>File</strong>: <a class="reference external" href="https://github.com/Rishit-dagli/torch-diffsim/blob/main/examples/demo_bunny.py">examples/demo_bunny.py</a></p>
+<p>This example demonstrates standard (non-differentiable) simulation with 3D visualization using Polyscope.</p>
+<p>Features:</p>
+<ul class="simple">
+<li><p>Loading a complex tetrahedral mesh (Stanford Bunny)</p></li>
+<li><p>Interactive visualization of deformation</p></li>
+<li><p>Collision detection with ground plane</p></li>
+<li><p>Real-time simulation display</p></li>
+</ul>
+<p>Running the example:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>examples/demo_bunny.py
+</pre></div>
+</div>
+<p>Output: Opens an interactive Polyscope window where you can view the deformation of the bunny.</p>
+</section>
+<section id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Explore the <a class="reference internal" href="api/diff_physics.html"><span class="doc">Differentiable Physics</span></a> documentation for advanced features</p></li>
+<li><p>Check out the <a class="reference internal" href="quickstart.html"><span class="doc">Quickstart Guide</span></a> guide for more basic examples</p></li>
+<li><p>Visit the <a class="reference external" href="https://github.com/Rishit-dagli/torch-diffsim">GitHub repository</a> for more examples and updates</p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="how_it_works/differentiation.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Differentiation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="citation.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Citation</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-differentiable-simulation">Basic Differentiable Simulation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#material-parameter-identification">Material Parameter Identification</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spatially-varying-material-optimization">Spatially Varying Material Optimization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bunny-demo-visualization">Bunny Demo (Visualization)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">Next Steps</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Rishit Dagli
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Rishit Dagli.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

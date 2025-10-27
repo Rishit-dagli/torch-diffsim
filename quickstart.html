@@ -1,0 +1,814 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Quickstart Guide &#8212; ⚙️ torch-diffsim</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=a1637f0b"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'quickstart';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="How does torch-diffsim work?" href="how_it_works.html" />
+    <link rel="prev" title="Installation" href="installation.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">⚙️ torch-diffsim</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Rishit-dagli/torch-diffsim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    ⚙️ torch-diffsim
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Quickstart Guide</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="how_it_works.html">How does torch-diffsim work?</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="how_it_works/simulation.html">Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="how_it_works/differentiation.html">Differentiation</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="citation.html">Citation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="api/mesh.html">Mesh</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/material.html">Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/solver.html">Solver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/simulator.html">Simulator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/diff_physics.html">Differentiable Physics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/diff_simulator.html">Differentiable Simulator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/collision.html">Collision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/visualizer.html">Visualizer</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Rishit-dagli/torch-diffsim" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Rishit-dagli/torch-diffsim/edit/main/docs/source/quickstart.rst" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Rishit-dagli/torch-diffsim/issues/new?title=Issue%20on%20page%20%2Fquickstart.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/quickstart.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Quickstart Guide</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-concepts">Basic Concepts</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-simulation">Standard Simulation</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-simple-simulation">Creating a Simple Simulation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-custom-meshes">Loading Custom Meshes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualization">Visualization</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#differentiable-simulation">Differentiable Simulation</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-differentiable-example">Basic Differentiable Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#material-parameter-optimization">Material Parameter Optimization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spatially-varying-materials">Spatially Varying Materials</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#memory-efficient-rollouts">Memory-Efficient Rollouts</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contact-and-collision">Contact and Collision</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">Next Steps</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="quickstart-guide">
+<h1>Quickstart Guide<a class="headerlink" href="#quickstart-guide" title="Link to this heading">#</a></h1>
+<p>This guide will help you get started with torch-diffsim by walking through the basic concepts and providing simple examples.</p>
+<section id="basic-concepts">
+<h2>Basic Concepts<a class="headerlink" href="#basic-concepts" title="Link to this heading">#</a></h2>
+<p>torch-diffsim is built around a few core concepts:</p>
+<ul class="simple">
+<li><p><strong>Mesh</strong>: Represents the geometry of your simulated object using tetrahedral elements</p></li>
+<li><p><strong>Material</strong>: Defines the material properties (e.g., Young’s modulus <span class="math notranslate nohighlight">\(E\)</span>, Poisson’s ratio <span class="math notranslate nohighlight">\(\nu\)</span>)</p></li>
+<li><p><strong>Solver</strong>: Handles the semi-implicit time integration and physics computation</p></li>
+<li><p><strong>Simulator</strong>: Coordinates the simulation loop and maintains state</p></li>
+</ul>
+<section id="background">
+<h3>Background<a class="headerlink" href="#background" title="Link to this heading">#</a></h3>
+<p><strong>Time Integration</strong>: torch-diffsim uses a semi-implicit (symplectic Euler) integrator:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{v}^{n+1} &amp;= \mathbf{v}^n + \Delta t \, \mathbf{M}^{-1} \mathbf{f}(\mathbf{x}^n) \\
+\mathbf{x}^{n+1} &amp;= \mathbf{x}^n + \Delta t \, \mathbf{v}^{n+1}\end{split}\]</div>
+<p><strong>Elastic Forces</strong>: Forces are derived from the strain energy density <span class="math notranslate nohighlight">\(\Psi(\mathbf{F})\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{f} = -\frac{\partial}{\partial \mathbf{x}} \int_\Omega \Psi(\mathbf{F}(\mathbf{x})) \, dV\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{F} = \frac{\partial \mathbf{x}}{\partial \mathbf{X}}\)</span> is the deformation gradient mapping from rest space to current space.</p>
+<p><strong>Stable Neo-Hookean Model</strong>: The energy density is given by:</p>
+<div class="math notranslate nohighlight">
+\[\Psi(\mathbf{F}) = \frac{\mu}{2}(I_C - 3) - \mu \log J + \frac{\lambda}{2}(J-1)^2\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(I_C = \text{tr}(\mathbf{F}^T\mathbf{F}) = \|\mathbf{F}\|_F^2\)</span> is the first invariant</p></li>
+<li><p><span class="math notranslate nohighlight">\(J = \det(\mathbf{F})\)</span> is the volume ratio (Jacobian determinant)</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mu = \frac{E}{2(1+\nu)}\)</span> is the first Lamé parameter (shear modulus)</p></li>
+<li><p><span class="math notranslate nohighlight">\(\lambda = \frac{E\nu}{(1+\nu)(1-2\nu)}\)</span> is the second Lamé parameter</p></li>
+</ul>
+<p>This formulation ensures stability even under large deformations and element inversion.</p>
+</section>
+</section>
+<section id="standard-simulation">
+<h2>Standard Simulation<a class="headerlink" href="#standard-simulation" title="Link to this heading">#</a></h2>
+<section id="creating-a-simple-simulation">
+<h3>Creating a Simple Simulation<a class="headerlink" href="#creating-a-simple-simulation" title="Link to this heading">#</a></h3>
+<p>Here’s a minimal example to run a standard (non-differentiable) simulation:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">diffsim</span><span class="w"> </span><span class="kn">import</span> <span class="n">TetrahedralMesh</span><span class="p">,</span> <span class="n">StableNeoHookean</span><span class="p">,</span> <span class="n">SemiImplicitSolver</span><span class="p">,</span> <span class="n">Simulator</span>
+
+<span class="c1"># Create or load a mesh</span>
+<span class="n">mesh</span> <span class="o">=</span> <span class="n">TetrahedralMesh</span><span class="o">.</span><span class="n">create_cube</span><span class="p">(</span><span class="n">resolution</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+
+<span class="c1"># Or load from a file</span>
+<span class="c1"># mesh = TetrahedralMesh.load_from_msh(&quot;path/to/mesh.msh&quot;)</span>
+
+<span class="c1"># Define material properties</span>
+<span class="n">material</span> <span class="o">=</span> <span class="n">StableNeoHookean</span><span class="p">(</span><span class="n">E</span><span class="o">=</span><span class="mf">1e5</span><span class="p">,</span> <span class="n">nu</span><span class="o">=</span><span class="mf">0.45</span><span class="p">)</span>  <span class="c1"># E: Young&#39;s modulus, nu: Poisson&#39;s ratio</span>
+
+<span class="c1"># Create solver and simulator</span>
+<span class="n">solver</span> <span class="o">=</span> <span class="n">SemiImplicitSolver</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">material</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="n">simulator</span> <span class="o">=</span> <span class="n">Simulator</span><span class="p">(</span><span class="n">solver</span><span class="p">)</span>
+
+<span class="c1"># Run simulation steps</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+    <span class="n">simulator</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Step </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: Energy = </span><span class="si">{</span><span class="n">simulator</span><span class="o">.</span><span class="n">compute_energy</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="loading-custom-meshes">
+<h3>Loading Custom Meshes<a class="headerlink" href="#loading-custom-meshes" title="Link to this heading">#</a></h3>
+<p>You can load tetrahedral meshes in <cite>.msh</cite> format (Gmsh):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mesh</span> <span class="o">=</span> <span class="n">TetrahedralMesh</span><span class="o">.</span><span class="n">load_from_msh</span><span class="p">(</span><span class="s2">&quot;assets/tetmesh/bunny0.msh&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Vertices: </span><span class="si">{</span><span class="n">mesh</span><span class="o">.</span><span class="n">num_vertices</span><span class="si">}</span><span class="s2">, Tetrahedra: </span><span class="si">{</span><span class="n">mesh</span><span class="o">.</span><span class="n">num_tetrahedra</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="visualization">
+<h3>Visualization<a class="headerlink" href="#visualization" title="Link to this heading">#</a></h3>
+<p>torch-diffsim includes built-in visualization using Polyscope:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">diffsim.visualizer</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimulationVisualizer</span>
+
+<span class="c1"># Create visualizer</span>
+<span class="n">viz</span> <span class="o">=</span> <span class="n">SimulationVisualizer</span><span class="p">(</span><span class="n">mesh</span><span class="p">)</span>
+
+<span class="c1"># Run simulation with visualization</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">200</span><span class="p">):</span>
+    <span class="n">simulator</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">5</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">viz</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">simulator</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">positions</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+
+<span class="c1"># Show the visualization window</span>
+<span class="n">viz</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="differentiable-simulation">
+<h2>Differentiable Simulation<a class="headerlink" href="#differentiable-simulation" title="Link to this heading">#</a></h2>
+<p>The key feature of torch-diffsim is its support for differentiable simulation, enabling gradient-based optimization.</p>
+<section id="basic-differentiable-example">
+<h3>Basic Differentiable Example<a class="headerlink" href="#basic-differentiable-example" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">diffsim</span><span class="w"> </span><span class="kn">import</span> <span class="n">TetrahedralMesh</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">diffsim.diff_physics</span><span class="w"> </span><span class="kn">import</span> <span class="n">DifferentiableMaterial</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">diffsim.diff_simulator</span><span class="w"> </span><span class="kn">import</span> <span class="n">DifferentiableSolver</span><span class="p">,</span> <span class="n">DifferentiableSimulator</span>
+
+<span class="n">device</span> <span class="o">=</span> <span class="s2">&quot;cuda&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span>
+
+<span class="c1"># Create mesh</span>
+<span class="n">mesh</span> <span class="o">=</span> <span class="n">TetrahedralMesh</span><span class="o">.</span><span class="n">create_cube</span><span class="p">(</span><span class="n">resolution</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<span class="n">mesh</span><span class="o">.</span><span class="n">_compute_rest_state</span><span class="p">()</span>
+
+<span class="c1"># Create learnable material</span>
+<span class="n">material</span> <span class="o">=</span> <span class="n">DifferentiableMaterial</span><span class="p">(</span><span class="n">E</span><span class="o">=</span><span class="mf">1e5</span><span class="p">,</span> <span class="n">nu</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+<span class="c1"># Create differentiable solver and simulator</span>
+<span class="n">solver</span> <span class="o">=</span> <span class="n">DifferentiableSolver</span><span class="p">(</span><span class="n">dt</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">gravity</span><span class="o">=-</span><span class="mf">9.8</span><span class="p">,</span> <span class="n">damping</span><span class="o">=</span><span class="mf">0.98</span><span class="p">)</span>
+<span class="n">simulator</span> <span class="o">=</span> <span class="n">DifferentiableSimulator</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">material</span><span class="p">,</span> <span class="n">solver</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+
+<span class="c1"># Run simulation</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
+    <span class="n">simulator</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+<span class="c1"># Compute loss (e.g., match target position)</span>
+<span class="n">target_position</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<span class="n">center_of_mass</span> <span class="o">=</span> <span class="n">simulator</span><span class="o">.</span><span class="n">positions</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">loss</span> <span class="o">=</span> <span class="p">((</span><span class="n">center_of_mass</span> <span class="o">-</span> <span class="n">target_position</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="c1"># Backpropagate</span>
+<span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Gradient w.r.t. Young&#39;s modulus: </span><span class="si">{</span><span class="n">material</span><span class="o">.</span><span class="n">E</span><span class="o">.</span><span class="n">grad</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="material-parameter-optimization">
+<h3>Material Parameter Optimization<a class="headerlink" href="#material-parameter-optimization" title="Link to this heading">#</a></h3>
+<p>A common use case is optimizing material properties to match observed behavior:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">diffsim</span><span class="w"> </span><span class="kn">import</span> <span class="n">TetrahedralMesh</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">diffsim.diff_physics</span><span class="w"> </span><span class="kn">import</span> <span class="n">DifferentiableMaterial</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">diffsim.diff_simulator</span><span class="w"> </span><span class="kn">import</span> <span class="n">DifferentiableSolver</span><span class="p">,</span> <span class="n">DifferentiableSimulator</span>
+
+<span class="n">device</span> <span class="o">=</span> <span class="s2">&quot;cuda&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span>
+
+<span class="c1"># Create mesh</span>
+<span class="n">mesh</span> <span class="o">=</span> <span class="n">TetrahedralMesh</span><span class="o">.</span><span class="n">create_cube</span><span class="p">(</span><span class="n">resolution</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<span class="n">mesh</span><span class="o">.</span><span class="n">_compute_rest_state</span><span class="p">()</span>
+
+<span class="c1"># Create target data (simulate with known material)</span>
+<span class="n">true_material</span> <span class="o">=</span> <span class="n">DifferentiableMaterial</span><span class="p">(</span><span class="mf">8e4</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">true_solver</span> <span class="o">=</span> <span class="n">DifferentiableSolver</span><span class="p">(</span><span class="n">dt</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">gravity</span><span class="o">=-</span><span class="mf">9.8</span><span class="p">,</span> <span class="n">damping</span><span class="o">=</span><span class="mf">0.98</span><span class="p">,</span> <span class="n">substeps</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">true_sim</span> <span class="o">=</span> <span class="n">DifferentiableSimulator</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">true_material</span><span class="p">,</span> <span class="n">true_solver</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
+    <span class="n">true_sim</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">true_sim</span><span class="o">.</span><span class="n">positions</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
+
+<span class="c1"># Initialize learnable material with wrong guess</span>
+<span class="n">material</span> <span class="o">=</span> <span class="n">DifferentiableMaterial</span><span class="p">(</span><span class="mf">2e5</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">solver</span> <span class="o">=</span> <span class="n">DifferentiableSolver</span><span class="p">(</span><span class="n">dt</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">gravity</span><span class="o">=-</span><span class="mf">9.8</span><span class="p">,</span> <span class="n">damping</span><span class="o">=</span><span class="mf">0.98</span><span class="p">,</span> <span class="n">substeps</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">simulator</span> <span class="o">=</span> <span class="n">DifferentiableSimulator</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">material</span><span class="p">,</span> <span class="n">solver</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+
+<span class="c1"># Optimize</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">([</span><span class="n">material</span><span class="o">.</span><span class="n">E</span><span class="p">],</span> <span class="n">lr</span><span class="o">=</span><span class="mf">5e3</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">iteration</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">):</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+    <span class="n">simulator</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
+
+    <span class="c1"># Forward simulation</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
+        <span class="n">simulator</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+    <span class="c1"># Compute loss</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">simulator</span><span class="o">.</span><span class="n">positions</span> <span class="o">-</span> <span class="n">target</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="c1"># Backward pass</span>
+    <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+    <span class="c1"># Clamp values to physical range</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+        <span class="n">material</span><span class="o">.</span><span class="n">E</span><span class="o">.</span><span class="n">clamp_</span><span class="p">(</span><span class="mf">1e4</span><span class="p">,</span> <span class="mf">5e5</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">iteration</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Iter </span><span class="si">{</span><span class="n">iteration</span><span class="si">}</span><span class="s2">: Loss = </span><span class="si">{</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">, E = </span><span class="si">{</span><span class="n">material</span><span class="o">.</span><span class="n">E</span><span class="o">.</span><span class="n">item</span><span class="p">()</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="spatially-varying-materials">
+<h3>Spatially Varying Materials<a class="headerlink" href="#spatially-varying-materials" title="Link to this heading">#</a></h3>
+<p>You can also optimize materials that vary across the mesh:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">diffsim.diff_physics</span><span class="w"> </span><span class="kn">import</span> <span class="n">SpatiallyVaryingMaterial</span>
+
+<span class="c1"># Create spatially varying material</span>
+<span class="c1"># Grid resolution: number of control points in each dimension</span>
+<span class="n">spatial_material</span> <span class="o">=</span> <span class="n">SpatiallyVaryingMaterial</span><span class="p">(</span>
+    <span class="n">base_E</span><span class="o">=</span><span class="mf">1e5</span><span class="p">,</span>
+    <span class="n">base_nu</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span>
+    <span class="n">grid_resolution</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+    <span class="n">E_range</span><span class="o">=</span><span class="p">(</span><span class="mf">5e4</span><span class="p">,</span> <span class="mf">2e5</span><span class="p">),</span>
+    <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+<span class="c1"># The material parameters will be interpolated based on position</span>
+<span class="n">simulator</span> <span class="o">=</span> <span class="n">DifferentiableSimulator</span><span class="p">(</span><span class="n">mesh</span><span class="p">,</span> <span class="n">spatial_material</span><span class="p">,</span> <span class="n">solver</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+
+<span class="c1"># Optimize the spatial distribution</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">spatial_material</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e3</span><span class="p">)</span>
+<span class="c1"># ... run optimization loop</span>
+</pre></div>
+</div>
+</section>
+<section id="memory-efficient-rollouts">
+<h3>Memory-Efficient Rollouts<a class="headerlink" href="#memory-efficient-rollouts" title="Link to this heading">#</a></h3>
+<p>For long simulations, use checkpointed rollouts to save memory:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">diffsim.diff_physics</span><span class="w"> </span><span class="kn">import</span> <span class="n">CheckpointedRollout</span>
+
+<span class="c1"># Create checkpointed rollout function</span>
+<span class="n">rollout</span> <span class="o">=</span> <span class="n">CheckpointedRollout</span><span class="p">(</span><span class="n">simulator</span><span class="p">,</span> <span class="n">checkpoint_every</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># Run for many steps with gradient tracking</span>
+<span class="n">final_state</span> <span class="o">=</span> <span class="n">rollout</span><span class="p">(</span><span class="n">num_steps</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+
+<span class="c1"># Compute loss and backpropagate</span>
+<span class="n">loss</span> <span class="o">=</span> <span class="n">compute_loss</span><span class="p">(</span><span class="n">final_state</span><span class="p">)</span>
+<span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>  <span class="c1"># Uses checkpointing to save memory</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="contact-and-collision">
+<h2>Contact and Collision<a class="headerlink" href="#contact-and-collision" title="Link to this heading">#</a></h2>
+<p>torch-diffsim includes barrier-based collision handling:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">diffsim.diff_physics</span><span class="w"> </span><span class="kn">import</span> <span class="n">DifferentiableBarrierContact</span>
+
+<span class="c1"># Create contact handler</span>
+<span class="n">contact</span> <span class="o">=</span> <span class="n">DifferentiableBarrierContact</span><span class="p">(</span>
+    <span class="n">ground_height</span><span class="o">=-</span><span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">barrier_stiffness</span><span class="o">=</span><span class="mf">1e6</span><span class="p">,</span>
+    <span class="n">barrier_distance</span><span class="o">=</span><span class="mf">0.01</span>
+<span class="p">)</span>
+
+<span class="c1"># Apply contact forces during simulation</span>
+<span class="n">positions</span> <span class="o">=</span> <span class="n">simulator</span><span class="o">.</span><span class="n">positions</span>
+<span class="n">velocities</span> <span class="o">=</span> <span class="n">simulator</span><span class="o">.</span><span class="n">velocities</span>
+
+<span class="n">contact_forces</span> <span class="o">=</span> <span class="n">contact</span><span class="o">.</span><span class="n">compute_forces</span><span class="p">(</span><span class="n">positions</span><span class="p">,</span> <span class="n">velocities</span><span class="p">)</span>
+<span class="c1"># These forces are automatically included in the differentiable simulator</span>
+</pre></div>
+</div>
+</section>
+<section id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Check out the <a class="reference internal" href="examples.html"><span class="doc">Examples</span></a> page for more complete examples</p></li>
+<li><p>Explore the <a class="reference internal" href="api/diff_physics.html"><span class="doc">Differentiable Physics</span></a> API documentation for advanced features</p></li>
+<li><p>Look at the example scripts in the <code class="docutils literal notranslate"><span class="pre">examples/</span></code> directory of the repository</p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="installation.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Installation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="how_it_works.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">How does torch-diffsim work?</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-concepts">Basic Concepts</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#background">Background</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-simulation">Standard Simulation</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-simple-simulation">Creating a Simple Simulation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-custom-meshes">Loading Custom Meshes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualization">Visualization</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#differentiable-simulation">Differentiable Simulation</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-differentiable-example">Basic Differentiable Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#material-parameter-optimization">Material Parameter Optimization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spatially-varying-materials">Spatially Varying Materials</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#memory-efficient-rollouts">Memory-Efficient Rollouts</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contact-and-collision">Contact and Collision</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">Next Steps</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Rishit Dagli
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Rishit Dagli.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

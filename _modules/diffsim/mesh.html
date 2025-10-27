@@ -1,0 +1,629 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>diffsim.mesh &#8212; ⚙️ torch-diffsim</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=a1637f0b"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs"></script>
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+    <script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";
+window.addEventListener("load", () => mermaid.run());
+</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/diffsim/mesh';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">⚙️ torch-diffsim</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Rishit-dagli/torch-diffsim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    ⚙️ torch-diffsim
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quickstart Guide</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../how_it_works.html">How does torch-diffsim work?</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../how_it_works/simulation.html">Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../how_it_works/differentiation.html">Differentiation</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../citation.html">Citation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../api/mesh.html">Mesh</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/material.html">Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/solver.html">Solver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/simulator.html">Simulator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/diff_physics.html">Differentiable Physics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/diff_simulator.html">Differentiable Simulator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/collision.html">Collision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/visualizer.html">Visualizer</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Rishit-dagli/torch-diffsim" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Rishit-dagli/torch-diffsim/issues/new?title=Issue%20on%20page%20%2F_modules/diffsim/mesh.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for diffsim.mesh</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Tetrahedral mesh representation for finite element simulation</span>
+
+<span class="sd">This module provides the TetrahedralMesh class, which represents volumetric geometry</span>
+<span class="sd">using tetrahedral elements. The mesh stores vertex positions and element connectivity,</span>
+<span class="sd">and computes the deformation gradient for each element during simulation.</span>
+
+<span class="sd">The deformation gradient :math:`\\mathbf{F}` maps from the reference (rest) configuration</span>
+<span class="sd">to the current (deformed) configuration:</span>
+
+<span class="sd">.. math::</span>
+
+<span class="sd">    \\mathbf{F} = \\mathbf{D}_s \\mathbf{D}_m^{-1}</span>
+
+<span class="sd">where :math:`\\mathbf{D}_s` contains edge vectors in the current configuration and</span>
+<span class="sd">:math:`\\mathbf{D}_m` contains edge vectors in the rest configuration.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">meshio</span>
+
+
+<div class="viewcode-block" id="TetrahedralMesh">
+<a class="viewcode-back" href="../../api/mesh.html#diffsim.mesh.TetrahedralMesh">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">TetrahedralMesh</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Tetrahedral mesh for finite element simulation</span>
+
+<span class="sd">    This class represents a volumetric mesh using tetrahedral elements. Each tetrahedron</span>
+<span class="sd">    is defined by four vertices, and the mesh computes quantities needed for FEM simulation</span>
+<span class="sd">    such as the deformation gradient, element volumes, and shape matrices.</span>
+
+<span class="sd">    The mesh automatically computes and caches rest-state quantities when initialized:</span>
+
+<span class="sd">    - :math:`\\mathbf{D}_m`: Rest shape matrix for each element (3×3)</span>
+<span class="sd">    - :math:`\\mathbf{D}_m^{-1}`: Inverse rest shape matrix</span>
+<span class="sd">    - :math:`V_0`: Rest volume for each element</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        vertices (torch.Tensor): Vertex positions :math:`(N \\times 3)`</span>
+<span class="sd">        tetrahedra (torch.Tensor): Element connectivity :math:`(M \\times 4)` indices</span>
+<span class="sd">        num_vertices (int): Number of vertices :math:`N`</span>
+<span class="sd">        num_elements (int): Number of tetrahedral elements :math:`M`</span>
+<span class="sd">        Dm (torch.Tensor): Rest shape matrices :math:`(M \\times 3 \\times 3)`</span>
+<span class="sd">        Dm_inv (torch.Tensor): Inverse rest shape matrices :math:`(M \\times 3 \\times 3)`</span>
+<span class="sd">        rest_volume (torch.Tensor): Rest volumes :math:`(M,)`</span>
+<span class="sd">        device (torch.device): Device where tensors are stored</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TetrahedralMesh.__init__">
+<a class="viewcode-back" href="../../api/mesh.html#diffsim.mesh.TetrahedralMesh.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vertices</span><span class="p">,</span> <span class="n">tetrahedra</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize tetrahedral mesh</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vertices: :math:`(N, 3)` array of vertex positions</span>
+<span class="sd">            tetrahedra: :math:`(M, 4)` array of tetrahedron indices</span>
+<span class="sd">            device: &#39;cpu&#39; or &#39;cuda&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+        <span class="c1"># Convert to torch tensors</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">vertices</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">vertices</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">vertices</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tetrahedra</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">tetrahedra</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">tetrahedra</span><span class="p">)</span><span class="o">.</span><span class="n">long</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">vertices</span> <span class="o">=</span> <span class="n">vertices</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tetrahedra</span> <span class="o">=</span> <span class="n">tetrahedra</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_vertices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vertices</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_elements</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tetrahedra</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># Compute reference shape matrices (Dm in standard FEM notation)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_compute_rest_state</span><span class="p">()</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_compute_rest_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute rest state quantities for each element&quot;&quot;&quot;</span>
+        <span class="c1"># Get vertices for each tetrahedron</span>
+        <span class="n">v0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vertices</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">tetrahedra</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]]</span>  <span class="c1"># (M, 3)</span>
+        <span class="n">v1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vertices</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">tetrahedra</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]]</span>
+        <span class="n">v2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vertices</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">tetrahedra</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]]</span>
+        <span class="n">v3</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vertices</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">tetrahedra</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]]</span>
+
+        <span class="c1"># Compute edge vectors in reference configuration</span>
+        <span class="c1"># Dm = [v1-v0, v2-v0, v3-v0]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Dm</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">v1</span> <span class="o">-</span> <span class="n">v0</span><span class="p">,</span> <span class="n">v2</span> <span class="o">-</span> <span class="n">v0</span><span class="p">,</span> <span class="n">v3</span> <span class="o">-</span> <span class="n">v0</span><span class="p">],</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># (M, 3, 3)</span>
+
+        <span class="c1"># Compute inverse of Dm for each element (robust to degeneracy)</span>
+        <span class="c1"># Use pseudo-inverse to avoid crashes on singular elements</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Dm_inv</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">pinv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Dm</span><span class="p">)</span>  <span class="c1"># (M, 3, 3)</span>
+
+        <span class="c1"># Compute rest volume for each tetrahedron</span>
+        <span class="c1"># Volume = 1/6 * |det(Dm)|</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rest_volume</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Dm</span><span class="p">))</span> <span class="o">/</span> <span class="mf">6.0</span>  <span class="c1"># (M,)</span>
+
+<div class="viewcode-block" id="TetrahedralMesh.compute_deformation_gradient">
+<a class="viewcode-back" href="../../api/mesh.html#diffsim.mesh.TetrahedralMesh.compute_deformation_gradient">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_deformation_gradient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current_vertices</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute deformation gradient F for each element</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            current_vertices: :math:`(N, 3)` current vertex positions</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            F: :math:`(M, 3, 3)` deformation gradient for each element</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Get current vertices for each tetrahedron</span>
+        <span class="n">v0</span> <span class="o">=</span> <span class="n">current_vertices</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">tetrahedra</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]]</span>
+        <span class="n">v1</span> <span class="o">=</span> <span class="n">current_vertices</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">tetrahedra</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]]</span>
+        <span class="n">v2</span> <span class="o">=</span> <span class="n">current_vertices</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">tetrahedra</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]]</span>
+        <span class="n">v3</span> <span class="o">=</span> <span class="n">current_vertices</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">tetrahedra</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]]</span>
+
+        <span class="c1"># Compute current edge vectors</span>
+        <span class="c1"># Ds = [v1-v0, v2-v0, v3-v0]</span>
+        <span class="n">Ds</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">v1</span> <span class="o">-</span> <span class="n">v0</span><span class="p">,</span> <span class="n">v2</span> <span class="o">-</span> <span class="n">v0</span><span class="p">,</span> <span class="n">v3</span> <span class="o">-</span> <span class="n">v0</span><span class="p">],</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># (M, 3, 3)</span>
+
+        <span class="c1"># Deformation gradient F = Ds * Dm_inv</span>
+        <span class="n">F</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">bmm</span><span class="p">(</span><span class="n">Ds</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Dm_inv</span><span class="p">)</span>  <span class="c1"># (M, 3, 3)</span>
+
+        <span class="k">return</span> <span class="n">F</span></div>
+
+
+<div class="viewcode-block" id="TetrahedralMesh.from_file">
+<a class="viewcode-back" href="../../api/mesh.html#diffsim.mesh.TetrahedralMesh.from_file">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_file</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load mesh from file using meshio&quot;&quot;&quot;</span>
+        <span class="n">mesh</span> <span class="o">=</span> <span class="n">meshio</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+        <span class="c1"># Extract vertices</span>
+        <span class="n">vertices</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">points</span>
+
+        <span class="c1"># Extract tetrahedra</span>
+        <span class="n">tetrahedra</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">cell_block</span> <span class="ow">in</span> <span class="n">mesh</span><span class="o">.</span><span class="n">cells</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">cell_block</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;tetra&quot;</span><span class="p">:</span>
+                <span class="n">tetrahedra</span> <span class="o">=</span> <span class="n">cell_block</span><span class="o">.</span><span class="n">data</span>
+                <span class="k">break</span>
+
+        <span class="k">if</span> <span class="n">tetrahedra</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No tetrahedral elements found in </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">vertices</span><span class="p">,</span> <span class="n">tetrahedra</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TetrahedralMesh.create_cube">
+<a class="viewcode-back" href="../../api/mesh.html#diffsim.mesh.TetrahedralMesh.create_cube">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_cube</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a cube mesh with tetrahedral elements</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            resolution: number of divisions along each axis</span>
+<span class="sd">            size: size of the cube</span>
+<span class="sd">            device: &#39;cpu&#39; or &#39;cuda&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Create grid of points</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">resolution</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+
+        <span class="c1"># Create vertices</span>
+        <span class="n">vertices</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">vertex_map</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+                    <span class="n">vertices</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">z</span><span class="p">[</span><span class="n">k</span><span class="p">]])</span>
+                    <span class="n">vertex_map</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">)]</span> <span class="o">=</span> <span class="n">idx</span>
+                    <span class="n">idx</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="n">vertices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vertices</span><span class="p">)</span>
+
+        <span class="c1"># Create tetrahedra (5 tets per cube)</span>
+        <span class="n">tetrahedra</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                    <span class="c1"># Get 8 corners of cube</span>
+                    <span class="n">v000</span> <span class="o">=</span> <span class="n">vertex_map</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">)]</span>
+                    <span class="n">v001</span> <span class="o">=</span> <span class="n">vertex_map</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+                    <span class="n">v010</span> <span class="o">=</span> <span class="n">vertex_map</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="p">)]</span>
+                    <span class="n">v011</span> <span class="o">=</span> <span class="n">vertex_map</span><span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+                    <span class="n">v100</span> <span class="o">=</span> <span class="n">vertex_map</span><span class="p">[(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span><span class="p">)]</span>
+                    <span class="n">v101</span> <span class="o">=</span> <span class="n">vertex_map</span><span class="p">[(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+                    <span class="n">v110</span> <span class="o">=</span> <span class="n">vertex_map</span><span class="p">[(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="p">)]</span>
+                    <span class="n">v111</span> <span class="o">=</span> <span class="n">vertex_map</span><span class="p">[(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+
+                    <span class="c1"># Subdivide cube into 5 tetrahedra</span>
+                    <span class="n">tetrahedra</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">v000</span><span class="p">,</span> <span class="n">v001</span><span class="p">,</span> <span class="n">v011</span><span class="p">,</span> <span class="n">v111</span><span class="p">])</span>
+                    <span class="n">tetrahedra</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">v000</span><span class="p">,</span> <span class="n">v001</span><span class="p">,</span> <span class="n">v101</span><span class="p">,</span> <span class="n">v111</span><span class="p">])</span>
+                    <span class="n">tetrahedra</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">v000</span><span class="p">,</span> <span class="n">v100</span><span class="p">,</span> <span class="n">v101</span><span class="p">,</span> <span class="n">v111</span><span class="p">])</span>
+                    <span class="n">tetrahedra</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">v000</span><span class="p">,</span> <span class="n">v100</span><span class="p">,</span> <span class="n">v110</span><span class="p">,</span> <span class="n">v111</span><span class="p">])</span>
+                    <span class="n">tetrahedra</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">v000</span><span class="p">,</span> <span class="n">v010</span><span class="p">,</span> <span class="n">v011</span><span class="p">,</span> <span class="n">v111</span><span class="p">])</span>
+
+        <span class="n">tetrahedra</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">tetrahedra</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">vertices</span><span class="p">,</span> <span class="n">tetrahedra</span><span class="p">,</span> <span class="n">device</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Rishit Dagli
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Rishit Dagli.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

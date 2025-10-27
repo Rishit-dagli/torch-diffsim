@@ -1,0 +1,825 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>diffsim.collision &#8212; ⚙️ torch-diffsim</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=a1637f0b"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs"></script>
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+    <script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";
+window.addEventListener("load", () => mermaid.run());
+</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/diffsim/collision';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">⚙️ torch-diffsim</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Rishit-dagli/torch-diffsim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    ⚙️ torch-diffsim
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quickstart Guide</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../how_it_works.html">How does torch-diffsim work?</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../how_it_works/simulation.html">Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../how_it_works/differentiation.html">Differentiation</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../citation.html">Citation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../api/mesh.html">Mesh</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/material.html">Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/solver.html">Solver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/simulator.html">Simulator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/diff_physics.html">Differentiable Physics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/diff_simulator.html">Differentiable Simulator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/collision.html">Collision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/visualizer.html">Visualizer</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Rishit-dagli/torch-diffsim" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Rishit-dagli/torch-diffsim/issues/new?title=Issue%20on%20page%20%2F_modules/diffsim/collision.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for diffsim.collision</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Collision detection and response</span>
+
+<span class="sd">This module implements two collision handling approaches:</span>
+
+<span class="sd">1. **IPC (Incremental Potential Contact)**: Rigorous collision handling using</span>
+<span class="sd">   barrier potentials with provable non-penetration guarantees. Based on Li et al.</span>
+<span class="sd">   &quot;Incremental Potential Contact&quot; (2020).</span>
+
+<span class="sd">2. **Simplified**: Fast approximate collision detection using distance-based</span>
+<span class="sd">   repulsion forces for real-time simulation.</span>
+
+<span class="sd">The IPC barrier function is:</span>
+
+<span class="sd">.. math::</span>
+
+<span class="sd">    b(d) = -(d - \\hat{d})^2 \\log(d/\\hat{d}) \\text{ for } d &lt; \\hat{d}</span>
+
+<span class="sd">where :math:`d` is the distance between primitives and :math:`\\hat{d}` is the</span>
+<span class="sd">activation distance. This creates smooth repulsive forces that prevent penetration.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+
+<div class="viewcode-block" id="IPCCollisionHandler">
+<a class="viewcode-back" href="../../api/collision.html#diffsim.collision.IPCCollisionHandler">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">IPCCollisionHandler</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    IPC (Incremental Potential Contact) collision handler</span>
+
+<span class="sd">    Implements collision handling using smooth barrier potentials as described in:</span>
+<span class="sd">    Li, M., Ferguson, Z., Schneider, T., Langlois, T. R., Zorin, D., Panozzo, D., ...</span>
+<span class="sd">    &amp; Jiang, C. (2020). Incremental potential contact: intersection-and inversion-free,</span>
+<span class="sd">    large-deformation dynamics. ACM Trans. Graph., 39(4), 49.</span>
+
+<span class="sd">    The barrier function creates smooth repulsive forces that activate when primitives</span>
+<span class="sd">    approach within a threshold distance :math:`\\hat{d}`, preventing penetration while</span>
+<span class="sd">    maintaining continuity for gradient-based optimization.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        barrier_stiffness (float): Stiffness coefficient :math:`\\kappa` (default: 1e3)</span>
+<span class="sd">        dhat (float): Barrier activation distance :math:`\\hat{d}` (default: 1e-3)</span>
+<span class="sd">        friction_mu (float): Friction coefficient (default: 0.3)</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        kappa (float): Barrier stiffness</span>
+<span class="sd">        dhat (float): Activation distance</span>
+<span class="sd">        dhat_squared (float): Squared activation distance for efficiency</span>
+<span class="sd">        friction_mu (float): Friction coefficient</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="IPCCollisionHandler.__init__">
+<a class="viewcode-back" href="../../api/collision.html#diffsim.collision.IPCCollisionHandler.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">barrier_stiffness</span><span class="o">=</span><span class="mf">1e3</span><span class="p">,</span> <span class="n">dhat</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">friction_mu</span><span class="o">=</span><span class="mf">0.3</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize IPC collision handler</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            barrier_stiffness: stiffness of barrier potential</span>
+<span class="sd">            dhat: activation distance for barrier (collision threshold)</span>
+<span class="sd">            friction_mu: friction coefficient</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kappa</span> <span class="o">=</span> <span class="n">barrier_stiffness</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dhat</span> <span class="o">=</span> <span class="n">dhat</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dhat_squared</span> <span class="o">=</span> <span class="n">dhat</span> <span class="o">*</span> <span class="n">dhat</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">friction_mu</span> <span class="o">=</span> <span class="n">friction_mu</span></div>
+
+
+<div class="viewcode-block" id="IPCCollisionHandler.barrier_function">
+<a class="viewcode-back" href="../../api/collision.html#diffsim.collision.IPCCollisionHandler.barrier_function">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">barrier_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d_squared</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        IPC barrier function: b(d) for distance d</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            d_squared: squared distance</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            barrier value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Avoid log(0)</span>
+        <span class="n">d_squared</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">d_squared</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mf">1e-12</span><span class="p">)</span>
+        <span class="n">dhat_sq</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dhat_squared</span>
+
+        <span class="c1"># Barrier: -(d - dhat)^2 * log(d / dhat)</span>
+        <span class="c1"># Only active when d &lt; dhat</span>
+        <span class="n">active</span> <span class="o">=</span> <span class="n">d_squared</span> <span class="o">&lt;</span> <span class="n">dhat_sq</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">active</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">d_squared</span><span class="p">)</span>
+
+        <span class="n">d</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">d_squared</span><span class="p">)</span>
+        <span class="n">ratio</span> <span class="o">=</span> <span class="n">d</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">dhat</span>
+        <span class="n">barrier</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">d_squared</span><span class="p">)</span>
+        <span class="n">barrier</span><span class="p">[</span><span class="n">active</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="p">((</span><span class="n">d</span><span class="p">[</span><span class="n">active</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">dhat</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+            <span class="n">ratio</span><span class="p">[</span><span class="n">active</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1e-12</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">barrier</span></div>
+
+
+<div class="viewcode-block" id="IPCCollisionHandler.barrier_gradient">
+<a class="viewcode-back" href="../../api/collision.html#diffsim.collision.IPCCollisionHandler.barrier_gradient">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">barrier_gradient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d_squared</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gradient of barrier function</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            d_squared: squared distance</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            gradient magnitude</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">d_squared</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">d_squared</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mf">1e-12</span><span class="p">)</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">d_squared</span><span class="p">)</span>
+
+        <span class="n">active</span> <span class="o">=</span> <span class="n">d_squared</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">dhat_squared</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">active</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+
+        <span class="n">grad</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+        <span class="n">d_active</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="n">active</span><span class="p">]</span>
+        <span class="n">ratio</span> <span class="o">=</span> <span class="n">d_active</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">dhat</span>
+
+        <span class="c1"># d/dd[ -(d - dhat)^2 * log(d/dhat) ]</span>
+        <span class="n">term1</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">d_active</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">dhat</span><span class="p">)</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">ratio</span> <span class="o">+</span> <span class="mf">1e-12</span><span class="p">)</span>
+        <span class="n">term2</span> <span class="o">=</span> <span class="o">-</span><span class="p">((</span><span class="n">d_active</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">dhat</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">d_active</span> <span class="o">+</span> <span class="mf">1e-12</span><span class="p">)</span>
+        <span class="n">grad</span><span class="p">[</span><span class="n">active</span><span class="p">]</span> <span class="o">=</span> <span class="n">term1</span> <span class="o">+</span> <span class="n">term2</span>
+
+        <span class="k">return</span> <span class="n">grad</span></div>
+
+
+<div class="viewcode-block" id="IPCCollisionHandler.point_triangle_distance">
+<a class="viewcode-back" href="../../api/collision.html#diffsim.collision.IPCCollisionHandler.point_triangle_distance">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">point_triangle_distance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">v0</span><span class="p">,</span> <span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute squared distance from point p to triangle (v0, v1, v2)</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            p: :math:`(N, 3)` points</span>
+<span class="sd">            v0, v1, v2: :math:`(M, 3)` triangle vertices</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            distances: :math:`(N, M)` squared distances</span>
+<span class="sd">            closest_points: :math:`(N, M, 3)` closest points on triangles</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Expand dimensions for broadcasting</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># (N, 1, 3)</span>
+        <span class="n">v0</span> <span class="o">=</span> <span class="n">v0</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># (1, M, 3)</span>
+        <span class="n">v1</span> <span class="o">=</span> <span class="n">v1</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">v2</span> <span class="o">=</span> <span class="n">v2</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Triangle edges</span>
+        <span class="n">e0</span> <span class="o">=</span> <span class="n">v1</span> <span class="o">-</span> <span class="n">v0</span>
+        <span class="n">e1</span> <span class="o">=</span> <span class="n">v2</span> <span class="o">-</span> <span class="n">v1</span>
+        <span class="n">e2</span> <span class="o">=</span> <span class="n">v0</span> <span class="o">-</span> <span class="n">v2</span>
+
+        <span class="c1"># Vector from v0 to p</span>
+        <span class="n">v0p</span> <span class="o">=</span> <span class="n">p</span> <span class="o">-</span> <span class="n">v0</span>
+
+        <span class="c1"># Normal (not normalized)</span>
+        <span class="n">normal</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">e0</span><span class="p">,</span> <span class="n">v2</span> <span class="o">-</span> <span class="n">v0</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Project point onto plane</span>
+        <span class="n">normal_norm_sq</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">normal</span> <span class="o">*</span> <span class="n">normal</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1e-12</span>
+        <span class="n">dist_to_plane</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">v0p</span> <span class="o">*</span> <span class="n">normal</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">proj</span> <span class="o">=</span> <span class="n">p</span> <span class="o">-</span> <span class="n">normal</span> <span class="o">*</span> <span class="p">(</span><span class="n">dist_to_plane</span> <span class="o">/</span> <span class="n">normal_norm_sq</span><span class="p">)</span>
+
+        <span class="c1"># Check if projection is inside triangle using barycentric coordinates</span>
+        <span class="c1"># Simplified: just compute distance to triangle plane for now</span>
+        <span class="n">d_squared</span> <span class="o">=</span> <span class="n">dist_to_plane</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">normal_norm_sq</span>
+
+        <span class="k">return</span> <span class="n">d_squared</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">proj</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="IPCCollisionHandler.compute_self_collision_forces">
+<a class="viewcode-back" href="../../api/collision.html#diffsim.collision.IPCCollisionHandler.compute_self_collision_forces">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_self_collision_forces</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mesh</span><span class="p">,</span> <span class="n">positions</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute self-collision forces using IPC barrier potentials</span>
+
+<span class="sd">        This is a simplified version that checks vertex-face distances</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            mesh: TetrahedralMesh</span>
+<span class="sd">            positions: :math:`(N, 3)` current positions</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            forces: :math:`(N, 3)` collision forces</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">device</span> <span class="o">=</span> <span class="n">positions</span><span class="o">.</span><span class="n">device</span>
+        <span class="n">forces</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span>
+
+        <span class="c1"># Extract surface triangles (boundary faces)</span>
+        <span class="n">surface_faces</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_surface_faces</span><span class="p">(</span><span class="n">mesh</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">surface_faces</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">surface_faces</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">forces</span>
+
+        <span class="c1"># For each vertex, check distance to non-adjacent faces</span>
+        <span class="c1"># This is O(N*M) but we&#39;ll use spatial hashing for efficiency</span>
+
+        <span class="c1"># Simple version: check all vertex-face pairs (expensive but correct)</span>
+        <span class="c1"># In production, use BVH (Bounding Volume Hierarchy)</span>
+
+        <span class="n">num_checks</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">max_checks</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span>
+            <span class="n">positions</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">surface_faces</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">10000</span>
+        <span class="p">)</span>  <span class="c1"># Limit for speed</span>
+
+        <span class="c1"># Sample subset for efficiency</span>
+        <span class="n">vertex_sample</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randperm</span><span class="p">(</span><span class="n">positions</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)[</span>
+            <span class="p">:</span> <span class="nb">min</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">positions</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="p">]</span>
+        <span class="n">face_sample</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randperm</span><span class="p">(</span><span class="n">surface_faces</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)[</span>
+            <span class="p">:</span> <span class="nb">min</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">surface_faces</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">v_idx</span> <span class="ow">in</span> <span class="n">vertex_sample</span><span class="p">:</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">positions</span><span class="p">[</span><span class="n">v_idx</span><span class="p">]</span>
+
+            <span class="k">for</span> <span class="n">f_idx</span> <span class="ow">in</span> <span class="n">face_sample</span><span class="p">:</span>
+                <span class="n">face</span> <span class="o">=</span> <span class="n">surface_faces</span><span class="p">[</span><span class="n">f_idx</span><span class="p">]</span>
+
+                <span class="c1"># Skip if vertex is part of this face</span>
+                <span class="k">if</span> <span class="n">v_idx</span> <span class="ow">in</span> <span class="n">face</span><span class="p">:</span>
+                    <span class="k">continue</span>
+
+                <span class="c1"># Compute distance</span>
+                <span class="n">v0</span><span class="p">,</span> <span class="n">v1</span><span class="p">,</span> <span class="n">v2</span> <span class="o">=</span> <span class="n">positions</span><span class="p">[</span><span class="n">face</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">positions</span><span class="p">[</span><span class="n">face</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">positions</span><span class="p">[</span><span class="n">face</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
+
+                <span class="c1"># Simple point-to-plane distance</span>
+                <span class="n">edge1</span> <span class="o">=</span> <span class="n">v1</span> <span class="o">-</span> <span class="n">v0</span>
+                <span class="n">edge2</span> <span class="o">=</span> <span class="n">v2</span> <span class="o">-</span> <span class="n">v0</span>
+                <span class="n">normal</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">edge1</span><span class="p">,</span> <span class="n">edge2</span><span class="p">)</span>
+                <span class="n">normal_norm</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">normal</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1e-12</span>
+                <span class="n">normal</span> <span class="o">=</span> <span class="n">normal</span> <span class="o">/</span> <span class="n">normal_norm</span>
+
+                <span class="c1"># Distance from point to plane</span>
+                <span class="n">to_point</span> <span class="o">=</span> <span class="n">p</span> <span class="o">-</span> <span class="n">v0</span>
+                <span class="n">dist</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">to_point</span><span class="p">,</span> <span class="n">normal</span><span class="p">))</span>
+                <span class="n">d_squared</span> <span class="o">=</span> <span class="n">dist</span><span class="o">**</span><span class="mi">2</span>
+
+                <span class="c1"># Apply barrier if within threshold</span>
+                <span class="k">if</span> <span class="n">d_squared</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">dhat_squared</span><span class="p">:</span>
+                    <span class="c1"># Compute barrier gradient</span>
+                    <span class="n">grad_mag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">barrier_gradient</span><span class="p">(</span><span class="n">d_squared</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+
+                    <span class="c1"># Force direction (repulsion along normal)</span>
+                    <span class="n">sign</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">to_point</span><span class="p">,</span> <span class="n">normal</span><span class="p">))</span>
+                    <span class="n">force</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kappa</span> <span class="o">*</span> <span class="n">grad_mag</span> <span class="o">*</span> <span class="n">sign</span> <span class="o">*</span> <span class="n">normal</span>
+
+                    <span class="n">forces</span><span class="p">[</span><span class="n">v_idx</span><span class="p">]</span> <span class="o">+=</span> <span class="n">force</span>
+
+                    <span class="n">num_checks</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="k">if</span> <span class="n">num_checks</span> <span class="o">&gt;=</span> <span class="n">max_checks</span><span class="p">:</span>
+                        <span class="k">return</span> <span class="n">forces</span>
+
+        <span class="k">return</span> <span class="n">forces</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_extract_surface_faces</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mesh</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Extract surface triangles from tetrahedral mesh</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            surface_faces: :math:`(F, 3)` tensor of surface triangle indices</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tets</span> <span class="o">=</span> <span class="n">mesh</span><span class="o">.</span><span class="n">tetrahedra</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
+
+        <span class="c1"># Each tet has 4 faces</span>
+        <span class="n">all_faces</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">tets</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span>
+                <span class="n">tets</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]],</span>
+                <span class="n">tets</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">]],</span>
+                <span class="n">tets</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]],</span>
+            <span class="p">],</span>
+            <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Sort each face to find duplicates</span>
+        <span class="n">sorted_faces</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">all_faces</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Find unique faces (boundary faces appear once)</span>
+        <span class="n">unique_faces</span><span class="p">,</span> <span class="n">inverse_indices</span><span class="p">,</span> <span class="n">counts</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span>
+            <span class="n">sorted_faces</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">return_inverse</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Boundary faces (count == 1)</span>
+        <span class="n">boundary_mask</span> <span class="o">=</span> <span class="n">counts</span> <span class="o">==</span> <span class="mi">1</span>
+        <span class="n">boundary_sorted</span> <span class="o">=</span> <span class="n">unique_faces</span><span class="p">[</span><span class="n">boundary_mask</span><span class="p">]</span>
+
+        <span class="c1"># Map back to original face indices</span>
+        <span class="n">surface_faces</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">sorted_face</span> <span class="ow">in</span> <span class="n">boundary_sorted</span><span class="p">:</span>
+            <span class="c1"># Find first occurrence in all_faces</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">face</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">all_faces</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">face</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sorted_face</span><span class="p">):</span>
+                    <span class="n">surface_faces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">face</span><span class="p">)</span>
+                    <span class="k">break</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">surface_faces</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">surface_faces</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">mesh</span><span class="o">.</span><span class="n">tetrahedra</span><span class="o">.</span><span class="n">device</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="SimplifiedCollisionHandler">
+<a class="viewcode-back" href="../../api/collision.html#diffsim.collision.SimplifiedCollisionHandler">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SimplifiedCollisionHandler</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fast simplified collision detection for real-time simulation</span>
+
+<span class="sd">    Uses distance-based repulsion without full CCD</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SimplifiedCollisionHandler.__init__">
+<a class="viewcode-back" href="../../api/collision.html#diffsim.collision.SimplifiedCollisionHandler.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">collision_distance</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span>
+        <span class="n">repulsion_stiffness</span><span class="o">=</span><span class="mf">1e4</span><span class="p">,</span>
+        <span class="n">max_checks_per_frame</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            collision_distance: minimum distance threshold</span>
+<span class="sd">            repulsion_stiffness: strength of repulsion forces</span>
+<span class="sd">            max_checks_per_frame: maximum collision checks per frame (for performance)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">d_min</span> <span class="o">=</span> <span class="n">collision_distance</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">k_repulsion</span> <span class="o">=</span> <span class="n">repulsion_stiffness</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_checks</span> <span class="o">=</span> <span class="n">max_checks_per_frame</span></div>
+
+
+<div class="viewcode-block" id="SimplifiedCollisionHandler.compute_self_collision_forces">
+<a class="viewcode-back" href="../../api/collision.html#diffsim.collision.SimplifiedCollisionHandler.compute_self_collision_forces">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_self_collision_forces</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mesh</span><span class="p">,</span> <span class="n">positions</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fast self-collision detection using simple distance checks</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            mesh: TetrahedralMesh</span>
+<span class="sd">            positions: :math:`(N, 3)` current positions</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            forces: :math:`(N, 3)` repulsion forces</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">forces</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span>
+
+        <span class="c1"># Vectorized collision detection for speed</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="n">positions</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># Limit checks for performance - sample vertex pairs</span>
+        <span class="n">num_samples</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_checks</span><span class="p">,</span> <span class="n">N</span> <span class="o">*</span> <span class="mi">5</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">num_samples</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">forces</span>
+
+        <span class="c1"># Generate random pairs in batch</span>
+        <span class="n">indices_i</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="p">(</span><span class="n">num_samples</span><span class="p">,),</span> <span class="n">device</span><span class="o">=</span><span class="n">positions</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">indices_j</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="p">(</span><span class="n">num_samples</span><span class="p">,),</span> <span class="n">device</span><span class="o">=</span><span class="n">positions</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+
+        <span class="c1"># Filter out self-pairs</span>
+        <span class="n">valid</span> <span class="o">=</span> <span class="n">indices_i</span> <span class="o">!=</span> <span class="n">indices_j</span>
+        <span class="n">indices_i</span> <span class="o">=</span> <span class="n">indices_i</span><span class="p">[</span><span class="n">valid</span><span class="p">]</span>
+        <span class="n">indices_j</span> <span class="o">=</span> <span class="n">indices_j</span><span class="p">[</span><span class="n">valid</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">indices_i</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">forces</span>
+
+        <span class="c1"># Compute distances in batch</span>
+        <span class="n">pos_i</span> <span class="o">=</span> <span class="n">positions</span><span class="p">[</span><span class="n">indices_i</span><span class="p">]</span>
+        <span class="n">pos_j</span> <span class="o">=</span> <span class="n">positions</span><span class="p">[</span><span class="n">indices_j</span><span class="p">]</span>
+        <span class="n">diff</span> <span class="o">=</span> <span class="n">pos_i</span> <span class="o">-</span> <span class="n">pos_j</span>
+        <span class="n">dist</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">diff</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1e-12</span>
+
+        <span class="c1"># Find colliding pairs</span>
+        <span class="n">colliding</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">d_min</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">colliding</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">forces</span>
+
+        <span class="c1"># Compute repulsion forces for colliding pairs</span>
+        <span class="n">dist_colliding</span> <span class="o">=</span> <span class="n">dist</span><span class="p">[</span><span class="n">colliding</span><span class="p">]</span>
+        <span class="n">diff_colliding</span> <span class="o">=</span> <span class="n">diff</span><span class="p">[</span><span class="n">colliding</span><span class="p">]</span>
+        <span class="n">penetration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">d_min</span> <span class="o">-</span> <span class="n">dist_colliding</span>
+        <span class="n">force_mag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">k_repulsion</span> <span class="o">*</span> <span class="n">penetration</span> <span class="o">/</span> <span class="n">dist_colliding</span>
+        <span class="n">force</span> <span class="o">=</span> <span class="n">force_mag</span> <span class="o">*</span> <span class="n">diff_colliding</span>
+
+        <span class="c1"># Accumulate forces (using scatter_add for efficiency)</span>
+        <span class="n">indices_i_colliding</span> <span class="o">=</span> <span class="n">indices_i</span><span class="p">[</span><span class="n">colliding</span><span class="p">]</span>
+        <span class="n">indices_j_colliding</span> <span class="o">=</span> <span class="n">indices_j</span><span class="p">[</span><span class="n">colliding</span><span class="p">]</span>
+
+        <span class="n">forces</span><span class="o">.</span><span class="n">index_add_</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">indices_i_colliding</span><span class="p">,</span> <span class="n">force</span><span class="p">)</span>
+        <span class="n">forces</span><span class="o">.</span><span class="n">index_add_</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">indices_j_colliding</span><span class="p">,</span> <span class="o">-</span><span class="n">force</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">forces</span></div>
+</div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Rishit Dagli
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Rishit Dagli.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

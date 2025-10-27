@@ -1,0 +1,738 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Simulation &#8212; ⚙️ torch-diffsim</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=a1637f0b"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'how_it_works/simulation';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Differentiation" href="differentiation.html" />
+    <link rel="prev" title="How does torch-diffsim work?" href="../how_it_works.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">⚙️ torch-diffsim</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/Rishit-dagli/torch-diffsim" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    ⚙️ torch-diffsim
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart Guide</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../how_it_works.html">How does torch-diffsim work?</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="differentiation.html">Differentiation</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../citation.html">Citation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../api/mesh.html">Mesh</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/material.html">Material</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/solver.html">Solver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/simulator.html">Simulator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/diff_physics.html">Differentiable Physics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/diff_simulator.html">Differentiable Simulator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/collision.html">Collision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/visualizer.html">Visualizer</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/Rishit-dagli/torch-diffsim" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Rishit-dagli/torch-diffsim/edit/main/docs/source/how_it_works/simulation.rst" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/Rishit-dagli/torch-diffsim/issues/new?title=Issue%20on%20page%20%2Fhow_it_works/simulation.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/how_it_works/simulation.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Simulation</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finite-element-method-fem">Finite Element Method (FEM)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mesh-discretization">Mesh Discretization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deformation-gradient">Deformation Gradient</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stable-neo-hookean-material">Stable Neo-Hookean Material</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#energy-density">Energy Density</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#total-elastic-energy">Total Elastic Energy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#elastic-forces">Elastic Forces</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#semi-implicit-symplectic-euler-time-integration">Semi-Implicit (Symplectic Euler) Time Integration</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#integration-scheme">Integration Scheme</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-semi-implicit">Why Semi-Implicit?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#total-force-computation">Total Force Computation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#substepping">Substepping</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contact-handling">Contact Handling</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#barrier-potential">Barrier Potential</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contact-force-differentiable">Contact Force (Differentiable)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ground-projection-standard">Ground Projection (Standard)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-matrix">Mass Matrix</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#boundary-conditions">Boundary Conditions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementation-notes">Implementation Notes</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="simulation">
+<h1>Simulation<a class="headerlink" href="#simulation" title="Link to this heading">#</a></h1>
+<p>This page describes the forward physics simulation in torch-diffsim, including the finite element method formulation, time integration scheme, and material model.</p>
+<section id="finite-element-method-fem">
+<h2>Finite Element Method (FEM)<a class="headerlink" href="#finite-element-method-fem" title="Link to this heading">#</a></h2>
+<p>torch-diffsim uses the <strong>finite element method</strong> with linear tetrahedral elements to discretize the continuous elastic body.</p>
+<section id="mesh-discretization">
+<h3>Mesh Discretization<a class="headerlink" href="#mesh-discretization" title="Link to this heading">#</a></h3>
+<p>The domain <span class="math notranslate nohighlight">\(\Omega \subset \mathbb{R}^3\)</span> is discretized into <span class="math notranslate nohighlight">\(M\)</span> tetrahedral elements:</p>
+<div class="math notranslate nohighlight">
+\[\Omega \approx \bigcup_{e=1}^{M} \Omega_e\]</div>
+<p>Each tetrahedron <span class="math notranslate nohighlight">\(\Omega_e\)</span> is defined by 4 vertices with positions <span class="math notranslate nohighlight">\(\mathbf{x}_0, \mathbf{x}_1, \mathbf{x}_2, \mathbf{x}_3 \in \mathbb{R}^3\)</span>.</p>
+</section>
+<section id="deformation-gradient">
+<h3>Deformation Gradient<a class="headerlink" href="#deformation-gradient" title="Link to this heading">#</a></h3>
+<p>The deformation gradient <span class="math notranslate nohighlight">\(\mathbf{F}\)</span> maps from the reference (rest) configuration to the current (deformed) configuration. For each element, it is computed as:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{F} = \mathbf{D}_s \mathbf{D}_m^{-1}\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathbf{D}_m = [\mathbf{X}_1 - \mathbf{X}_0, \mathbf{X}_2 - \mathbf{X}_0, \mathbf{X}_3 - \mathbf{X}_0] \in \mathbb{R}^{3 \times 3}\)</span> contains edge vectors in the <strong>rest configuration</strong></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{D}_s = [\mathbf{x}_1 - \mathbf{x}_0, \mathbf{x}_2 - \mathbf{x}_0, \mathbf{x}_3 - \mathbf{x}_0] \in \mathbb{R}^{3 \times 3}\)</span> contains edge vectors in the <strong>current configuration</strong></p></li>
+</ul>
+<p>For <strong>linear tetrahedral elements</strong>, <span class="math notranslate nohighlight">\(\mathbf{F}\)</span> is constant within each element (constant strain elements).</p>
+</section>
+</section>
+<section id="stable-neo-hookean-material">
+<h2>Stable Neo-Hookean Material<a class="headerlink" href="#stable-neo-hookean-material" title="Link to this heading">#</a></h2>
+<p>The material model defines the relationship between deformation and stress. We use the <strong>Stable Neo-Hookean</strong> hyperelastic model from Smith et al. (2018).</p>
+<section id="energy-density">
+<h3>Energy Density<a class="headerlink" href="#energy-density" title="Link to this heading">#</a></h3>
+<p>The strain energy density <span class="math notranslate nohighlight">\(\Psi: \mathbb{R}^{3 \times 3} \to \mathbb{R}\)</span> is:</p>
+<div class="math notranslate nohighlight">
+\[\Psi(\mathbf{F}) = \frac{\mu}{2}(I_C - 3) - \mu \log J + \frac{\lambda}{2}(J - 1)^2\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(I_C = \text{tr}(\mathbf{F}^T \mathbf{F}) = \|\mathbf{F}\|_F^2\)</span> is the <strong>first invariant</strong> (measures stretch)</p></li>
+<li><p><span class="math notranslate nohighlight">\(J = \det(\mathbf{F})\)</span> is the <strong>Jacobian determinant</strong> (measures volume change)</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mu = \frac{E}{2(1+\nu)}\)</span> is the <strong>shear modulus</strong> (first Lamé parameter)</p></li>
+<li><p><span class="math notranslate nohighlight">\(\lambda = \frac{E\nu}{(1+\nu)(1-2\nu)}\)</span> is the <strong>bulk modulus</strong> (second Lamé parameter)</p></li>
+</ul>
+<p><strong>Why “Stable”?</strong> The logarithmic term <span class="math notranslate nohighlight">\(-\mu \log J\)</span> (instead of <span class="math notranslate nohighlight">\(\lambda \log^2 J\)</span>) ensures the energy remains bounded even under large compression or inversion, providing numerical stability.</p>
+</section>
+<section id="total-elastic-energy">
+<h3>Total Elastic Energy<a class="headerlink" href="#total-elastic-energy" title="Link to this heading">#</a></h3>
+<p>The total elastic energy is obtained by integrating over all elements:</p>
+<div class="math notranslate nohighlight">
+\[E_{\text{elastic}} = \sum_{e=1}^{M} \Psi(\mathbf{F}_e) V_e^0\]</div>
+<p>where <span class="math notranslate nohighlight">\(V_e^0 = \frac{1}{6}|\det(\mathbf{D}_m^e)|\)</span> is the rest volume of element <span class="math notranslate nohighlight">\(e\)</span>.</p>
+</section>
+<section id="elastic-forces">
+<h3>Elastic Forces<a class="headerlink" href="#elastic-forces" title="Link to this heading">#</a></h3>
+<p>The elastic force on each vertex is the negative gradient of the total energy:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{f}_{\text{elastic}} = -\frac{\partial E_{\text{elastic}}}{\partial \mathbf{x}}\]</div>
+<p>This is computed using the <strong>first Piola-Kirchhoff stress tensor</strong> <span class="math notranslate nohighlight">\(\mathbf{P}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{P} = \frac{\partial \Psi}{\partial \mathbf{F}} = \mu \mathbf{F} - \mu \mathbf{F}^{-T} + \lambda (J-1) J \mathbf{F}^{-T}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{F}^{-T} = (\mathbf{F}^{-1})^T\)</span> is the inverse transpose.</p>
+<p>The force on vertex <span class="math notranslate nohighlight">\(i\)</span> of element <span class="math notranslate nohighlight">\(e\)</span> is:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{f}_i^e = -V_e^0 \mathbf{P}_e \frac{\partial \mathbf{F}_e}{\partial \mathbf{x}_i}\]</div>
+</section>
+</section>
+<section id="semi-implicit-symplectic-euler-time-integration">
+<h2>Semi-Implicit (Symplectic Euler) Time Integration<a class="headerlink" href="#semi-implicit-symplectic-euler-time-integration" title="Link to this heading">#</a></h2>
+<p>Time integration advances the simulation forward in time. We use <strong>semi-implicit Euler</strong>, also known as <strong>symplectic Euler</strong>.</p>
+<section id="integration-scheme">
+<h3>Integration Scheme<a class="headerlink" href="#integration-scheme" title="Link to this heading">#</a></h3>
+<p>Given state <span class="math notranslate nohighlight">\((\mathbf{x}^n, \mathbf{v}^n)\)</span> at time <span class="math notranslate nohighlight">\(t_n\)</span>, compute the next state:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\mathbf{v}^{n+1} &amp;= \mathbf{v}^n + \Delta t \, \mathbf{M}^{-1} \mathbf{f}(\mathbf{x}^n)\\\mathbf{x}^{n+1} &amp;= \mathbf{x}^n + \Delta t \, \mathbf{v}^{n+1}\end{aligned}\end{align} \]</div>
+<p><strong>Key property</strong>: Velocities are updated using forces at the <strong>current position</strong> <span class="math notranslate nohighlight">\(\mathbf{x}^n\)</span>, then positions are updated using the <strong>new velocities</strong> <span class="math notranslate nohighlight">\(\mathbf{v}^{n+1}\)</span>.</p>
+</section>
+<section id="why-semi-implicit">
+<h3>Why Semi-Implicit?<a class="headerlink" href="#why-semi-implicit" title="Link to this heading">#</a></h3>
+<p>This scheme is:</p>
+<ol class="arabic simple">
+<li><p><strong>Symplectic</strong>: Preserves phase space volume, leading to better energy conservation</p></li>
+<li><p><strong>First-order accurate</strong>: Error is <span class="math notranslate nohighlight">\(O(\Delta t)\)</span></p></li>
+<li><p><strong>Conditionally stable</strong>: More stable than explicit Euler for stiff systems</p></li>
+<li><p><strong>Simple</strong>: No iterative solver needed (unlike fully implicit methods)</p></li>
+</ol>
+<p>The scheme is called “semi-implicit” because velocities use the current position (explicit) but positions use the new velocity (implicit dependency).</p>
+</section>
+<section id="total-force-computation">
+<h3>Total Force Computation<a class="headerlink" href="#total-force-computation" title="Link to this heading">#</a></h3>
+<p>The total force includes multiple components:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{f}(\mathbf{x}) = \mathbf{f}_{\text{elastic}}(\mathbf{x}) + \mathbf{f}_{\text{gravity}} + \mathbf{f}_{\text{contact}}(\mathbf{x}) + \mathbf{f}_{\text{damping}}(\mathbf{v})\]</div>
+<p><strong>Elastic forces</strong>: Computed from strain energy as described above</p>
+<p><strong>Gravity</strong>: <span class="math notranslate nohighlight">\(\mathbf{f}_{\text{gravity}} = \mathbf{M} \mathbf{g}\)</span> where <span class="math notranslate nohighlight">\(\mathbf{g} = [0, -9.8, 0]^T\)</span></p>
+<p><strong>Contact forces</strong>: Either smooth barrier forces (differentiable solver) or projection with friction (standard solver)</p>
+<p><strong>Damping</strong>: <span class="math notranslate nohighlight">\(\mathbf{v} \leftarrow \alpha \mathbf{v}\)</span> with <span class="math notranslate nohighlight">\(\alpha \approx 0.99\)</span></p>
+</section>
+<section id="substepping">
+<h3>Substepping<a class="headerlink" href="#substepping" title="Link to this heading">#</a></h3>
+<p>For stability, each timestep <span class="math notranslate nohighlight">\(\Delta t\)</span> is subdivided into <span class="math notranslate nohighlight">\(n_{\text{sub}}\)</span> substeps:</p>
+<div class="math notranslate nohighlight">
+\[h = \frac{\Delta t}{n_{\text{sub}}}\]</div>
+<p>The integration scheme is applied <span class="math notranslate nohighlight">\(n_{\text{sub}}\)</span> times with step size <span class="math notranslate nohighlight">\(h\)</span>. Typical values: <span class="math notranslate nohighlight">\(\Delta t = 0.01\)</span>, <span class="math notranslate nohighlight">\(n_{\text{sub}} = 4\)</span>.</p>
+</section>
+</section>
+<section id="contact-handling">
+<h2>Contact Handling<a class="headerlink" href="#contact-handling" title="Link to this heading">#</a></h2>
+<p>We use two approaches depending on the solver:</p>
+<ul class="simple">
+<li><p><strong>Differentiable solver</strong>: Smooth barrier functions to maintain differentiability</p></li>
+<li><p><strong>Standard solver</strong>: Ground-plane projection with restitution and simple Coulomb-like friction</p></li>
+</ul>
+<section id="barrier-potential">
+<h3>Barrier Potential<a class="headerlink" href="#barrier-potential" title="Link to this heading">#</a></h3>
+<p>For ground contact at <span class="math notranslate nohighlight">\(y = 0\)</span>, the barrier potential for vertex <span class="math notranslate nohighlight">\(i\)</span> is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}b(d_i) = \begin{cases}
+-\kappa (d_i - \hat{d})^2 \log(d_i / \hat{d}) &amp; \text{if } d_i &lt; \hat{d} \\
+0 &amp; \text{otherwise}
+\end{cases}\end{split}\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(d_i = y_i\)</span> is the distance to the ground</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{d}\)</span> is the barrier activation distance (e.g., 0.01 m)</p></li>
+<li><p><span class="math notranslate nohighlight">\(\kappa\)</span> is the barrier stiffness (e.g., <span class="math notranslate nohighlight">\(10^4\)</span>)</p></li>
+</ul>
+</section>
+<section id="contact-force-differentiable">
+<h3>Contact Force (Differentiable)<a class="headerlink" href="#contact-force-differentiable" title="Link to this heading">#</a></h3>
+<p>The contact force is the negative gradient of the barrier potential:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{f}_{\text{contact}} = -\nabla_{\mathbf{x}} \sum_{i=1}^{N} b(d_i)\]</div>
+<p>This creates a smooth repulsive force that increases as the vertex approaches the ground, preventing penetration while maintaining <span class="math notranslate nohighlight">\(C^2\)</span> continuity.</p>
+<p><strong>Why smooth barriers?</strong> Hard constraints (projections) introduce discontinuities that break gradient flow. Smooth barriers maintain differentiability while still preventing penetration.</p>
+</section>
+<section id="ground-projection-standard">
+<h3>Ground Projection (Standard)<a class="headerlink" href="#ground-projection-standard" title="Link to this heading">#</a></h3>
+<p>For the non-differentiable solver, vertices below the ground are projected back to <span class="math notranslate nohighlight">\(y=0\)</span>, normal velocity is adjusted by restitution, and tangential velocity is damped to emulate friction. See <code class="docutils literal notranslate"><span class="pre">SemiImplicitSolver._handle_ground_collision</span></code> in the code.</p>
+</section>
+</section>
+<section id="mass-matrix">
+<h2>Mass Matrix<a class="headerlink" href="#mass-matrix" title="Link to this heading">#</a></h2>
+<p>The mass matrix <span class="math notranslate nohighlight">\(\mathbf{M}\)</span> is diagonal (lumped mass):</p>
+<div class="math notranslate nohighlight">
+\[M_{ii} = \sum_{e \in \text{adj}(i)} \frac{\rho V_e^0}{4}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\rho\)</span> is the material density and the sum is over all elements adjacent to vertex <span class="math notranslate nohighlight">\(i\)</span>. Each element’s mass is distributed equally to its 4 vertices.</p>
+</section>
+<section id="boundary-conditions">
+<h2>Boundary Conditions<a class="headerlink" href="#boundary-conditions" title="Link to this heading">#</a></h2>
+<p><strong>Fixed vertices</strong>: Vertices can be constrained by setting their velocity to zero:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{v}_i^{n+1} = \mathbf{0} \quad \text{for } i \in \mathcal{F}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathcal{F}\)</span> is the set of fixed vertex indices.</p>
+</section>
+<section id="implementation-notes">
+<h2>Implementation Notes<a class="headerlink" href="#implementation-notes" title="Link to this heading">#</a></h2>
+<p>In the code:</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(\mathbf{D}_m^{-1}\)</span> is precomputed and cached for efficiency</p></li>
+<li><p>Forces are accumulated using <code class="docutils literal notranslate"><span class="pre">index_add_</span></code> for parallelism</p></li>
+<li><p>All operations use PyTorch tensors for GPU acceleration</p></li>
+<li><p>Clamping is applied to <span class="math notranslate nohighlight">\(J\)</span> to prevent numerical issues: <span class="math notranslate nohighlight">\(J \leftarrow \text{clamp}(J, J_{\min}, J_{\max})\)</span></p></li>
+<li><p>The standard solver optionally adds simplified self-collision forces; the differentiable solver includes smooth ground contact forces.</p></li>
+</ol>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../how_it_works.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">How does torch-diffsim work?</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="differentiation.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Differentiation</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finite-element-method-fem">Finite Element Method (FEM)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mesh-discretization">Mesh Discretization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deformation-gradient">Deformation Gradient</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stable-neo-hookean-material">Stable Neo-Hookean Material</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#energy-density">Energy Density</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#total-elastic-energy">Total Elastic Energy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#elastic-forces">Elastic Forces</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#semi-implicit-symplectic-euler-time-integration">Semi-Implicit (Symplectic Euler) Time Integration</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#integration-scheme">Integration Scheme</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-semi-implicit">Why Semi-Implicit?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#total-force-computation">Total Force Computation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#substepping">Substepping</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contact-handling">Contact Handling</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#barrier-potential">Barrier Potential</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contact-force-differentiable">Contact Force (Differentiable)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ground-projection-standard">Ground Projection (Standard)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mass-matrix">Mass Matrix</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#boundary-conditions">Boundary Conditions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementation-notes">Implementation Notes</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Rishit Dagli
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Rishit Dagli.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
