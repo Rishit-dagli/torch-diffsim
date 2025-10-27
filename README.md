@@ -66,7 +66,7 @@ loss.backward()
 
 ## Learn more
 
-- User Guide and API: https://rishit-dagli.github.io/torch-diffsim/
+- User Guide and API: https://torch-diffsim.github.io
 - Examples: see the `examples/` directory
 - How it works: simulation and differentiation details in the docs
 
